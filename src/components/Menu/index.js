@@ -1,18 +1,9 @@
-import React, { createContext, useState, Component } from "react";
+import React, { createContext, Component } from "react";
 import Burger from "./Burger";
 import Nav from "./Nav";
 import Sidebar from "./Sidebar";
 
 const MenuContext = createContext();
-
-function useMenu() {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = value => setIsOpen(value ? value : !isOpen);
-  return {
-    isOpen,
-    toggle
-  };
-}
 
 function Consumer({ children }) {
   return (

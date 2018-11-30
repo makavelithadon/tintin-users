@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./Root";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 const rootElement = document.getElementById("root");

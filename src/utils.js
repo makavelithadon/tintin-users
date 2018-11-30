@@ -30,9 +30,9 @@ export const media = Object.entries(breakpoints).reduce((acc, [name, width]) => 
   return acc;
 }, initial);
 
-export function isDev(env) {
-  return env === "development";
-}
+export const isDev = Boolean(
+  /* process && process.env && process.env.NODE_env && process.env.NODE_ENV === "development" */ false
+);
 
 export function getGoogleFonts() {
   const links = [...document.documentElement.querySelectorAll('head link[rel="stylesheet"]')].filter(link =>

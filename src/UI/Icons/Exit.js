@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Keyframes, animated, config } from "react-spring";
+import { Keyframes, animated } from "react-spring";
 import theme from "theme";
 import { getSquareDiagonal } from "utils";
 import {
   //easeLinear,
-  easePolyIn,
-  easePolyOut,
+  //easePolyIn,
+  easePolyOut
   /*easePolyInOut,
   easeCubicIn,
   easeCubicOut,
@@ -16,7 +16,7 @@ import {
   easeQuadOut,
   easeQuadInOut,
   easeExpIn,*/
-  easeExpOut
+  //easeExpOut
   /*easeExpInOut,
   easeCircleInOut,
   easeCircleOut,
@@ -70,10 +70,9 @@ const IconAnimation = Keyframes.Spring({
 });
 
 export function AnimatedExit(props) {
-  const { color, ...rest } = props;
-  console.log("props", props);
+  const { color, animationState, ...rest } = props;
   return (
-    <IconAnimation state={props.animationState} native>
+    <IconAnimation state={animationState} native>
       {styles => (
         <StyledIcon {...rest} rotate={styles.rotate}>
           <StyledExitItem color={color} angle={45} {...styles} />

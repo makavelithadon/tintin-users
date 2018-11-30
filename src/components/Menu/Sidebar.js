@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled, { withTheme } from "styled-components";
 import { Link } from "react-router-dom";
 import { Spring, animated } from "react-spring";
 import Burger from "./Burger";
-import { AppContext } from "components/App";
 import { media } from "utils";
 import appLogo from "assets/img/logo.png";
 import {
@@ -75,8 +74,6 @@ const StyledEmailAddress = styled.a`
 `;
 
 function Sidebar({ theme }) {
-  const { selected } = useContext(AppContext);
-  const normalizedSelectedUser = selected === null ? selected : selected < 10 ? `0${selected}` : selected;
   return (
     <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={sidebarSpringConfig} native>
       {props => (

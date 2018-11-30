@@ -3,7 +3,7 @@ import { createGlobalStyle, ThemeProvider, css } from "styled-components";
 import normalizeCSS from "normalize.css";
 import theme from "./theme/index";
 import App from "./App";
-import { isDev, getGoogleFonts } from "utils";
+import { getGoogleFonts } from "utils";
 
 // Fonts imports
 

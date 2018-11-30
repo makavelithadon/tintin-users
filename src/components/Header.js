@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled, { withTheme } from "styled-components";
 import Media from "react-media";
-import { AppContext } from "components/App";
 import Menu from "components/Menu/index";
 import { media } from "utils";
 
@@ -16,9 +15,6 @@ const StyledHeader = styled.header`
 `;
 
 function Header({ theme }) {
-  const {
-    app: { menu }
-  } = useContext(AppContext);
   return (
     <StyledHeader>
       <Media query={`min-with: (${theme.breakpoints.values.small})`}>
