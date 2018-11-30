@@ -5,7 +5,6 @@ export const getScrollbarWidth = () => {
 const preventScroll = e => e.preventDefault();
 
 export const setDocumentElementStyles = isOpen => {
-  console.log("isOpen", isOpen);
   document.body.style.paddingRight = isOpen ? `${getScrollbarWidth()}px` : 0;
   document.body.style.overflow = isOpen ? "hidden" : "auto";
   if (isOpen) {

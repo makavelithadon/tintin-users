@@ -6,9 +6,9 @@ import * as serviceWorker from "./serviceWorker";
 
 const rootElement = document.getElementById("root");
 
-const render = Element => ReactDOM.render(Element, rootElement);
+const render = Element => ReactDOM.render(<Element />, rootElement);
 
-render(<Root />);
+render(Root);
 
 if (module.hot) {
   module.hot.accept();

@@ -3,6 +3,7 @@ import { createGlobalStyle, ThemeProvider, css } from "styled-components";
 import normalizeCSS from "normalize.css";
 import theme from "./theme/index";
 import App from "./App";
+import { isDev, getGoogleFonts } from "utils";
 
 // Fonts imports
 
@@ -37,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
   }
   @font-face {
     font-family: "Bebas Bold";
-    src: local('Open Sans'), local('OpenSans'),
+    src: local('Bebas Bold'), local('Bebas Bold'),
       url(${BebasBoldEOT}) format('embedded-opentype'), /* IE6-IE8 */
       url(${BebasBoldTTF}) format('woff'), /* Modern Browsers */
       url(${BebasBoldWOFF}) format('truetype'), /* Safari, Android, iOS */
@@ -46,6 +47,9 @@ const GlobalStyle = createGlobalStyle`
   :root {
     ${Object.entries(theme.colors)
       .reduce((acc, [name, value]) => [...acc, css`--${name}-color: ${value};`], [])
+      .flat()}
+    ${getGoogleFonts()
+      .reduce((acc, font, index) => [...acc, css`--font-${index + 1}: ${font};`], [])
       .flat()}
   }
 `;

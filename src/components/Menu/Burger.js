@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { MenuContext } from "./index";
+import Menu from "./index";
 
 const burgerWidth = 30;
 const burgerHeight = 16;
@@ -19,17 +19,20 @@ const StyledBurgerItem = styled.li`
   height: ${itemHeight}px;
   border-radius: 5px;
   width: ${props => (props.index === 2 ? "75%" : "100%")};
-  background-color: ${props => props.theme.colors.darkGrey}
+  background-color: ${props => (props.color ? props.color : props.theme.colors.darkGrey)}
   top: ${props => `${Math.floor(props.index * (burgerHeight / 2) - itemHeight)}px`};
 `;
 
-export default function Burger() {
-  const { toggle } = useContext(MenuContext);
+export default function Burger({ color, ...props }) {
   return (
-    <StyledBurgerContainer onClick={() => toggle()}>
-      {[...new Array(3)].map((_, index) => {
-        return <StyledBurgerItem key={index} index={index} />;
-      })}
-    </StyledBurgerContainer>
+    <Menu.Consumer>
+      {({ toggle }) => (
+        <StyledBurgerContainer onClick={() => toggle(true)} {...props}>
+          {[...new Array(3)].map((_, index) => {
+            return <StyledBurgerItem key={index} index={index} color={color} />;
+          })}
+        </StyledBurgerContainer>
+      )}
+    </Menu.Consumer>
   );
 }

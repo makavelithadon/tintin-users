@@ -1,4 +1,5 @@
-import tintinPicture from "assets/img/tintin.png";
+import tintinPicture from "assets/img/tintin/01/large.png";
+import haddockPicture from "assets/img/haddock/01/large.jpg";
 
 export default {
   users: [
@@ -6,12 +7,19 @@ export default {
       id: 1,
       slug: "tintin",
       displayName: "Tintin",
-      picture: tintinPicture
+      picture: {
+        src: tintinPicture,
+        width: "100%"
+      }
     },
     {
       id: 2,
       slug: "haddock",
-      displayName: "Capitaine Haddock"
+      displayName: "Capitaine Haddock",
+      picture: {
+        src: haddockPicture,
+        width: "60%"
+      }
     },
     {
       id: 3,

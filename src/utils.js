@@ -1,16 +1,13 @@
 import { css } from "styled-components";
-import sizes from "theme/sizes";
+import theme from "theme";
 
 const {
   breakpoints: { values: breakpoints, order: breakpointsOrder }
-} = sizes;
+} = theme;
 
 export const forEach = (obj, cb) =>
   Object.entries(obj)
-    .reduce((acc, [breakpoint, value]) => {
-      acc.push(media[breakpoint]`${cb(value, breakpoint)}`);
-      return acc;
-    }, [])
+    .reduce((acc, [breakpoint, value]) => [...acc, media[breakpoint]`${cb(value, breakpoint)}`], [])
     .flat();
 
 export const getHigherFromBreakpoints = obj => {
@@ -32,3 +29,28 @@ export const media = Object.entries(breakpoints).reduce((acc, [name, width]) => 
 
   return acc;
 }, initial);
+
+export function isDev(env) {
+  return env === "development";
+}
+
+export function getGoogleFonts() {
+  const links = [...document.documentElement.querySelectorAll('head link[rel="stylesheet"]')].filter(link =>
+    link.href.includes("fonts.googleapis.com")
+  );
+
+  if (links.length) {
+    let normalizedFonts = links
+      .map(link => {
+        const { href } = link;
+        return href.slice(href.indexOf("=") + 1).split("|");
+      })
+      .flat()
+      .map(font => font.replace(/\+/g, " "));
+    return (normalizedFonts = [...new Set(normalizedFonts)]);
+  }
+}
+
+export function getSquareDiagonal(side) {
+  return side * Math.sqrt(2);
+}

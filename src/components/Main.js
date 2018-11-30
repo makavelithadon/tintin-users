@@ -1,135 +1,146 @@
 import React, { useContext } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { withTheme } from "styled-components";
 import { withRouter } from "react-router-dom";
 import Scrollbar from "react-smooth-scrollbar";
+import Media from "react-media";
+import { useWindowScrollPosition as useScroll } from "the-platform";
+import { Spring, animated } from "react-spring";
 import { media } from "utils";
 import Menu from "components/Menu/index";
 import { AppContext } from "components/App";
 import Header from "./Header";
+import { easePolyOut } from "d3-ease";
 import faker from "faker";
 import data from "data";
+import { H1 } from "UI/Heading";
 
 const StyledMain = styled.main`
   position: relative;
-  /* overflow: hidden; */
   min-height: 100vh;
-  ${({ menuFrom, theme }) => {
-    if (menuFrom === "left") {
-      return media.forEach(theme.sizes.header.height, h => `padding-left: ${h};`);
-    }
-  }}
-  ${({ theme }) =>
-    media.forEach(theme.sizes.body.padding, padding => `min-height: calc(100vh - (${parseInt(padding, 10) * 2}px))`)};
   transition: ${props => props.theme.transitions.primary};
 `;
 
 const StyledContent = styled.section`
   position: relative;
   display: flex;
-  width: 100%;
+  margin: 0 auto;
+  ${media.forEach({ xs: "100%", medium: "90%", large: "80%" }, w => `width: ${w};`)};
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 20vh 10vh;
-  ${({ theme, menuFrom }) => {
-    const {
-      body: { padding: bodyPadding },
-      header: { height: headerHeight }
-    } = theme.sizes;
-    if (menuFrom === "left") return `height: 100%;`;
+  ${media.forEach({ xs: "30px", small: "50px", medium: "80px" }, paddingRight => `padding-right: ${paddingRight};`)};
+  ${({ theme }) => {
+    const { xs, ...otherSizes } = theme.styles.sidebar.width;
     return media.forEach(
-      bodyPadding,
-      (padding, breakpoint) =>
-        `height: calc(100vh - (${parseInt(padding, 10) * 2}px + ${
-          headerHeight[breakpoint] ? headerHeight[breakpoint] : media.getHigherFromBreakpoints(headerHeight)
-        }));`
+      {
+        xs: "30px",
+        ...Object.entries(otherSizes).reduce(
+          (styles, [breakpoint, paddingLeft], index) => ({
+            ...styles,
+            [breakpoint]: breakpoint === "small" ? `${parseInt(paddingLeft, 10) + 30}px` : paddingLeft
+          }),
+          {}
+        )
+      },
+      p => `padding-left: ${p};`
     );
   }};
+  height: 100%;
 `;
 
-const appearFromBottom = keyframes`
-0% {
-  opacity: 0;
-  transform: translateY(20vh);
-}
-100% {
-  opacity: 1;
-  transform: translateY(0);
-}
-`;
-
-const appearFromLeft = keyframes`
-0% {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-100% {
-  opacity: 1;
-  transform: translateX(0);
-}
-`;
-
-const StyledDescription = styled.div`
+const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
+  style: {
+    opacity: o.interpolate(o => o),
+    transform: x.interpolate(x => `translateY(${-x}px)`)
+  }
+}))`
   color: ${({ theme }) => theme.colors.darkGrey};
   line-height: 1.4;
-  text-shadow: ${({ theme }) => theme.shadows.text};
-  opacity: 0;
-  animation: ${appearFromBottom} 800ms 1000ms forwards cubic-bezier(0.23, 1, 0.32, 1);
-  ${media.forEach({ xs: "100%", medium: "74%" }, w => `width: ${w};`)};
-  ${media.forEach({ xs: 0, medium: "3%", large: "7%" }, paddingLeft => `padding-left: ${paddingLeft};`)};
+  text-align: justify;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+  ${media.forEach({ xs: "100%", medium: "70%" }, w => `width: ${w};`)};
+  ${media.forEach({ xs: 0, medium: "6%" }, paddingLeft => `padding-left: ${paddingLeft};`)};
 `;
 
 const StyledPicture = styled.div`
-  ${media.forEach({ xs: "none", medium: "block" }, d => `display: ${d};`)};
-  ${media.forEach({ xs: "100%", medium: "26%" }, w => `width: ${w};`)};
+  ${media.forEach({ xs: "100%", medium: "30%" }, w => `width: ${w};`)};
   overflow: hidden;
 `;
 
-const StyledPictureContent = styled.div`
+const StyledPictureContent = styled(animated.div).attrs(({ o, x, y }) => ({
+  style: {
+    opacity: o.interpolate(o => o),
+    transform: x.interpolate(x => `translate(${x}%, ${y}px)`)
+  }
+}))`
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
   position: relative;
-  transform: translateX(-100%);
-  animation: ${appearFromLeft} 800ms 1000ms forwards cubic-bezier(0.23, 1, 0.32, 1);
-`;
-
-const StyledDisplayName = styled.h1`
-  font-family: ${({ theme }) => theme.fonts.primary};
-  color: ${({ theme }) => theme.colors.primary};
-  margin-top: 0;
-  font-size: 4rem;
+  /*background-color: ${({ theme }) => theme.colors.primary};*/
 `;
 
 const StyledParagraph = styled.p`
   margin-top: 0;
   margin-bottom: 4rem;
-  font-family: "Segoe UI", sans-serif;
+  font-family: ${({ theme }) => theme.fonts.tertiary};
 `;
 
-function Main(props) {
+function Picture({ user, ...props }) {
+  const { y: scrollY } = useScroll({ throttleMs: 1 });
+  console.log("scrollY", scrollY);
+  return (
+    <StyledPicture>
+      <StyledPictureContent {...props} y={scrollY}>
+        {user.picture && (
+          <img
+            style={{ margin: "0 auto" }}
+            src={user.picture.src}
+            alt={user.displayName}
+            width={user.picture.width ? user.picture.width : "100%"}
+          />
+        )}
+      </StyledPictureContent>
+    </StyledPicture>
+  );
+}
+
+function Main({ theme, location }) {
   const {
     app: { menu }
   } = useContext(AppContext);
-  const user = data.users.find(user => props.location.pathname.includes(user.slug));
+  const user = data.users.find(user => location.pathname.includes(user.slug));
   return (
-    <StyledMain menuFrom={menu.from}>
+    <StyledMain>
       <Menu>
-        {menu.from !== "left" && <Header />}
         <Menu.Nav />
-        {menu.from === "left" && <Menu.Sidebar />}
+        <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
+          {matches => (matches ? <Menu.Sidebar /> : <Header />)}
+        </Media>
       </Menu>
       <StyledContent menuFrom={menu.from}>
-        <StyledPicture>
-          <StyledPictureContent>
-            {user.picture && <img style={{ width: "100%" }} src={user.picture} alt={user.displayName} />}
-          </StyledPictureContent>
-        </StyledPicture>
-        <StyledDescription>
-          <StyledDisplayName>{user.displayName}</StyledDisplayName>
-          {[...new Array(10)].map((_, index) => (
-            <StyledParagraph key={index}>{faker.lorem.paragraphs()}</StyledParagraph>
-          ))}
-        </StyledDescription>
+        <Spring
+          from={{ o: 0, x: -101 }}
+          to={{ o: 1, x: 0 }}
+          config={{ duration: 600, delay: 800, easing: easePolyOut }}
+          native
+        >
+          {props => (
+            <>
+              <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
+                {matches => (matches && user.picture ? <Picture {...props} user={user} /> : null)}
+              </Media>
+              <StyledDescription {...props}>
+                <H1 color={theme.colors.primary}>{user.displayName}</H1>
+                {[...new Array(30)].map((_, index) => (
+                  <StyledParagraph key={index}>{faker.lorem.paragraphs()}</StyledParagraph>
+                ))}
+              </StyledDescription>
+            </>
+          )}
+        </Spring>
       </StyledContent>
       {/* <Scrollbar>
         <StyledContent>
@@ -146,4 +157,4 @@ function Main(props) {
   );
 }
 
-export default withRouter(Main);
+export default withTheme(withRouter(Main));
