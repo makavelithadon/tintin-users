@@ -14,7 +14,6 @@ const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
   color: ${({ theme }) => theme.colors.darkGrey};
   line-height: 1.4;
   text-align: left;
-  padding-top: 15vh;
   ${media.forEach({ xs: "100%", medium: "70%" }, w => `width: ${w};`)};
   ${media.forEach({ xs: 0, medium: "6%" }, paddingLeft => `padding-left: ${paddingLeft};`)};
 `;

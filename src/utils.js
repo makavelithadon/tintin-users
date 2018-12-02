@@ -68,7 +68,7 @@ export function getBrowser() {
   return parser.getBrowser();
 }
 
-export function isOldBrowsers() {
+export function isOldBrowser() {
   return /edge|ie/i.test(normalizeBrowserName(parser.getBrowser().name));
 }
 

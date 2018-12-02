@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Spring, animated } from "react-spring";
 import Burger from "./Burger";
 import { media } from "utils";
+import Media from "react-media";
 import appLogo from "assets/img/logo.png";
 import {
   /* easeLinear,
@@ -32,7 +33,7 @@ const sidebarSpringConfig = { duration: 300, easing: easeCircleOut, delay: 2000 
 
 const StyledLogo = styled.img`
   display: block;
-  max-width: 60%;
+  max-width: 60px;
   margin: 0 auto;
 `;
 
@@ -56,15 +57,15 @@ const StyledSidebar = styled(animated.aside).attrs(({ o, x }) => ({
   ${({ theme }) => media.forEach(theme.styles.sidebar.width, h => `width: ${h};`)};
 `;
 
-const StyledBurger = styled.div`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+const StyledEmailContainer = styled.div`
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  transform: rotate(-90deg);
 `;
 
-const StyledEmailAddress = styled.a`
-  writing-mode: tb;
-  transform: rotate(-180deg);
+const StyledEmail = styled.a`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.primary};
   font-family: ${({ theme }) => theme.fonts.secondary};
@@ -81,15 +82,16 @@ function Sidebar({ theme }) {
           <Link to={"/"}>
             <StyledLogo src={appLogo} alt="Logo" />
           </Link>
-          <StyledBurger>
-            <Burger color={theme.colors.primary} />
-          </StyledBurger>
-          <div>
-            {/* normalizedSelectedUser */}
-            <StyledEmailAddress href={"mailto:romuald.duconseil@hotmail.fr"}>
-              romuald.duconseil@hotmail.fr
-            </StyledEmailAddress>
-          </div>
+          <Burger color={theme.colors.primary} />
+          <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
+            {match => (
+              <StyledEmailContainer>
+                {match ? (
+                  <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>romuald.duconseil@hotmail.fr</StyledEmail>
+                ) : null}
+              </StyledEmailContainer>
+            )}
+          </Media>
         </StyledSidebar>
       )}
     </Spring>

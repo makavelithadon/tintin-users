@@ -3,10 +3,9 @@ import styled, { withTheme } from "styled-components";
 import { animated } from "react-spring";
 import { useWindowScrollPosition as useScroll, useWindowSize } from "the-platform";
 import PictureCaption from "./PictureCaption";
-import { media, isDev, isOldBrowsers } from "utils";
+import { media, isDev, isOldBrowser } from "utils";
 
 const StyledContainer = styled.div`
-  padding-top: 15vh;
   position: relative;
   ${media.forEach({ xs: "100%", medium: "30%" }, w => `width: ${w};`)};
   background-color: ${({ theme }) => (isDev ? theme.colors.secondary : "none")};
@@ -21,31 +20,22 @@ const StyledScrolledPictures = styled(animated.div).attrs(({ o, width }) => ({
   position: absolute;
   top: 0;
   height: 100vh;
-  display: flex;
-  align-items: center;
   overflow: hidden;
-  will-change: width, opacity;
+  will-change: width, opacity, top, bottom;
   transition: ${({ theme }) => theme.transitions.primary};
 `;
 
-const StyledSlider = styled.ul.attrs(({ w, h, x }) => ({
+const StyledSlider = styled.ul.attrs(({ w, h, x, y }) => ({
   style: {
     width: w,
     height: h,
-    transform: `translateX(-${x}px)`
+    transform: `translate(-${x}px, ${y}px)`
   }
 }))`
   position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
+  text-align: left;
+  font-size: 0;
   will-change: width, height, transform;
-  ${({ theme }) => `transition: ${isOldBrowsers() ? "0s 0s linear" : theme.transitions.primary}`};
-  ${({ theme }) =>
-    isDev &&
-    `
-    background-color: ${theme.colors.primary};
-  `}
 `;
 
 const StyledSliderItem = styled.li.attrs(({ w }) => ({
@@ -53,16 +43,16 @@ const StyledSliderItem = styled.li.attrs(({ w }) => ({
     width: w
   }
 }))`
-  display: flex;
-  align-items: flex-end;
+  position: relative;
+  display: inline-block;
   height: 100%;
   will-change: width;
-  transition: ${({ theme }) => theme.transitions.primary};
+  vertical-align: top;
   ${({ theme }) =>
     isDev &&
     `
     background-color: ${theme.colors.white};
-    border: 1px solid ${theme.colors.danger};
+    border: 1px solid ${theme.colors.primary};
   `}
 `;
 
@@ -93,7 +83,7 @@ const handleScrollIntoContainer = (node, windowHeight) => {
     node.firstElementChild.style.position = "absolute";
     node.firstElementChild.style.top = "auto";
     node.firstElementChild.style.bottom = isOverBottom ? 0 : "auto";
-  } else if (top < 0) {
+  } else if (top <= 0) {
     node.firstElementChild.style.position = "fixed";
     node.firstElementChild.style.top = 0;
   }
@@ -104,11 +94,15 @@ function Picture({ theme, user, x, ...props }) {
   const [calculatedFrictionCoefficient, setCalculatedFrictionCoefficient] = useState(10);
   const { y: scrollY } = useScroll({ throttleMs: 1 });
   const { width, height } = useWindowSize({ throttleMs: 1 });
-  const container = useRef(null),
-    slider = useRef(null);
+  const container = useRef(null);
+  const slider = useRef(null);
   const slidesCount = user.pictures.length;
-  const normalizedXOffset = scrollY / calculatedFrictionCoefficient;
+  let normalizedXOffset = 0;
   const sliderWidth = calculatedWidth * slidesCount;
+  if (container.current) {
+    const { top } = container.current.getBoundingClientRect();
+    normalizedXOffset = top <= 0 ? -top / calculatedFrictionCoefficient : 0;
+  }
   useEffect(
     () => {
       handleScrollIntoContainer(container.current, height);
@@ -136,11 +130,20 @@ function Picture({ theme, user, x, ...props }) {
               w={sliderWidth}
               h={calculatedWidth}
               x={normalizedXOffset < sliderWidth - calculatedWidth ? normalizedXOffset : sliderWidth - calculatedWidth}
+              y={height / 2 - calculatedWidth / 2}
             >
               {user.pictures.map(picture => (
                 <StyledSliderItem key={picture.src} w={calculatedWidth}>
                   <img
-                    style={{ margin: "0 auto", maxWidth: "100%", maxHeight: "100%" }}
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      margin: "0 auto",
+                      maxWidth: "100%",
+                      maxHeight: "100%"
+                    }}
                     src={picture.src}
                     alt={`${user.displayName}:${picture.caption}`}
                   />
