@@ -4,6 +4,7 @@ import { Keyframes, animated } from "react-spring";
 import { AppContext } from "components/App";
 import Menu from "./index";
 import { setDocumentElementStyles } from "./utils";
+import { scrollToTop } from "utils";
 import data from "data";
 import { AnimatedExit as Exit } from "UI/Icons";
 import {
@@ -109,15 +110,6 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   ${media.large`padding: 60px 60px 60px 220px;`};
 `;
 
-/* const StyledNavLinksContainer = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0 auto;
-`; */
-
 const StyledNavItem = styled(animated.li).attrs(({ o, slide }) => ({
   style: {
     opacity: o.interpolate(o => o),
@@ -186,6 +178,7 @@ function Nav({ theme }) {
                             return;
                           }
                           toggle(false);
+                          scrollToTop();
                         }}
                       >
                         {item.displayName}

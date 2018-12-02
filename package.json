@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.0",
+    "@babel/polyfill": "^7.0.0",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -54,6 +55,7 @@
     "style-loader": "0.23.0",
     "styled-components": "^4.1.1",
     "terser-webpack-plugin": "1.1.0",
+    "ua-parser-js": "^0.7.19",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",

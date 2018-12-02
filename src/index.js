@@ -1,5 +1,8 @@
+import "@babel/polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
+import "./polyfills";
+import "./shared";
 import Root from "./Root";
 import * as serviceWorker from "./serviceWorker";
 

@@ -1,5 +1,6 @@
 import { css } from "styled-components";
 import theme from "theme";
+import { parser } from "shared";
 
 const {
   breakpoints: { values: breakpoints, order: breakpointsOrder }
@@ -53,4 +54,24 @@ export function getGoogleFonts() {
 
 export function getSquareDiagonal(side) {
   return side * Math.sqrt(2);
+}
+
+export function scrollToTop() {
+  document.documentElement.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function normalizeBrowserName(browserName) {
+  return browserName.toLowerCase();
+}
+
+export function getBrowser() {
+  return parser.getBrowser();
+}
+
+export function isOldBrowsers() {
+  return /edge|ie/i.test(normalizeBrowserName(parser.getBrowser().name));
+}
+
+export function matchBrowser(pattern) {
+  new RegExp(pattern).test(getBrowser().name);
 }

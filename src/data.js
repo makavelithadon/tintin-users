@@ -6,6 +6,9 @@ import haddockPicture01 from "assets/img/haddock/01/large.png";
 import haddockPicture02 from "assets/img/haddock/02/large.png";
 import haddockPicture03 from "assets/img/haddock/03/large.png";
 import tournesolPicture01 from "assets/img/tournesol/01/large.png";
+import tournesolPicture02 from "assets/img/tournesol/02/large.png";
+
+import faker from "faker";
 
 const data = {
   users: [
@@ -15,16 +18,20 @@ const data = {
       displayName: "Tintin",
       pictures: [
         {
-          src: tintinPicture01
+          src: tintinPicture01,
+          caption: "Tintin, reporter autour du monde."
         },
         {
-          src: tintinPicture02
+          src: tintinPicture02,
+          caption: "Tintin est toujours accompagné de son fidèle compagnon, Milou."
         },
         {
-          src: tintinPicture03
+          src: tintinPicture03,
+          caption: "Tintin au Tibet, une aventure haletante."
         },
         {
-          src: tintinPicture04
+          src: tintinPicture04,
+          caption: "Rien ne fait peur à notre cher Tintin, pas même une petite escapade sur la Lune !"
         }
       ]
     },
@@ -34,13 +41,16 @@ const data = {
       displayName: "Capitaine Haddock",
       pictures: [
         {
-          src: haddockPicture01
+          src: haddockPicture01,
+          caption: faker.lorem.sentence()
         },
         {
-          src: haddockPicture02
+          src: haddockPicture02,
+          caption: faker.lorem.sentence()
         },
         {
-          src: haddockPicture03
+          src: haddockPicture03,
+          caption: faker.lorem.sentence()
         }
       ]
     },
@@ -50,7 +60,12 @@ const data = {
       displayName: "Professeur Tournesol",
       pictures: [
         {
-          src: tournesolPicture01
+          src: tournesolPicture01,
+          caption: faker.lorem.sentence()
+        },
+        {
+          src: tournesolPicture02,
+          caption: faker.lorem.sentence()
         }
       ]
     },
