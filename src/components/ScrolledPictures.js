@@ -4,11 +4,12 @@ import { animated } from "react-spring";
 import { useWindowScrollPosition as useScroll, useWindowSize } from "the-platform";
 import PictureCaption from "./PictureCaption";
 import { media, isDev, isOldBrowser } from "utils";
+import { DEBUG } from "shared";
 
 const StyledContainer = styled.div`
   position: relative;
   ${media.forEach({ xs: "100%", medium: "30%" }, w => `width: ${w};`)};
-  background-color: ${({ theme }) => (isDev ? theme.colors.secondary : "none")};
+  background-color: ${({ theme }) => (isDev && DEBUG ? theme.colors.secondary : "none")};
 `;
 
 const StyledScrolledPictures = styled(animated.div).attrs(({ o, width }) => ({
@@ -50,6 +51,7 @@ const StyledSliderItem = styled.li.attrs(({ w }) => ({
   vertical-align: top;
   ${({ theme }) =>
     isDev &&
+    DEBUG &&
     `
     background-color: ${theme.colors.white};
     border: 1px solid ${theme.colors.primary};
@@ -71,7 +73,7 @@ const getActivePicture = (slidesCount, sliderWidth, x, sliderNode) => {
   } else if (slideOpacity < 0.5) {
     slideOpacity = slideOpacity / 1.5 - 0.125;
   }
-  [...sliderNode.childNodes][activeSlideIndex].style.opacity = slideOpacity;
+  [...sliderNode.childNodes][activeSlideIndex].style.opacity = slideOpacity >= 0 ? slideOpacity : 0;
 };
 
 const handleScrollIntoContainer = (node, windowHeight) => {
@@ -92,8 +94,8 @@ const handleScrollIntoContainer = (node, windowHeight) => {
 function Picture({ theme, user, x, ...props }) {
   const [calculatedWidth, setCalculatedWidth] = useState(1);
   const [calculatedFrictionCoefficient, setCalculatedFrictionCoefficient] = useState(10);
-  const { y: scrollY } = useScroll({ throttleMs: 1 });
-  const { width, height } = useWindowSize({ throttleMs: 1 });
+  const { y: scrollY } = useScroll({ throttleMs: isOldBrowser() ? 20 : 1 });
+  const { width, height } = useWindowSize({ throttleMs: isOldBrowser() ? 20 : 1 });
   const container = useRef(null);
   const slider = useRef(null);
   const slidesCount = user.pictures.length;

@@ -11,7 +11,7 @@ const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
     transform: x.interpolate(x => `translateY(${-x}px)`)
   }
 }))`
-  color: ${({ theme }) => theme.colors.darkGrey};
+  color: ${({ theme }) => theme.colors.text};
   line-height: 1.4;
   text-align: left;
   ${media.forEach({ xs: "100%", medium: "70%" }, w => `width: ${w};`)};
@@ -21,7 +21,7 @@ const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
 const StyledParagraph = styled.p`
   margin-top: 0;
   margin-bottom: 4rem;
-  font-family: ${({ theme }) => theme.fonts.tertiary};
+  font-family: ${({ theme }) => theme.fonts.secondary};
 `;
 
 function Description(props) {

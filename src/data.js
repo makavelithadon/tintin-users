@@ -37,6 +37,11 @@ const data = {
     },
     {
       id: 2,
+      slug: "milou",
+      displayName: "Milou"
+    },
+    {
+      id: 3,
       slug: "haddock",
       displayName: "Capitaine Haddock",
       pictures: [
@@ -55,7 +60,7 @@ const data = {
       ]
     },
     {
-      id: 3,
+      id: 4,
       slug: "tournesol",
       displayName: "Professeur Tournesol",
       pictures: [
@@ -70,19 +75,24 @@ const data = {
       ]
     },
     {
-      id: 4,
+      id: 5,
       slug: "dupondt",
       displayName: "Dupont et Dupond"
     },
     {
-      id: 5,
+      id: 6,
       slug: "nestor",
       displayName: "Nestor"
     },
     {
-      id: 6,
+      id: 7,
       slug: "castafiore",
       displayName: "Bianca Castafiore"
+    },
+    {
+      id: 8,
+      slug: "lampion",
+      displayName: "Séraphin Lampion"
     }
   ]
 };

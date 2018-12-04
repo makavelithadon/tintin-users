@@ -1,5 +1,6 @@
 import UAParser from "ua-parser-js";
 
-const parser = new UAParser();
+const UserAgent = new UAParser();
+const DEBUG = false;
 
-export { parser };
+export { UserAgent, DEBUG };

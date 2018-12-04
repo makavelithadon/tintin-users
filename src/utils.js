@@ -1,15 +1,16 @@
 import { css } from "styled-components";
 import theme from "theme";
-import { parser } from "shared";
+import { UserAgent } from "shared";
+import flatten from "array.prototype.flat";
 
 const {
   breakpoints: { values: breakpoints, order: breakpointsOrder }
 } = theme;
 
 export const forEach = (obj, cb) =>
-  Object.entries(obj)
-    .reduce((acc, [breakpoint, value]) => [...acc, media[breakpoint]`${cb(value, breakpoint)}`], [])
-    .flat();
+  flat(
+    Object.entries(obj).reduce((acc, [breakpoint, value]) => [...acc, media[breakpoint]`${cb(value, breakpoint)}`], [])
+  );
 
 export const getHigherFromBreakpoints = obj => {
   for (const br of [...breakpointsOrder].reverse()) {
@@ -31,9 +32,7 @@ export const media = Object.entries(breakpoints).reduce((acc, [name, width]) => 
   return acc;
 }, initial);
 
-export const isDev = Boolean(
-  /* process && process.env && process.env.NODE_env && process.env.NODE_ENV === "development" */ false
-);
+export const isDev = Boolean(process.env.NODE_ENV === "development");
 
 export function getGoogleFonts() {
   const links = [...document.documentElement.querySelectorAll('head link[rel="stylesheet"]')].filter(link =>
@@ -41,13 +40,12 @@ export function getGoogleFonts() {
   );
 
   if (links.length) {
-    let normalizedFonts = links
-      .map(link => {
+    let normalizedFonts = flat(
+      links.map(link => {
         const { href } = link;
         return href.slice(href.indexOf("=") + 1).split("|");
       })
-      .flat()
-      .map(font => font.replace(/\+/g, " "));
+    ).map(font => font.replace(/\+/g, " "));
     return (normalizedFonts = [...new Set(normalizedFonts)]);
   }
 }
@@ -65,13 +63,17 @@ function normalizeBrowserName(browserName) {
 }
 
 export function getBrowser() {
-  return parser.getBrowser();
+  return UserAgent.getBrowser();
 }
 
 export function isOldBrowser() {
-  return /edge|ie/i.test(normalizeBrowserName(parser.getBrowser().name));
+  return /edge|ie/i.test(normalizeBrowserName(getBrowser().name));
 }
 
 export function matchBrowser(pattern) {
   new RegExp(pattern).test(getBrowser().name);
+}
+
+export function flat(...args) {
+  return flatten(...args);
 }

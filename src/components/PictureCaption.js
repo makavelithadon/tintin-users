@@ -39,8 +39,8 @@ const StyledCaption = styled(animated.em).attrs(({ x, o }) => ({
   padding: 0 5%;
   line-height: 1.35;
   text-align: center;
-  color: ${({ theme }) => theme.colors.darkGrey};
-  font-family: ${({ theme }) => theme.fonts.tertiary};
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.secondary};
 `;
 
 const PictureCaption = ({ caption }) => {

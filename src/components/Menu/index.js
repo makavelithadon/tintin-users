@@ -1,4 +1,4 @@
-import React, { createContext, Component } from "react";
+import React, { createContext, useContext, Component } from "react";
 import Burger from "./Burger";
 import Nav from "./Nav";
 import Sidebar from "./Sidebar";
@@ -6,16 +6,11 @@ import Sidebar from "./Sidebar";
 const MenuContext = createContext();
 
 function Consumer({ children }) {
-  return (
-    <MenuContext.Consumer>
-      {context => {
-        if (!context) {
-          throw new Error("Context is undefined, please be sure that you are well placed on the correspondig provider");
-        }
-        return children(context);
-      }}
-    </MenuContext.Consumer>
-  );
+  const context = useContext(MenuContext);
+  if (!context) {
+    throw new Error("Context is undefined, please be sure that you are well placed on the correspondig provider");
+  }
+  return children(context);
 }
 
 export default class Menu extends Component {
