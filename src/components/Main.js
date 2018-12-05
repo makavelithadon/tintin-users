@@ -27,7 +27,7 @@ const StyledContent = styled.section`
   left: 0;
   right: 0;
   bottom: 0;
-  padding-top: 15vh;
+  padding-top: 20vh;
   ${media.forEach({ xs: "30px", small: "50px", medium: "80px" }, paddingRight => `padding-right: ${paddingRight};`)};
   ${({ theme }) => {
     const { xs, ...otherSizes } = theme.styles.sidebar.width;
