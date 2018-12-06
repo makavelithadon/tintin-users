@@ -1,35 +1,12 @@
-import React, { useContext, memo } from "react";
+import React, { memo } from "react";
 import styled, { withTheme } from "styled-components";
 import { Keyframes, animated } from "react-spring";
-import { AppContext } from "components/App";
 import Menu from "./index";
 import { setDocumentElementStyles } from "./utils";
 import { scrollToTop } from "utils";
-import data from "data";
+import data from "data/index";
 import { AnimatedExit as Exit } from "UI/Icons";
-import {
-  //easeLinear,
-  easePolyIn,
-  easePolyOut,
-  /*easePolyInOut,
-  easeCubicIn,
-  easeCubicOut,
-  easeCubicInOut,
-  expInOut,
-  easeQuadIn,
-  easeQuadOut,
-  easeQuadInOut,
-  easeExpIn,*/
-  easeExpOut
-  /*easeExpInOut,
-  easeCircleInOut,
-  easeCircleOut,
-  easeBackIn,
-  easeBackOut,
-  easeBackInOut,
-  easeBounceInOut,
-  ease*/
-} from "d3-ease";
+import { easePolyIn, easePolyOut, easeExpOut } from "d3-ease";
 import { media } from "utils";
 import NavLink from "components/NavLink";
 
@@ -71,10 +48,8 @@ const AnimatedLinks = Keyframes.Trail({
 
 const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   style: {
-    /* opacity: o.interpolate(o => o), */
     display: o.interpolate(o => (o > 0 ? "flex" : "none")),
     visibility: o.interpolate(o => (o > 0 ? "visible" : "hidden")),
-    /* pointerEvents: o.interpolate(o => (o >= 1 ? "auto" : "none")), */
     transform: slide.interpolate(slide => `translate${from === "left" ? "X" : "Y"}(${slide}%)`)
   }
 }))`
@@ -146,9 +121,6 @@ const StyledExitIconContainer = styled.div`
 `;
 
 function Nav({ theme }) {
-  const {
-    app: { menu }
-  } = useContext(AppContext);
   return (
     <Menu.Consumer>
       {({ isOpen, toggle }) => {
@@ -157,7 +129,7 @@ function Nav({ theme }) {
         return (
           <AnimatedNav state={animationState} native>
             {props => (
-              <StyledNav {...props} theme={theme} from={menu.from}>
+              <StyledNav {...props} theme={theme} from={"left"}>
                 <StyledExitIconContainer>
                   <Exit onClick={() => toggle(false)} animationState={animationState} />
                 </StyledExitIconContainer>

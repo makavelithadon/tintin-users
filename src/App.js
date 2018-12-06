@@ -1,17 +1,23 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import AppProvider from "components/App";
-import Main from "./components/Main";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import StoreProvider from "./Store";
+import rootReducer from "./reducers";
+import User from "components/User";
+import Layout from "components/Layout";
 // import ToggleButton from "./ToggleMenuPosition";
 
 function App() {
   return (
-    <Router>
-      <AppProvider>
-        {/* <ToggleButton>click me!</ToggleButton> */}
-        <Main />
-      </AppProvider>
-    </Router>
+    <StoreProvider rootReducer={rootReducer}>
+      <Router>
+        <Layout>
+          <Switch>
+            {/* <Route exact path={"/"} render={props => "Hello from Home"} /> */}
+            <Route exact path={"/:user"} component={User} />
+          </Switch>
+        </Layout>
+      </Router>
+    </StoreProvider>
   );
 }
 
