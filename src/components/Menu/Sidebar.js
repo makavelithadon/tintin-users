@@ -6,28 +6,7 @@ import Burger from "./Burger";
 import { media } from "utils";
 import Media from "react-media";
 import appLogo from "assets/img/logo.png";
-import {
-  /* easeLinear,
-  easePolyIn,
-  easePolyOut,
-  easePolyInOut,
-  easeCubicIn,
-  easeCubicOut,
-  easeCubicInOut,
-  expInOut,
-  easeQuadIn,
-  easeQuadOut,
-  easeQuadInOut,
-  easeExpIn,
-  easeExpOut,
-  easeExpInOut,
-  easeCircleInOut, */
-  easeCircleOut
-  /* easeBackIn,
-  easeBackOut,
-  easeBackInOut,
-  easeBounceInOut */
-} from "d3-ease";
+import { easeCircleOut } from "d3-ease";
 
 const sidebarSpringConfig = { duration: 300, easing: easeCircleOut, delay: 2000 };
 

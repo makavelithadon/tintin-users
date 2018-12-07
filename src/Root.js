@@ -1,9 +1,8 @@
 import React from "react";
 import { createGlobalStyle, ThemeProvider, css } from "styled-components";
 import normalizeCSS from "normalize.css";
-import theme from "./theme/index";
-import App from "./App";
 import { getGoogleFonts, flat } from "utils";
+import { useStore } from "hooks";
 
 // Fonts imports
 
@@ -32,7 +31,10 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased!important;
     font-size: 1.6em; /* base font-size is equivalent "14px" */
     /* overflow: hidden; */
-    background-color: ${theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${props => {
+      console.log("props", props);
+    }}
   }
   ul, li {
     list-style-type: none;
@@ -59,18 +61,19 @@ const GlobalStyle = createGlobalStyle`
       url(${TintinBoldSVG}) format('svg');
   }
   :root {
-    ${flat(Object.entries(theme.colors).reduce((acc, [name, value]) => [...acc, css`--${name}-color: ${value};`], []))}
+    ${({ theme }) =>
+      flat(Object.entries(theme.colors).reduce((acc, [name, value]) => [...acc, css`--${name}-color: ${value};`], []))}
     ${flat(getGoogleFonts().reduce((acc, font, index) => [...acc, css`--font-${index + 1}: ${font};`], []))}
   }
 `;
 
-const Root = props => {
+const Root = ({ children }) => {
+  const [{ theme }, dispatch] = useStore();
+  const ui = typeof children === "function" ? children() : children;
   return (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <App {...props} />
-      </ThemeProvider>
+      <GlobalStyle theme={theme} />
+      <ThemeProvider theme={theme}>{ui}</ThemeProvider>
     </>
   );
 };
