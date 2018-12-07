@@ -3,7 +3,6 @@ import styled, { withTheme } from "styled-components";
 import Media from "react-media";
 import Menu from "components/Menu";
 import Header from "components/Header";
-import { media } from "utils";
 
 const StyledMain = styled.main`
   position: relative;

@@ -20,6 +20,7 @@ const Scroller = React.forwardRef(({ wrapper: Wrapper, children }, ref) => {
   });
   const handleAll = throttle(
     () => {
+      console.log("scroll");
       if (!ref.current) return;
       const { current: node } = ref;
       const { height, top } = node.getBoundingClientRect();
@@ -36,9 +37,6 @@ const Scroller = React.forwardRef(({ wrapper: Wrapper, children }, ref) => {
     isOldBrowser() ? 20 : 1
   );
   useEffect(() => {
-    /* if (typeof top === "undefined") {
-      top = ref.current.getBoundingClientRect().top;
-    } */
     if (scrollerWidth === 0) {
       setState({ scrollerWidth: ref.current.clientWidth });
     }
@@ -51,7 +49,6 @@ const Scroller = React.forwardRef(({ wrapper: Wrapper, children }, ref) => {
     return () => {
       window.removeEventListener("scroll", handleAll);
       window.removeEventListener("resize", handleAll);
-      //init = false;
     };
   });
 

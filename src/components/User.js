@@ -18,7 +18,6 @@ const StyledUserContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  padding-top: 15vh;
   min-height: 100vh;
   ${media.forEach({ xs: "100%", medium: "90%", large: "80%" }, w => `width: ${w};`)};
   ${media.forEach({ xs: "30px", small: "50px", medium: "80px" }, paddingRight => `padding-right: ${paddingRight};`)};
