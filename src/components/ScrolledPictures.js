@@ -2,7 +2,7 @@ import React from "react";
 import styled, { withTheme } from "styled-components";
 import { animated, Spring, config } from "react-spring";
 import PictureCaption from "./PictureCaption";
-import { media, isDev } from "utils";
+import { media, isDev, isOldBrowser } from "utils";
 import { DEBUG } from "shared";
 import Scroller from "./Scroller";
 import Img from "UI/Img";
@@ -13,17 +13,17 @@ const StyledContainer = styled.div`
   background-color: ${({ theme }) => (isDev && DEBUG ? theme.colors.secondary : "none")};
 `;
 
-const StyledScrolledPictures = styled(animated.div).attrs(({ o, width, height, top, position, bottom }) => ({
+const StyledScrolledPictures = styled(animated.div).attrs(({ o, width, top, position, bottom }) => ({
   style: {
     position,
     bottom,
     width,
-    height,
     top,
     opacity: o.interpolate(o => o)
   }
 }))`
   overflow: hidden;
+  height: 100vh;
   will-change: width, opacity, top, bottom;
   background-color: ${({ bgColor }) => (bgColor ? bgColor : "transparent")};
 `;
@@ -32,7 +32,7 @@ const StyledSlider = styled(animated.ul).attrs(({ w, h, x }) => ({
   style: {
     width: w.interpolate(w => w),
     height: h.interpolate(h => h),
-    transform: x.interpolate(x => `translate(-${x}px, -50%)`)
+    transform: `translate(-${x}px, -50%)`
   }
 }))`
   position: absolute;
@@ -41,17 +41,18 @@ const StyledSlider = styled(animated.ul).attrs(({ w, h, x }) => ({
   font-size: 0;
   will-change: width, height, transform;
   overflow: hidden;
+  transition: ${({ theme }) => (isOldBrowser() ? "0.0s 0.0s linear" : theme.transitions.primary)};
 `;
 
-const StyledSliderItem = styled.li.attrs(({ w, h, o }) => ({
+const StyledSliderItem = styled.li.attrs(({ w, o }) => ({
   style: {
     width: w,
-    height: h,
     opacity: o
   }
 }))`
   position: relative;
   display: inline-block;
+  height: 100%;
   will-change: width;
   vertical-align: top;
   ${({ theme }) =>
@@ -126,25 +127,23 @@ function ScrolledPictures({ theme, user, x, ...props }) {
               {...props}
               position={isOverflow ? "absolute" : "fixed"}
               width={scrollerWidth}
-              height={windowHeight}
               top={isOverBottom ? "auto" : 0}
               bottom={isOverBottom ? 0 : "auto"}
             >
               <Spring
-                from={{ x: 0, w: 0, h: 0 }}
-                to={{ x: normalizedScrollX, w: sliderWidth, h: scrollerWidth }}
-                config={{ ...config.default, duration: 0.000001, delay: 0.000001 }}
+                from={{ w: 0, h: 0 }}
+                to={{ w: sliderWidth, h: scrollerWidth }}
+                config={{ ...config.default, duration: 40, delay: 0.000001 }}
                 native
               >
                 {({ x, w, h }) => (
-                  <StyledSlider w={w} h={h} x={x}>
+                  <StyledSlider w={w} h={h} x={normalizedScrollX}>
                     {user.pictures.map((picture, index) => {
                       return (
                         <StyledSliderItem
                           key={picture.src}
                           w={scrollerWidth}
-                          h={scrollerWidth}
-                          o={getSlideOpacity(index, scrollerWidth, normalizedScrollX)}
+                          /* o={getSlideOpacity(index, scrollerWidth, normalizedScrollX)} */
                         >
                           <StyledImg src={picture.src} alt={`${user.displayName}:${picture.caption}`} />
                         </StyledSliderItem>

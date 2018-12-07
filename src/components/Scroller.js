@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useWindowScrollPosition as useScroll, useWindowSize } from "the-platform";
-import { isOldBrowser } from "utils";
+import { isOldBrowser, throttle } from "utils";
 
 function round(n) {
   return Math.round(n);
 }
 
+let init = false;
+
 const Scroller = React.forwardRef(({ wrapper: Wrapper, children }, ref) => {
   const scrollerDefaultClassName = "scrolled-container";
-  const { y: scrollY } = useScroll({ throttleMs: isOldBrowser() ? 20 : 0.0001 });
-  const { width: windowWidth, height: windowHeight } = useWindowSize({ throttleMs: isOldBrowser() ? 20 : 0.0001 });
+  const { width: windowWidth, height: windowHeight } = useWindowSize({ throttleMs: isOldBrowser() ? 20 : 1 });
   const [{ isOverflow, isOverTop, isOverBottom, offsetTop, scrollerWidth }, setState] = useState({
     isOverflow: true,
     isOverTop: true,
@@ -17,8 +18,9 @@ const Scroller = React.forwardRef(({ wrapper: Wrapper, children }, ref) => {
     offsetTop: 0,
     scrollerWidth: 0
   });
-  useEffect(
+  const handleAll = throttle(
     () => {
+      if (!ref.current) return;
       const { current: node } = ref;
       const { height, top } = node.getBoundingClientRect();
       const isOverTop = top > 0;
@@ -31,11 +33,30 @@ const Scroller = React.forwardRef(({ wrapper: Wrapper, children }, ref) => {
         scrollerWidth: node.clientWidth
       });
     },
-    [windowWidth, windowHeight, scrollY]
+    isOldBrowser() ? 20 : 1
   );
+  useEffect(() => {
+    /* if (typeof top === "undefined") {
+      top = ref.current.getBoundingClientRect().top;
+    } */
+    if (scrollerWidth === 0) {
+      setState({ scrollerWidth: ref.current.clientWidth });
+    }
+    if (!init && window.pageYOffset === 0) {
+      init = true;
+      handleAll();
+    }
+    window.addEventListener("scroll", handleAll);
+    window.addEventListener("resize", handleAll);
+    return () => {
+      window.removeEventListener("scroll", handleAll);
+      window.removeEventListener("resize", handleAll);
+      //init = false;
+    };
+  });
 
   const state = {
-    scrollY,
+    scrollY: window.pageYOffset,
     windowWidth,
     windowHeight,
     isOverflow,

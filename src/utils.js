@@ -77,3 +77,23 @@ export function matchBrowser(pattern) {
 export function flat(...args) {
   return flatten(...args);
 }
+
+export function throttle(func, threshhold = 250, scope) {
+  let last, deferTimer;
+  return function(c) {
+    let context = scope || c;
+    let now = Date.now(),
+      args = arguments;
+    if (last && now < last + threshhold) {
+      // hold on to it
+      clearTimeout(deferTimer);
+      deferTimer = setTimeout(function() {
+        last = now;
+        func.apply(context, args);
+      }, threshhold);
+    } else {
+      last = now;
+      func.apply(context, args);
+    }
+  };
+}
