@@ -41,7 +41,7 @@ const StyledSlider = styled(animated.ul).attrs(({ w, h, x }) => ({
   font-size: 0;
   will-change: width, height, transform;
   overflow: hidden;
-  transition: ${({ theme }) => (isOldBrowser() ? "0.0s 0.0s linear" : theme.transitions.primary)};
+  transition: ${({ theme }) => (isOldBrowser() ? "0.0s 0.0s linear" : `transform ${theme.transitions.primary}`)};
 `;
 
 const StyledSliderItem = styled.li.attrs(({ w, o }) => ({

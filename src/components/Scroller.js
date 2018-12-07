@@ -20,7 +20,6 @@ const Scroller = React.forwardRef(({ wrapper: Wrapper, children }, ref) => {
   });
   const handleAll = throttle(
     () => {
-      console.log("scroll");
       if (!ref.current) return;
       const { current: node } = ref;
       const { height, top } = node.getBoundingClientRect();
