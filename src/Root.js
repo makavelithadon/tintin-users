@@ -32,9 +32,6 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.6em; /* base font-size is equivalent "14px" */
     /* overflow: hidden; */
     background-color: ${({ theme }) => theme.colors.background};
-    color: ${props => {
-      console.log("props", props);
-    }}
   }
   ul, li {
     list-style-type: none;

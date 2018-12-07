@@ -2,9 +2,9 @@ import React from "react";
 import styled, { withTheme } from "styled-components";
 import { animated, Spring, config } from "react-spring";
 import PictureCaption from "./PictureCaption";
-import { media, isDev } from "utils";
+import { media, isDev, isOldBrowser } from "utils";
 import { DEBUG } from "shared";
-import Scroller from "./Scroller";
+import ScrollHandler from "./ScrollHandler";
 import Img from "UI/Img";
 
 const StyledContainer = styled.div`
@@ -30,9 +30,9 @@ const StyledScrolledPictures = styled(animated.div).attrs(({ o, width, height, t
 
 const StyledSlider = styled(animated.ul).attrs(({ w, h, x }) => ({
   style: {
-    width: w.interpolate(w => w),
-    height: h.interpolate(h => h),
-    transform: x.interpolate(x => `translate(-${x}px, -50%)`)
+    width: w,
+    height: h,
+    transform: `translate3d(-${x}px, -50%, 0)`
   }
 }))`
   position: absolute;
@@ -41,6 +41,7 @@ const StyledSlider = styled(animated.ul).attrs(({ w, h, x }) => ({
   font-size: 0;
   will-change: width, height, transform;
   overflow: hidden;
+  transition: ${({ theme }) => (isOldBrowser() ? "0.0s 0.0s linear" : `transform ${theme.transitions.primary}`)};
 `;
 
 const StyledSliderItem = styled.li.attrs(({ w, h, o }) => ({
@@ -101,50 +102,48 @@ function getSlideOpacity(index, scrollerWidth, x) {
     opacity = isAppearing ? opacity + visibilityPercentage / 100 : opacity / (100 / visibilityPercentage);
     opacity = opacity < 0 ? 0 : opacity > 1 ? 1 : opacity;
   } else {
-    opacity = 1;
+    opacity = 0;
   }
   return opacity;
 }
 
 function ScrolledPictures({ theme, user, x, ...props }) {
-  const ref = React.createRef();
   return (
     <StyledContainer>
-      <Scroller ref={ref} wrapper={StyledScrollerWrapper}>
-        {({ windowHeight, isOverflow, isOverTop, offsetTop, isOverBottom, scrollerWidth }) => {
-          const sliderWidth = scrollerWidth * user.pictures.length;
-          const frictionCoefficient =
-            (ref.current ? ref.current.clientHeight - windowHeight : 0) / (sliderWidth - scrollerWidth);
+      <ScrollHandler ref={React.createRef()} wrapper={StyledScrollerWrapper}>
+        {({ height, isOverflow, isOverTop, isOverBottom, refWidth, refHeight, refTop }) => {
+          const sliderWidth = refWidth * user.pictures.length;
+          const frictionCoefficient = (refHeight - height) / (sliderWidth - refWidth);
           const normalizedScrollX = isOverTop
             ? 0
             : isOverBottom
-            ? sliderWidth - scrollerWidth
-            : -offsetTop / frictionCoefficient;
-          const currentIndex = Math.floor(normalizedScrollX / scrollerWidth);
+            ? sliderWidth - refWidth
+            : -refTop / frictionCoefficient;
+          const currentIndex = Math.floor(normalizedScrollX / refWidth);
           return (
             <StyledScrolledPictures
               {...props}
               position={isOverflow ? "absolute" : "fixed"}
-              width={scrollerWidth}
-              height={windowHeight}
+              width={refWidth}
+              height={"100vh"}
               top={isOverBottom ? "auto" : 0}
               bottom={isOverBottom ? 0 : "auto"}
             >
               <Spring
-                from={{ x: 0, w: 0, h: 0 }}
-                to={{ x: normalizedScrollX, w: sliderWidth, h: scrollerWidth }}
-                config={{ ...config.default, duration: 0.000001, delay: 0.000001 }}
+                from={{ w: 0, h: 0 }}
+                to={{ w: sliderWidth, h: refWidth }}
+                config={{ ...config.default, duration: 0.0001, delay: 0.0001 }}
                 native
               >
                 {({ x, w, h }) => (
-                  <StyledSlider w={w} h={h} x={x}>
+                  <StyledSlider w={w} h={h} x={normalizedScrollX}>
                     {user.pictures.map((picture, index) => {
                       return (
                         <StyledSliderItem
                           key={picture.src}
-                          w={scrollerWidth}
-                          h={scrollerWidth}
-                          o={getSlideOpacity(index, scrollerWidth, normalizedScrollX)}
+                          w={refWidth}
+                          h={refWidth}
+                          o={getSlideOpacity(index, refWidth, normalizedScrollX)}
                         >
                           <StyledImg src={picture.src} alt={`${user.displayName}:${picture.caption}`} />
                         </StyledSliderItem>
@@ -154,14 +153,14 @@ function ScrolledPictures({ theme, user, x, ...props }) {
                 )}
               </Spring>
               {user.pictures[currentIndex] && (
-                <StyledPictureCaptionContainer top={windowHeight / 2 + scrollerWidth / 2 + 16}>
+                <StyledPictureCaptionContainer top={height / 2 + refWidth / 2 + 16}>
                   <PictureCaption caption={user.pictures[currentIndex].caption} />
                 </StyledPictureCaptionContainer>
               )}
             </StyledScrolledPictures>
           );
         }}
-      </Scroller>
+      </ScrollHandler>
     </StyledContainer>
   );
 }
