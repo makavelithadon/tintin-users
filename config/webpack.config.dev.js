@@ -4,6 +4,8 @@ const fs = require("fs");
 const path = require("path");
 const resolve = require("resolve");
 const webpack = require("webpack");
+const marked = require("marked");
+const renderer = new marked.Renderer();
 const PnpWebpackPlugin = require("pnp-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
@@ -193,6 +195,10 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
+          {
+            test: /\.md$/,
+            loader: ["babel-loader", "@hugmanrique/react-markdown-loader"]
+          },
           // "url" loader works like "file" loader except that it embeds assets
           // smaller than specified limit in bytes as data URLs to avoid requests.
           // A missing `test` is equivalent to a match.

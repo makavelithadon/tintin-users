@@ -6,7 +6,7 @@ const StyledCommonImg = styled.img.attrs(({ alt = "An image", ariaLabel = "Image
   role: "img"
 }))`
   display: inline-block;
-  width: "100%";
+  width: 100%;
   border: none;
   outline: 0;
   outline-offset: 0;

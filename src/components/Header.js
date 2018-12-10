@@ -5,12 +5,14 @@ import Menu from "components/Menu/index";
 import { media } from "utils";
 
 const StyledHeader = styled.header`
-  position: relative;
+  position: fixed;
+  width: 100%;
   z-index: 10;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0 20px;
+  background-color: ${({ theme }) => theme.colors.background};
   ${({ theme }) => media.forEach(theme.styles.header.height, height => `height: ${height}`)};
 `;
 

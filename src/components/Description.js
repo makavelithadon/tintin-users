@@ -21,7 +21,7 @@ function Description({ theme, description, children, ...rest }) {
   return (
     <StyledDescription {...rest}>
       {children && children}
-      {description && description}
+      <article>{description && description}</article>
     </StyledDescription>
   );
 }

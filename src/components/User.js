@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
-import Markdown from "components/Markdown";
 import Media from "react-media";
+import Markdown from "components/Markdown/Markdown";
 import { Spring } from "react-spring";
 import { easePolyOut } from "d3-ease";
 import data from "data/index";
@@ -45,7 +45,7 @@ function User({ theme, location }) {
   const [{ app }, dispatch] = useStore();
   console.log("app", app);
   const user = data.users.find(user => location.pathname.includes(user.slug));
-  const { description, error: descriptionError } = useDescription(user.description);
+  //const { description, error: descriptionError } = useDescription(user.description);
   return (
     <Spring
       from={{ o: 0, x: -101 }}
@@ -56,13 +56,13 @@ function User({ theme, location }) {
       {props => (
         <>
           <StyledUserContainer>
-            {descriptionError && descriptionError}
-            {description && (
+            {/* descriptionError && descriptionError */}
+            {user.description && (
               <>
                 <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
                   {matches => (matches && user.pictures ? <ScrolledPictures {...props} user={user} /> : null)}
                 </Media>
-                <Description {...props} description={<Markdown content={description} />}>
+                <Description {...props} description={<Markdown content={user.description} />}>
                   <Heading.H1 color={theme.colors.primary}>{user.displayName}</Heading.H1>
                 </Description>
               </>

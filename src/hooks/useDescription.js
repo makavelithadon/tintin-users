@@ -8,6 +8,7 @@ export default function useDescription(raw) {
     let state = {};
     try {
       const response = await api.get(raw);
+      console.log("response", response);
       const description = await parseText(response);
       state = { ...state, description, error: null };
     } catch (error) {

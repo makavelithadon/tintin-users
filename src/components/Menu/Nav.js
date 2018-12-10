@@ -3,7 +3,6 @@ import styled, { withTheme } from "styled-components";
 import { Keyframes, animated } from "react-spring";
 import Menu from "./index";
 import { setDocumentElementStyles } from "./utils";
-import { scrollToTop } from "utils";
 import data from "data/index";
 import { AnimatedExit as Exit } from "UI/Icons";
 import { easePolyIn, easePolyOut, easeExpOut } from "d3-ease";
@@ -150,7 +149,6 @@ function Nav({ theme }) {
                             return;
                           }
                           toggle(false);
-                          scrollToTop();
                         }}
                       >
                         {item.displayName}

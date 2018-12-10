@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/core": "7.1.0",
     "@babel/polyfill": "^7.0.0",
+    "@hugmanrique/react-markdown-loader": "^0.0.2",
     "@svgr/webpack": "2.4.1",
     "array.prototype.flat": "^1.2.1",
     "babel-core": "7.0.0-bridge.0",
@@ -58,6 +59,7 @@
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "smooth-scrollbar": "^8.3.1",
+    "strip-indent": "^2.0.0",
     "style-loader": "0.23.0",
     "styled-components": "^4.1.1",
     "terser-webpack-plugin": "1.1.0",
@@ -86,6 +88,10 @@
   "devDependencies": {
     "d3-ease": "^1.0.5",
     "faker": "^4.1.0",
+    "html-loader": "^0.5.5",
+    "markdown-image-loader": "^2.0.0",
+    "markdown-to-jsx": "^6.9.0",
+    "marked": "^0.5.2",
     "normalize.css": "^8.0.1",
     "react-hot-loader": "^4.3.12",
     "the-platform": "^0.9.3"
