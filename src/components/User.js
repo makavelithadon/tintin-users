@@ -39,7 +39,6 @@ const StyledUserContainer = styled.div`
     );
   }};
   padding-bottom: 20vh;
-  height: 100%;
 `;
 
 function User({ theme, location }) {

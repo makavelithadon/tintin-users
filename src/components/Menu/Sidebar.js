@@ -7,6 +7,7 @@ import { media } from "utils";
 import Media from "react-media";
 import appLogo from "assets/img/logo.png";
 import { easeCircleOut } from "d3-ease";
+import { useStore } from "hooks";
 
 const sidebarSpringConfig = { duration: 300, easing: easeCircleOut, delay: 2000 };
 
@@ -32,28 +33,70 @@ const StyledSidebar = styled(animated.aside).attrs(({ o, x }) => ({
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 0;
+  padding: ${({ theme }) => `30px 0 ${theme.styles.sidebar.paddingBottom} 0;`};
   ${({ theme }) => media.forEach(theme.styles.sidebar.width, h => `width: ${h};`)};
 `;
 
+const StyledBurgerContainer = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const emailHeight = "20px";
+
 const StyledEmailContainer = styled.div`
-  width: 60px;
-  height: 60px;
+  position: absolute;
+  bottom: 30px;
+  height: ${emailHeight};
+  left: 50%;
   display: flex;
   align-items: center;
-  transform: rotate(-90deg);
+  transform: translate(-50%, ${parseInt(emailHeight, 10) / 2}px) rotate(-90deg);
+`;
+
+const StyledEmailWrapper = styled.div`
+  width: 225px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
 `;
 
 const StyledEmail = styled.a`
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.primary};
   font-family: ${({ theme }) => theme.fonts.secondary};
   &:hover {
     text-decoration: underline;
   }
 `;
 
+const StyledEmailWithColor = styled.span.attrs(({ color }) => ({
+  className: `is-${color}`
+}))`
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.primary)};
+  text-decoration: inherit;
+  z-index: ${({ zIndex }) => zIndex};
+  transform: ${({ color }) => (color !== "primary" ? `translateX(100%)` : "none")};
+`;
+
 function Sidebar({ theme }) {
+  const [state, dispatch] = useStore();
+  console.log("state", state);
   return (
     <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={sidebarSpringConfig} native>
       {props => (
@@ -61,13 +104,24 @@ function Sidebar({ theme }) {
           <Link to={"/"}>
             <StyledLogo src={appLogo} alt="Logo" />
           </Link>
-          <Burger color={theme.colors.primary} />
+          <StyledBurgerContainer>
+            <Burger color={theme.colors.primary} />
+          </StyledBurgerContainer>
           <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
             {match => (
               <StyledEmailContainer>
-                {match ? (
-                  <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>romuald.duconseil@hotmail.fr</StyledEmail>
-                ) : null}
+                <StyledEmailWrapper>
+                  {match ? (
+                    <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>
+                      <StyledEmailWithColor color={"primary"} zIndex={2}>
+                        romuald.duconseil@hotmail.fr
+                      </StyledEmailWithColor>
+                      <StyledEmailWithColor color={"white"} zIndex={1}>
+                        romuald.duconseil@hotmail.fr
+                      </StyledEmailWithColor>
+                    </StyledEmail>
+                  ) : null}
+                </StyledEmailWrapper>
               </StyledEmailContainer>
             )}
           </Media>
