@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Root = ({ children }) => {
-  const [{ theme }, dispatch] = useStore();
+  const [{ theme }] = useStore();
   const ui = typeof children === "function" ? children() : children;
   return (
     <>

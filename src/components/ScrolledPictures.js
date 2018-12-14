@@ -107,12 +107,12 @@ function getSlideOpacity(index, scrollerWidth, x) {
   return opacity;
 }
 
-function ScrolledPictures({ theme, user, x, ...props }) {
+function ScrolledPictures({ theme, pictures, altText, x, ...props }) {
   return (
     <StyledContainer>
       <ScrollHandler ref={React.createRef()} wrapper={StyledScrollerWrapper}>
         {({ height, isOverflow, isOverTop, isOverBottom, refWidth, refHeight, refTop }) => {
-          const sliderWidth = refWidth * user.pictures.length;
+          const sliderWidth = refWidth * pictures.length;
           const frictionCoefficient = (refHeight - height) / (sliderWidth - refWidth);
           const normalizedScrollX = isOverTop
             ? 0
@@ -137,7 +137,7 @@ function ScrolledPictures({ theme, user, x, ...props }) {
               >
                 {({ x, w, h }) => (
                   <StyledSlider w={w} h={h} x={normalizedScrollX}>
-                    {user.pictures.map((picture, index) => {
+                    {pictures.map((picture, index) => {
                       return (
                         <StyledSliderItem
                           key={picture.src}
@@ -145,16 +145,16 @@ function ScrolledPictures({ theme, user, x, ...props }) {
                           h={refWidth}
                           o={getSlideOpacity(index, refWidth, normalizedScrollX)}
                         >
-                          <StyledImg src={picture.src} alt={`${user.displayName}:${picture.caption}`} />
+                          <StyledImg src={picture.src} alt={`${altText}:${picture.caption}`} />
                         </StyledSliderItem>
                       );
                     })}
                   </StyledSlider>
                 )}
               </Spring>
-              {user.pictures[currentIndex] && (
+              {pictures[currentIndex] && (
                 <StyledPictureCaptionContainer top={height / 2 + refWidth / 2 + 16}>
-                  <PictureCaption caption={user.pictures[currentIndex].caption} />
+                  <PictureCaption caption={pictures[currentIndex].caption} />
                 </StyledPictureCaptionContainer>
               )}
             </StyledScrolledPictures>

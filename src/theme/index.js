@@ -11,5 +11,6 @@ export default {
   fonts,
   transitions,
   shadows,
-  styles
+  styles,
+  name: "light"
 };

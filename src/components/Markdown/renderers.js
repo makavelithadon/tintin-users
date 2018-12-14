@@ -4,6 +4,7 @@ import P from "UI/P";
 import * as Heading from "UI/Heading";
 import Img from "UI/Img";
 import Media from "react-media";
+import theme from "theme";
 
 function ParagraphRenderer(props) {
   return <P {...props} />;
@@ -21,7 +22,11 @@ const StyledImg = styled(Img)`
 `;
 
 const ResponsiveImg = ({ query, ...rest }) => {
-  return <Media query={query}>{matches => !!matches && <StyledImg {...rest} />}</Media>;
+  return (
+    <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
+      {matches => (matches ? null : <StyledImg {...rest} />)}
+    </Media>
+  );
 };
 
 export default {
