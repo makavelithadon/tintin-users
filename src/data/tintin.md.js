@@ -1,8 +1,7 @@
 import img01 from "assets/img/tintin/02/large.png";
-import theme from "theme";
 
 export default `
-  <ResponsiveImg query="(max-width: ${theme.breakpoints.values.medium})" src="${img01}" alt="Tintin" title="Tintin" />
+  <ResponsiveImg src="${img01}" alt="Tintin" title="Tintin" />
 
   Ce n'est ni un nom ni un prénom, c'est beaucoup plus ; Tintin c'est un univers, un mythe, une saga. C'est le héros que tous les jeunes de 7 à 77 ans veulent être ou sont lorsqu'ils plongent dans les aventures de Tintin.
 

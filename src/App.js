@@ -1,23 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Root from "./Root";
-import StoreProvider from "./Store";
-import rootReducer from "./reducers";
-import User from "components/User";
-import Layout from "components/Layout/Layout";
-// import ToggleButton from "./ToggleMenuPosition";
+import Root from "Root";
+import StoreProvider from "state/store";
+import { App as AppLayout, Admin as AdminLayout } from "components/Layout";
 
 function App() {
   return (
-    <StoreProvider rootReducer={rootReducer}>
+    <StoreProvider>
       <Router>
         <Root>
-          <Layout>
-            <Switch>
-              <Route exact path={"/"} render={props => "Hello from Home"} />
-              <Route exact path={"/:user"} component={User} />
-            </Switch>
-          </Layout>
+          <Switch>
+            <Route path="/admin" component={AdminLayout} />
+            <Route path="/" component={AppLayout} />
+          </Switch>
         </Root>
       </Router>
     </StoreProvider>

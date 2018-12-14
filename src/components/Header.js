@@ -20,7 +20,7 @@ function Header({ theme }) {
   return (
     <StyledHeader>
       <Media query={`min-with: (${theme.breakpoints.values.small})`}>
-        {matches => (matches ? null : <Menu.Burger color={theme.colors.primary} />)}
+        {matches => (matches ? null : <Menu.Burger color={"text"} />)}
       </Media>
     </StyledHeader>
   );

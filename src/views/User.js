@@ -5,11 +5,11 @@ import Markdown from "components/Markdown/Markdown";
 import { Spring } from "react-spring";
 import { easePolyOut } from "d3-ease";
 import data from "data/index";
-import ScrolledPictures from "./ScrolledPictures";
+import ScrolledPictures from "components/ScrolledPictures";
 import Slider from "components/Slider/Slider";
-import Description from "./Description";
+import Description from "components/Description";
 import * as Heading from "UI/Heading";
-import { useDescription, useStore } from "hooks";
+import { useStore } from "hooks";
 import { media } from "utils";
 
 const StyledUserContainer = styled.div`
@@ -42,10 +42,9 @@ const StyledUserContainer = styled.div`
 `;
 
 function User({ theme, location }) {
-  const [{ app }, dispatch] = useStore();
+  const [{ app }] = useStore();
   console.log("app", app);
   const user = data.users.find(user => location.pathname.includes(user.slug));
-  //const { description, error: descriptionError } = useDescription(user.description);
   return (
     <Spring
       from={{ o: 0, x: -101 }}
@@ -60,10 +59,14 @@ function User({ theme, location }) {
             {user.description && (
               <>
                 <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
-                  {matches => (matches && user.pictures ? <ScrolledPictures {...props} user={user} /> : null)}
+                  {matches =>
+                    matches && user.pictures && user.pictures.length ? (
+                      <ScrolledPictures {...props} pictures={user.pictures} altText={user.displayName} />
+                    ) : null
+                  }
                 </Media>
                 <Description {...props} description={<Markdown content={user.description} />}>
-                  <Heading.H1 color={theme.colors.primary}>{user.displayName}</Heading.H1>
+                  <Heading.H1 color={"text"}>{user.displayName}</Heading.H1>
                 </Description>
               </>
             )}

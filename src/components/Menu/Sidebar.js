@@ -7,7 +7,6 @@ import { media } from "utils";
 import Media from "react-media";
 import appLogo from "assets/img/logo.png";
 import { easeCircleOut } from "d3-ease";
-import { useStore } from "hooks";
 
 const sidebarSpringConfig = { duration: 300, easing: easeCircleOut, delay: 2000 };
 
@@ -95,8 +94,6 @@ const StyledEmailWithColor = styled.span.attrs(({ color }) => ({
 `;
 
 function Sidebar({ theme }) {
-  const [state, dispatch] = useStore();
-  console.log("state", state);
   return (
     <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={sidebarSpringConfig} native>
       {props => (
@@ -105,7 +102,7 @@ function Sidebar({ theme }) {
             <StyledLogo src={appLogo} alt="Logo" />
           </Link>
           <StyledBurgerContainer>
-            <Burger color={theme.colors.primary} />
+            <Burger color={"text"} />
           </StyledBurgerContainer>
           <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
             {match => (
@@ -116,7 +113,7 @@ function Sidebar({ theme }) {
                       <StyledEmailWithColor color={"primary"} zIndex={2}>
                         romuald.duconseil@hotmail.fr
                       </StyledEmailWithColor>
-                      <StyledEmailWithColor color={"white"} zIndex={1}>
+                      <StyledEmailWithColor color={"secondary"} zIndex={1}>
                         romuald.duconseil@hotmail.fr
                       </StyledEmailWithColor>
                     </StyledEmail>

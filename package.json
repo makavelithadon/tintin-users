@@ -16,6 +16,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^6.1.0",
     "bfj": "6.1.1",
+    "body-parser": "^1.18.3",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.1",
     "contentful": "^7.0.5",
@@ -29,6 +30,7 @@
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-react": "7.11.1",
+    "express": "^4.16.4",
     "file-loader": "2.0.0",
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-extra": "7.0.0",
@@ -37,8 +39,11 @@
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
+    "jsonwebtoken": "^8.4.0",
+    "jwt-decode": "^2.2.0",
     "markdown-loader": "^4.0.0",
     "mini-css-extract-plugin": "0.4.3",
+    "nodemon": "^1.18.8",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -75,7 +80,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "server": "nodemon server/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -142,5 +148,6 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "license": "ISC"
 }

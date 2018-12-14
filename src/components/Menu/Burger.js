@@ -19,7 +19,7 @@ const StyledBurgerItem = styled.li`
   height: ${itemHeight}px;
   border-radius: 5px;
   width: ${props => (props.index === 2 ? "75%" : "100%")};
-  background-color: ${props => (props.color ? props.color : props.theme.colors.darkGrey)}
+  background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.darkGrey)}
   top: ${props => `${Math.floor(props.index * (burgerHeight / 2) - itemHeight)}px`};
 `;
 

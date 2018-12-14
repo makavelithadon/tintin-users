@@ -8,6 +8,8 @@ import { AnimatedExit as Exit } from "UI/Icons";
 import { easePolyIn, easePolyOut, easeExpOut } from "d3-ease";
 import { media } from "utils";
 import NavLink from "components/NavLink";
+import { toggleTheme } from "state/ducks/theme/actions";
+import { useStore } from "hooks";
 
 const navSpringConfig = {
   common: { duration: 400 },
@@ -120,6 +122,7 @@ const StyledExitIconContainer = styled.div`
 `;
 
 function Nav({ theme }) {
+  const [, dispatch] = useStore();
   return (
     <Menu.Consumer>
       {({ isOpen, toggle }) => {
@@ -156,6 +159,7 @@ function Nav({ theme }) {
                     </StyledNavItem>
                   )}
                 </AnimatedLinks>
+                <button onClick={() => dispatch(toggleTheme())}>Toggle theme</button>
               </StyledNav>
             )}
           </AnimatedNav>

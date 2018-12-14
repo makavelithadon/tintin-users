@@ -1,9 +1,11 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
+import { Route, Switch } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Media from "react-media";
 import Menu from "components/Menu";
 import Header from "components/Header";
+import { Home, User } from "views";
 import { scrollToTop } from "utils";
 
 const StyledMain = styled.main`
@@ -37,7 +39,12 @@ class Layout extends React.Component {
             {matches => (matches ? <Menu.Sidebar /> : <Header />)}
           </Media>
         </Menu>
-        <StyledContent>{page}</StyledContent>
+        <StyledContent>
+          <Switch>
+            <Route exact path={"/"} component={Home} />
+            <Route exact path={"/:user"} component={User} />
+          </Switch>
+        </StyledContent>
       </StyledMain>
     );
   }
