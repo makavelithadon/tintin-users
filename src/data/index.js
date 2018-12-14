@@ -1,14 +1,19 @@
-import tintinPicture01 from "assets/img/tintin/01/large.png";
 import tintinPicture02 from "assets/img/tintin/02/large.png";
 import tintinPicture03 from "assets/img/tintin/03/large.jpg";
 import tintinPicture04 from "assets/img/tintin/04/large.png";
 import haddockPicture01 from "assets/img/haddock/01/large.png";
-import haddockPicture02 from "assets/img/haddock/02/large.png";
 import haddockPicture03 from "assets/img/haddock/03/large.png";
 import tournesolPicture01 from "assets/img/tournesol/01/large.png";
 import tournesolPicture02 from "assets/img/tournesol/02/large.png";
-
 import faker from "faker";
+import tintinText from "./tintin.md.js";
+// import milouText from "./milou.md";
+import haddockText from "./haddock.md.js";
+/* import tournesolText from "./tournesol.md";
+import dupondtText from "./dupondt.md";
+import nestorText from "./nestor.md";
+import castafioreText from "./castafiore.md";
+import lampionText from "./lampion.md"; */
 
 const data = {
   users: [
@@ -17,10 +22,6 @@ const data = {
       slug: "tintin",
       displayName: "Tintin",
       pictures: [
-        {
-          src: tintinPicture01,
-          caption: "Tintin, reporter autour du monde."
-        },
         {
           src: tintinPicture02,
           caption: "Tintin est toujours accompagné de son fidèle compagnon, Milou."
@@ -33,12 +34,14 @@ const data = {
           src: tintinPicture04,
           caption: "Rien ne fait peur à notre cher Tintin, pas même une petite escapade sur la Lune !"
         }
-      ]
+      ],
+      description: tintinText
     },
     {
       id: 2,
       slug: "milou",
-      displayName: "Milou"
+      displayName: "Milou",
+      description: tintinText
     },
     {
       id: 3,
@@ -50,14 +53,11 @@ const data = {
           caption: faker.lorem.sentence()
         },
         {
-          src: haddockPicture02,
-          caption: faker.lorem.sentence()
-        },
-        {
           src: haddockPicture03,
           caption: faker.lorem.sentence()
         }
-      ]
+      ],
+      description: haddockText
     },
     {
       id: 4,
@@ -72,27 +72,32 @@ const data = {
           src: tournesolPicture02,
           caption: faker.lorem.sentence()
         }
-      ]
+      ],
+      description: tintinText
     },
     {
       id: 5,
       slug: "dupondt",
-      displayName: "Dupont et Dupond"
+      displayName: "Dupont et Dupond",
+      description: tintinText
     },
     {
       id: 6,
       slug: "nestor",
-      displayName: "Nestor"
+      displayName: "Nestor",
+      description: tintinText
     },
     {
       id: 7,
       slug: "castafiore",
-      displayName: "Bianca Castafiore"
+      displayName: "Bianca Castafiore",
+      description: tintinText
     },
     {
       id: 8,
       slug: "lampion",
-      displayName: "Séraphin Lampion"
+      displayName: "Séraphin Lampion",
+      description: tintinText
     }
   ]
 };

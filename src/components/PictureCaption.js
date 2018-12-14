@@ -1,29 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 import { Transition, animated, config } from "react-spring";
-import {
-  //easeLinear,
-  easePolyIn,
-  easePolyOut,
-  easePolyInOut,
-  easeCubicIn,
-  easeCubicOut,
-  easeCubicInOut,
-  expInOut,
-  easeQuadIn,
-  easeQuadOut,
-  /*easeQuadInOut,
-  easeExpIn,*/
-  easeExpOut,
-  easeExpInOut,
-  easeCircleInOut,
-  easeCircleOut
-  /*easeBackIn,
-  easeBackOut,
-  easeBackInOut,
-  easeBounceInOut,
-  ease*/
-} from "d3-ease";
 
 const StyledCaption = styled(animated.em).attrs(({ x, o }) => ({
   style: {

@@ -1,8 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import { animated } from "react-spring";
-import faker from "faker";
-import { H1 } from "UI/Heading";
 import { media } from "utils";
 
 const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
@@ -14,24 +12,16 @@ const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
   color: ${({ theme }) => theme.colors.text};
   line-height: 1.4;
   text-align: left;
+  min-height: 100vh;
   ${media.forEach({ xs: "100%", medium: "70%" }, w => `width: ${w};`)};
   ${media.forEach({ xs: 0, medium: "6%" }, paddingLeft => `padding-left: ${paddingLeft};`)};
 `;
 
-const StyledParagraph = styled.p`
-  margin-top: 0;
-  margin-bottom: 4rem;
-  font-family: ${({ theme }) => theme.fonts.secondary};
-`;
-
-function Description(props) {
-  const { theme, user, ...rest } = props;
+function Description({ theme, description, children, ...rest }) {
   return (
     <StyledDescription {...rest}>
-      <H1 color={theme.colors.primary}>{user.displayName}</H1>
-      {[...new Array(15)].map((_, index) => (
-        <StyledParagraph key={index}>{faker.lorem.paragraphs()}</StyledParagraph>
-      ))}
+      {children && children}
+      <article>{description && description}</article>
     </StyledDescription>
   );
 }

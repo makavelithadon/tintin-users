@@ -1,17 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import AppProvider from "components/App";
-import Main from "./components/Main";
-// import ToggleButton from "./ToggleMenuPosition";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Root from "Root";
+import StoreProvider from "state/store";
+import { App as AppLayout, Admin as AdminLayout } from "components/Layout";
 
 function App() {
   return (
-    <Router>
-      <AppProvider>
-        {/* <ToggleButton>click me!</ToggleButton> */}
-        <Main />
-      </AppProvider>
-    </Router>
+    <StoreProvider>
+      <Router>
+        <Root>
+          <Switch>
+            <Route path="/admin" component={AdminLayout} />
+            <Route path="/" component={AppLayout} />
+          </Switch>
+        </Root>
+      </Router>
+    </StoreProvider>
   );
 }
 
