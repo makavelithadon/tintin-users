@@ -1,6 +1,8 @@
 const express = require("express");
-const user = require("../models/user");
+const user = require("./../models");
 const jwt = require("jsonwebtoken");
+const { User } = require("./../models");
+const { User: UserController } = require("./../controllers");
 
 const router = express.Router();
 
@@ -19,8 +21,34 @@ const checkToken = (req, res, next) => {
     res.sendStatus(403);
   }
 };
+/* 
+router.post("/register", (req, res, next) => {
+  const { body } = req;
+  const { name, email, password } = body;
 
-router.post("/login", (req, res, next) => {
+  // create a new user
+  var newUser = User({
+    name,
+    email,
+    password
+  });
+
+  // save the user
+  newUser.save(function(err) {
+    if (err) throw err;
+    const success = "User created!";
+    console.log(success);
+    res.send(success);
+  });
+}); */
+
+router.get("/users", UserController.getAll);
+
+router.get("/users/:id", UserController.findById);
+
+router.post(
+  "/login",
+  UserController.findOne /* (req, res, next) => {
   const { body } = req;
   console.log("req.body", req.body);
   const { username } = body;
@@ -38,7 +66,8 @@ router.post("/login", (req, res, next) => {
   } else {
     console.log("ERROR: Could not log in");
   }
-});
+} */
+);
 
 //This is a protected route
 router.get("/data", checkToken, (req, res) => {

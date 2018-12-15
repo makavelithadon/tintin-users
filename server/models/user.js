@@ -1,14 +1,9 @@
-module.exports = {
-  username: "user123",
-  password: "1234",
-  firstName: "Jon",
-  lastName: "Doe",
-  dob: "12/11/1991",
-  email: "user@gmail.com",
-  address: {
-    street: "555 Bayshore Blvd",
-    city: "Tampa",
-    state: "Florida",
-    zip: "33813"
-  }
-};
+const mongoose = require("mongoose");
+
+const User = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+});
+
+module.exports = mongoose.model("User", User);

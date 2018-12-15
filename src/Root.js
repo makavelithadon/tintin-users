@@ -27,10 +27,9 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     margin: 0;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Averia Serif Libre', sans-serif;
     -webkit-font-smoothing: antialiased!important;
     font-size: 1.6em; /* base font-size is equivalent "14px" */
-    /* overflow: hidden; */
     background-color: ${({ theme }) => theme.colors.background};
   }
   ul, li {

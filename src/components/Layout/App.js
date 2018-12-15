@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
-import { Route, Switch } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import Media from "react-media";
 import Menu from "components/Menu";
 import Header from "components/Header";

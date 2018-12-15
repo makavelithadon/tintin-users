@@ -1,6 +1,5 @@
 const fs = require("fs");
-const configPath = "./config.json";
-const parsed = JSON.parse(fs.readFileSync(configPath, "UTF-8"));
+const parsed = JSON.parse(fs.readFileSync(__dirname + "/config.json", "UTF-8"));
 module.exports = {
   app: {
     PORT: 5000
