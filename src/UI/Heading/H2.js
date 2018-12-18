@@ -1,14 +1,12 @@
+import React from "react";
 import styled from "styled-components";
 import { media } from "utils";
+import Common from "./common";
 
-const StyledH1 = styled.h2.attrs(props => ({
-  rel: props.rel || "title"
-}))`
-  margin-top: 0;
-  line-height: 1;
-  color: ${({ theme, color }) => (color ? color : theme.colors.text)};
-  ${media.forEach({ xs: "1.5rem", small: "2.5rem" }, fZ => `font-size: ${fZ};`)};
-  font-family: ${({ theme }) => theme.fonts.primary};
+const StyledCustomH2 = styled(Common)`
+  ${media.forEach({ xs: "2rem", small: "2.5rem" }, fZ => `font-size: ${fZ};`)};
 `;
 
-export default StyledH1;
+const StyledH2 = props => <StyledCustomH2 as={"h2"} {...props} />;
+
+export default StyledH2;

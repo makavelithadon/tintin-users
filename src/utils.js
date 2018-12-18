@@ -97,3 +97,17 @@ export function throttle(func, threshhold = 250, scope) {
     }
   };
 }
+
+export function randomize(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function uppercasify(str) {
+  return str.toUpperCase();
+}
+
+export function lowercasify(str) {
+  return str.toLowerCase();
+}

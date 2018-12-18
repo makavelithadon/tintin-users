@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Common from "./commons";
+import Common from "./common";
 
 const StyledImg = styled(Common)``;
 

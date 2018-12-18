@@ -6,7 +6,7 @@ const lightGrey = "#D1D1D1";
 const red = "#d52727";
 const text = darkGrey;
 
-const primary = "#0a2847";
+const primary = "#0a529b";
 const secondary = "#ffc86b";
 const danger = red;
 

@@ -66,7 +66,9 @@ function User({ theme, location }) {
                   }
                 </Media>
                 <Description {...props} description={<Markdown content={user.description} />}>
-                  <Heading.H1 color={"text"}>{user.displayName}</Heading.H1>
+                  <Heading.H1 color={"primary"} uppercase>
+                    {user.displayName}
+                  </Heading.H1>
                 </Description>
               </>
             )}

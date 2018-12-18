@@ -3,6 +3,8 @@ const user = require("./../models");
 const jwt = require("jsonwebtoken");
 const { User } = require("./../models");
 const { User: UserController } = require("./../controllers");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const router = express.Router();
 
@@ -21,26 +23,37 @@ const checkToken = (req, res, next) => {
     res.sendStatus(403);
   }
 };
-/* 
-router.post("/register", (req, res, next) => {
+
+router.post("/register", async (req, res, next) => {
   const { body } = req;
   const { name, email, password } = body;
 
-  // create a new user
-  var newUser = User({
-    name,
-    email,
-    password
-  });
+  console.log("====================================");
+  console.log("name", name, "email", email, "password", password);
+  console.log("====================================");
 
-  // save the user
-  newUser.save(function(err) {
-    if (err) throw err;
-    const success = "User created!";
-    console.log(success);
-    res.send(success);
-  });
-}); */
+  let message = "";
+
+  try {
+    const hash = await bcrypt.hash(password, saltRounds);
+    // create a new user
+    const newUser = User({
+      name,
+      email,
+      password: hash
+    });
+
+    // save the user
+    const user = await newUser.save();
+    message = "User created.";
+    console.log(message);
+  } catch (err) {
+    console.error("Error: ", err);
+    message = err;
+  } finally {
+    res.send({ message });
+  }
+});
 
 router.get("/users", UserController.getAll);
 

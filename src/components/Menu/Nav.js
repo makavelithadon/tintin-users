@@ -101,6 +101,7 @@ const StyledNavItem = styled(animated.li).attrs(({ o, slide }) => ({
   ${media.forEach({ xs: 3.5, small: 4, medium: 4.5, large: 5.5 }, fZ => `font-size: ${fZ}rem;`)};
   color: ${({ theme }) => theme.colors.white};
   font-family: ${({ theme }) => theme.fonts.primary};
+  text-transform: uppercase;
 `;
 
 const StyledNavLink = styled(NavLink)`

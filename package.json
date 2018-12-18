@@ -8,6 +8,7 @@
     "@hugmanrique/react-markdown-loader": "^0.0.2",
     "@svgr/webpack": "2.4.1",
     "array.prototype.flat": "^1.2.1",
+    "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -15,12 +16,14 @@
     "babel-plugin-named-asset-import": "^0.2.3",
     "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^6.1.0",
+    "bcrypt": "^3.0.2",
     "bfj": "6.1.1",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "^2.4.1",
     "contentful": "^7.0.5",
+    "cors": "^2.8.5",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
@@ -45,6 +48,7 @@
     "markdown-loader": "^4.0.0",
     "mini-css-extract-plugin": "0.4.3",
     "mongoose": "^5.3.16",
+    "mongoose-unique-validator": "^2.0.2",
     "nodemon": "^1.18.8",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
@@ -61,6 +65,7 @@
     "react-markdown": "^4.0.4",
     "react-media": "^1.8.0",
     "react-router-dom": "^4.4.0-beta.6",
+    "react-router-util": "^0.7.0",
     "react-smooth-scrollbar": "^8.0.6",
     "react-spring": "^6.1.8",
     "redux": "^4.0.1",
@@ -152,5 +157,6 @@
       "react-app"
     ]
   },
-  "license": "ISC"
+  "license": "ISC",
+  "proxy": "http://localhost:5000"
 }

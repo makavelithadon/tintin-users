@@ -1,5 +1,6 @@
 const { User } = require("./../models");
 const api = require("./../api");
+const bcrypt = require("bcrypt");
 
 exports.getAll = async (req, res, next) => {
   const allUsers = await api.getAll(User);
@@ -17,12 +18,16 @@ exports.findById = async (req, res, next) => {
 };
 
 exports.findOne = async (req, res, next) => {
-  const user = await api.findOne(
-    User,
-    Object.entries(req.body).reduce((resource, [field, value]) => ({ ...resource, [field]: value }), {})
-  );
+  const { email, password } = req.body;
+  console.log("body", req.body);
+  if (typeof password === "undefined") return res.status(404).send({ message: "You must provide a password." });
+  const user = await api.findOne(User, { email: email });
   if (user) {
-    return res.send(user);
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      return res.send(user);
+    }
+    return res.status(401).send({ message: "Bad credentials." });
   }
   return res.status(204).send();
 };
