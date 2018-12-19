@@ -50,8 +50,8 @@ function FormLogin() {
     setIsFetching(true);
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/admin/login`, state);
-      console.log("res", res);
-      auth.login(res.data);
+      const { token } = res.data;
+      auth.login(token);
     } catch (err) {
       console.error("Error", err);
     } finally {
