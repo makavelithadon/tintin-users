@@ -66,7 +66,7 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   overflow: hidden;
   height: 100%;
   height: 100vh;
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.secondary};
   transition: ${({ theme }) => `padding ${theme.transitions.primary}`};
   top: 0;
   ${({ theme }) => {
@@ -101,6 +101,7 @@ const StyledNavItem = styled(animated.li).attrs(({ o, slide }) => ({
   ${media.forEach({ xs: 3.5, small: 4, medium: 4.5, large: 5.5 }, fZ => `font-size: ${fZ}rem;`)};
   color: ${({ theme }) => theme.colors.white};
   font-family: ${({ theme }) => theme.fonts.primary};
+  text-transform: uppercase;
 `;
 
 const StyledNavLink = styled(NavLink)`

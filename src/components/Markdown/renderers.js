@@ -18,7 +18,7 @@ function HeadingRenderer({ level, ...restHeadingProps }) {
 const StyledImg = styled(Img)`
   display: block;
   margin-bottom: 20px;
-  max-width: 80%;
+  max-width: 300px;
 `;
 
 const ResponsiveImg = ({ query, ...rest }) => {

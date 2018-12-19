@@ -102,7 +102,7 @@ function Sidebar({ theme }) {
             <StyledLogo src={appLogo} alt="Logo" />
           </Link>
           <StyledBurgerContainer>
-            <Burger color={"text"} />
+            <Burger color={"primary"} />
           </StyledBurgerContainer>
           <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
             {match => (

@@ -1,8 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-util";
+import { Route, Switch } from "react-router-dom";
 import Root from "Root";
 import StoreProvider from "state/store";
-import { App as AppLayout, Admin as AdminLayout } from "components/Layout";
+import * as Layout from "components/Layout";
+import { NoMatch } from "views";
 
 function App() {
   return (
@@ -10,8 +12,9 @@ function App() {
       <Router>
         <Root>
           <Switch>
-            <Route path="/admin" component={AdminLayout} />
-            <Route path="/" component={AppLayout} />
+            <Route path="/admin" component={Layout.Admin} />
+            <Route path="/" component={Layout.App} />
+            <Route component={NoMatch} />
           </Switch>
         </Root>
       </Router>

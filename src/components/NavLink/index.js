@@ -6,22 +6,9 @@ const StyledNavLink = styled(NavLink)`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   color: inherit;
   transition: ${({ theme }) => theme.transitions.primary};
-  &::after {
-    content: "";
-    width: 0;
-    height: 2px;
-    background: ${({ theme }) => theme.colors.secondary};
-    position: absolute;
-    left: 50%;
-    bottom: 3px;
-    transform: translateX(-50%);
-    transition: inherit;
-  }
   &.active,
   &:hover {
-    &::after {
-      width: 100%;
-    }
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 

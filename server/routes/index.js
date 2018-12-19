@@ -1,6 +1,10 @@
 const express = require("express");
-const user = require("../models/user");
+const user = require("./../models");
 const jwt = require("jsonwebtoken");
+const { User } = require("./../models");
+const { User: UserController } = require("./../controllers");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const router = express.Router();
 
@@ -20,7 +24,44 @@ const checkToken = (req, res, next) => {
   }
 };
 
-router.post("/login", (req, res, next) => {
+router.post("/register", async (req, res, next) => {
+  const { body } = req;
+  const { name, email, password } = body;
+
+  console.log("====================================");
+  console.log("name", name, "email", email, "password", password);
+  console.log("====================================");
+
+  let message = "";
+
+  try {
+    const hash = await bcrypt.hash(password, saltRounds);
+    // create a new user
+    const newUser = User({
+      name,
+      email,
+      password: hash
+    });
+
+    // save the user
+    const user = await newUser.save();
+    message = "User created.";
+    console.log(message);
+  } catch (err) {
+    console.error("Error: ", err);
+    message = err;
+  } finally {
+    res.send({ message });
+  }
+});
+
+router.get("/users", UserController.getAll);
+
+router.get("/users/:id", UserController.findById);
+
+router.post(
+  "/login",
+  UserController.findOne /* (req, res, next) => {
   const { body } = req;
   console.log("req.body", req.body);
   const { username } = body;
@@ -38,7 +79,8 @@ router.post("/login", (req, res, next) => {
   } else {
     console.log("ERROR: Could not log in");
   }
-});
+} */
+);
 
 //This is a protected route
 router.get("/data", checkToken, (req, res) => {
