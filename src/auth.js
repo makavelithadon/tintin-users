@@ -1,21 +1,27 @@
-import jwt from "jwt-decode";
+import jwtDecode from "jwt-decode";
+const storageKey = "auth";
+const storage = window.localStorage;
 
 export default {
-  decode(jwtSource) {
-    return jwt.decode(jwtSource);
+  decode(token) {
+    return jwtDecode(token);
   },
   login(data) {
-    window.localStorage.setItem("jwt", JSON.stringify(data));
+    storage.setItem(storageKey, data);
   },
   logout() {
-    window.localStorage.removeItem("jwt");
+    storage.removeItem(storageKey);
+  },
+  isExpired(decodedToken) {
+    return decodedToken.exp < Date.now() / 1000;
   },
   isLogged() {
     try {
-      const decoded = /* this.decode( */ window.localStorage.getItem("jwt"); /* ) */
-      return !!decoded;
+      if (storage.getItem(storageKey) === null) return false;
+      const decoded = this.decode(storage.getItem(storageKey));
+      return !!decoded && !this.isExpired(decoded);
     } catch (err) {
-      console.error("Not logged.");
+      console.error("Not logged.", err);
       return false;
     }
     return true;
