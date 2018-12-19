@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const routes = require("./routes");
-const db = require("./database")();
+const db = require("./database");
 
 function errorHandler(err, req, res, next) {
   if (typeof err === "string") {
