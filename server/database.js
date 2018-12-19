@@ -4,11 +4,9 @@ const { DB_USER, DB_PASSWORD, DB_SERVER, DB_PORT, DB_NAME } = dbData;
 const dbURL = `mongodb://${DB_USER}:${encodeURIComponent(DB_PASSWORD)}@${DB_SERVER}:${DB_PORT}/${DB_NAME}`;
 
 const chalk = require("chalk");
+const { cyan: connected, yellow: error, red: disconnected, magenta: termination } = chalk.bold;
 
-const connected = chalk.bold.cyan;
-const error = chalk.bold.yellow;
-const disconnected = chalk.bold.red;
-const termination = chalk.bold.magenta;
+mongoose.Promise = global.Promise;
 
 const options = {
   useNewUrlParser: true,
@@ -21,31 +19,40 @@ const options = {
   family: 4 // Use IPv4, skip trying IPv6
 };
 
-mongoose.Promise = global.Promise;
+class Database {
+  constructor(...options) {
+    this._connect(...options);
+  }
+  _handleEmittedEvents() {
+    mongoose.connection.on("connected", function() {
+      console.log(connected("Mongoose default connection is open"));
+    });
+
+    mongoose.connection.on("error", function(err) {
+      console.log(error("Mongoose default connection has occured " + err + " error"));
+    });
+
+    mongoose.connection.on("disconnected", function() {
+      console.log(disconnected("Mongoose default connection is disconnected"));
+    });
+
+    process.on("SIGINT", function() {
+      mongoose.connection.close(function() {
+        console.log(termination("Mongoose default connection is disconnected due to application termination"));
+        process.exit(0);
+      });
+    });
+  }
+  async _connect(...options) {
+    try {
+      this._handleEmittedEvents();
+      await mongoose.connect(...options);
+      console.log("Database connection successful");
+    } catch (err) {
+      console.error("Database connection error");
+    }
+  }
+}
 
 //export this function and imported by server.js
-module.exports = function() {
-  mongoose.connect(
-    dbURL,
-    options
-  );
-
-  mongoose.connection.on("connected", function() {
-    console.log(connected("Mongoose default connection is open"));
-  });
-
-  mongoose.connection.on("error", function(err) {
-    console.log(error("Mongoose default connection has occured " + err + " error"));
-  });
-
-  mongoose.connection.on("disconnected", function() {
-    console.log(disconnected("Mongoose default connection is disconnected"));
-  });
-
-  process.on("SIGINT", function() {
-    mongoose.connection.close(function() {
-      console.log(termination("Mongoose default connection is disconnected due to application termination"));
-      process.exit(0);
-    });
-  });
-};
+module.exports = new Database(dbURL, options);
