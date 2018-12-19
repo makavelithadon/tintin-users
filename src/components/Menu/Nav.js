@@ -66,7 +66,7 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   overflow: hidden;
   height: 100%;
   height: 100vh;
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.secondary};
   transition: ${({ theme }) => `padding ${theme.transitions.primary}`};
   top: 0;
   ${({ theme }) => {

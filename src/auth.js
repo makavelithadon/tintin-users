@@ -7,17 +7,17 @@ export default {
   login(data) {
     window.localStorage.setItem("jwt", JSON.stringify(data));
   },
+  logout() {
+    window.localStorage.removeItem("jwt");
+  },
   isLogged() {
     try {
       const decoded = /* this.decode( */ window.localStorage.getItem("jwt"); /* ) */
-      console.log("logged from auth");
       return !!decoded;
     } catch (err) {
       console.error("Not logged.");
-      console.log("not logged from auth");
       return false;
     }
-    console.log("logged from auth");
     return true;
   }
 };

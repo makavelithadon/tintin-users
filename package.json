@@ -79,6 +79,7 @@
     "ua-parser-js": "^0.7.19",
     "unfetch": "^4.0.1",
     "url-loader": "1.1.1",
+    "uuid": "^3.3.2",
     "validator": "^10.9.0",
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
