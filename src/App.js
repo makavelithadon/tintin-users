@@ -5,6 +5,7 @@ import Root from "Root";
 import StoreProvider from "state/store";
 import * as Layout from "components/Layout";
 import { NoMatch } from "views";
+import { HOME, ADMIN } from "routes";
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
       <Router>
         <Root>
           <Switch>
-            <Route path="/admin" component={Layout.Admin} />
-            <Route path="/" component={Layout.App} />
+            <Route path={ADMIN} component={Layout.Admin} />
+            <Route path={HOME} component={Layout.App} />
             <Route component={NoMatch} />
           </Switch>
         </Root>

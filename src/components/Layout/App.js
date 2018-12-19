@@ -6,6 +6,7 @@ import Menu from "components/Menu";
 import Header from "components/Header";
 import { Home, User } from "views";
 import { scrollToTop } from "utils";
+import { HOME, CHARACTER } from "routes";
 
 const StyledMain = styled.main`
   position: relative;
@@ -40,8 +41,8 @@ class Layout extends React.Component {
         </Menu>
         <StyledContent>
           <Switch>
-            <Route exact path={"/"} component={Home} />
-            <Route exact path={"/:user"} component={User} />
+            <Route exact path={HOME} component={Home} />
+            <Route exact path={CHARACTER} component={User} />
           </Switch>
         </StyledContent>
       </StyledMain>
