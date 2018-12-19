@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import styled, { withTheme } from "styled-components";
+import { formatRoute } from "react-router-named-routes";
 import { Keyframes, animated } from "react-spring";
 import Menu from "./index";
 import { setDocumentElementStyles } from "./utils";
@@ -10,6 +11,7 @@ import { media } from "utils";
 import NavLink from "components/NavLink";
 import { toggleTheme } from "state/ducks/theme/actions";
 import { useStore } from "hooks";
+import { CHARACTER } from "routes";
 
 const navSpringConfig = {
   common: { duration: 400 },
@@ -146,7 +148,7 @@ function Nav({ theme }) {
                   {item => props => (
                     <StyledNavItem {...props}>
                       <StyledNavLink
-                        to={`/${item.slug}`}
+                        to={formatRoute(CHARACTER, { character: item.slug })}
                         onClick={e => {
                           if (!isOpen) {
                             e.preventDefault();

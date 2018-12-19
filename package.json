@@ -65,6 +65,7 @@
     "react-markdown": "^4.0.4",
     "react-media": "^1.8.0",
     "react-router-dom": "^4.4.0-beta.6",
+    "react-router-named-routes": "^0.0.23",
     "react-router-util": "^0.7.0",
     "react-smooth-scrollbar": "^8.0.6",
     "react-spring": "^6.1.8",
