@@ -11,9 +11,19 @@ const UniqID = require("uuid").v4();
 const JWTPrivateKey = RSAKey.encrypt(UniqID, "base64");
 
 module.exports = {
+  privateKey: JWTPrivateKey,
   options: {
     expiresIn: "1d",
     issuer: `My Tintin React Application`
   },
-  privateKey: JWTPrivateKey
+  verifyToken: (req, res, next) => {
+    const bearerHeader = req.headers["authorization"];
+    if (typeof bearerHeader === "undefined") {
+      return res.sendStatus(403);
+    }
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  }
 };
