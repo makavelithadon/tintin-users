@@ -25,3 +25,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# exclude jwt private/public keys
+**/jwt-private-key
+**/jwt-private-key.pub
