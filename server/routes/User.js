@@ -6,9 +6,9 @@ const { verifyToken } = utils.jwt;
 module.exports = router => {
   router.post("/register", UserController.register);
 
-  router.get("/users", verifyToken, UserController.getAll);
+  router.post("/login", UserController.login);
 
   router.get("/users/:id", verifyToken, UserController.findById);
 
-  router.post("/login", UserController.login);
+  router.get("/users", verifyToken, UserController.getAll);
 };
