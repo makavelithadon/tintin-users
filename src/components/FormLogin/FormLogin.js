@@ -5,7 +5,7 @@ import axios from "axios";
 import { H2 } from "UI/Heading";
 import { lowercasify } from "utils";
 import { useForm } from "hooks";
-import auth from "auth";
+import globalAuth from "auth";
 
 const StyledForm = styled.form`
   display: flex;
@@ -39,37 +39,20 @@ const StyledInput = styled.input.attrs(({ type, name }) => ({
   }
 `;
 
-function FormLogin() {
-  const [isFetching, setIsFetching] = useState(false);
-
+function FormLogin({ auth, login }) {
   const { state, handleChange } = useForm({ email: "", password: "" });
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (isFetching) return;
-    setIsFetching(true);
-    try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/admin/login`, state);
-      const { token } = res.data;
-      auth.login(token);
-    } catch (err) {
-      console.error("Error", err);
-    } finally {
-      setIsFetching(false);
-    }
+    if (auth.isLoading) return;
+    login(state);
   }
 
   const { email, password } = state;
+  const { isLoading } = auth;
 
-  return auth.isLogged() ? (
-    <Redirect
-      to={{
-        pathname: "/admin/list",
-        state: {
-          from: "/login"
-        }
-      }}
-    />
+  return globalAuth.isLogged() ? (
+    <Redirect to={"/admin/list"} />
   ) : (
     <StyledForm onSubmit={handleSubmit}>
       <H2 color={"primary"}>Login</H2>
@@ -79,7 +62,7 @@ function FormLogin() {
         type="email"
         value={email}
         onChange={handleChange}
-        readOnly={isFetching}
+        readOnly={isLoading}
       />
       <StyledInput
         autoComplete={lowercasify(`${process.env.REACT_APP_APPNAME}-password`)}
@@ -87,9 +70,9 @@ function FormLogin() {
         type="password"
         value={password}
         onChange={handleChange}
-        readOnly={isFetching}
+        readOnly={isLoading}
       />
-      <StyledInput type={"submit"} color={"secondary"} value={"Valider"} disabled={isFetching} />
+      <StyledInput type={"submit"} color={"secondary"} value={"Valider"} disabled={isLoading} />
       <a href="#" style={{ marginTop: "auto" }}>
         Reset password
       </a>

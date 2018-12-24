@@ -25,5 +25,11 @@ export default {
       return false;
     }
     return true;
+  },
+  getToken() {
+    return storage.getItem(storageKey);
+  },
+  getDecodedToken() {
+    return this.decode(this.getToken());
   }
 };

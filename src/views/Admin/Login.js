@@ -4,7 +4,7 @@ import Media from "react-media";
 import { media, randomize } from "utils";
 import login01 from "assets/img/admin/login/01.jpg";
 import login02 from "assets/img/admin/login/02.jpg";
-import FormLogin from "components/FormLogin/FormLogin";
+import FormLogin from "containers/FormLogin";
 import NavLink from "components/NavLink";
 
 const images = [login01, login02];
