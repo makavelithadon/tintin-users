@@ -4,6 +4,7 @@ import createSagaMiddleware from "redux-saga";
 import sagas from "./sagas";
 import auth from "auth";
 import { LOGIN_SUCCESS } from "state/ducks/auth/types";
+import { keepOnlyNotUndefinedValues } from "utils";
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -11,8 +12,10 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
   compose(
-    applyMiddleware(sagaMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    ...keepOnlyNotUndefinedValues([
+      applyMiddleware(sagaMiddleware),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    ])
   )
 );
 

@@ -111,3 +111,7 @@ export function uppercasify(str) {
 export function lowercasify(str) {
   return str.toLowerCase();
 }
+
+export function keepOnlyNotUndefinedValues(arr) {
+  return arr.filter(x => typeof x !== "undefined");
+}
