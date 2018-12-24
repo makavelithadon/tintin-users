@@ -10,7 +10,6 @@ import { easePolyIn, easePolyOut, easeExpOut } from "d3-ease";
 import { media } from "utils";
 import NavLink from "components/NavLink";
 import { toggleTheme } from "state/ducks/theme/actions";
-import { useStore } from "hooks";
 import { CHARACTER } from "routes";
 
 const navSpringConfig = {
@@ -124,8 +123,8 @@ const StyledExitIconContainer = styled.div`
   }};
 `;
 
-function Nav({ theme }) {
-  const [, dispatch] = useStore();
+function Nav({ theme, toggleTheme }) {
+  console.log("toggleTheme", toggleTheme);
   return (
     <Menu.Consumer>
       {({ isOpen, toggle }) => {
@@ -162,7 +161,7 @@ function Nav({ theme }) {
                     </StyledNavItem>
                   )}
                 </AnimatedLinks>
-                <button onClick={() => dispatch(toggleTheme())}>Toggle theme</button>
+                <button onClick={toggleTheme}>Toggle theme</button>
               </StyledNav>
             )}
           </AnimatedNav>

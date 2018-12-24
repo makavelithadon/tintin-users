@@ -9,7 +9,6 @@ import ScrolledPictures from "components/ScrolledPictures";
 import Slider from "components/Slider/Slider";
 import Description from "components/Description";
 import * as Heading from "UI/Heading";
-import { useStore } from "hooks";
 import { media } from "utils";
 
 const StyledUserContainer = styled.div`
@@ -42,8 +41,6 @@ const StyledUserContainer = styled.div`
 `;
 
 function User({ theme, location }) {
-  const [{ app }] = useStore();
-  console.log("app", app);
   const user = data.users.find(user => location.pathname.includes(user.slug));
   return (
     <Spring

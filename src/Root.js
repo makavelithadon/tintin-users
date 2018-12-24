@@ -2,7 +2,6 @@ import React from "react";
 import { createGlobalStyle, ThemeProvider, css } from "styled-components";
 import normalizeCSS from "normalize.css";
 import { getGoogleFonts, flat } from "utils";
-import { useStore } from "hooks";
 
 // Fonts imports
 
@@ -63,8 +62,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Root = ({ children }) => {
-  const [{ theme }] = useStore();
+const Root = ({ children, theme }) => {
   const ui = typeof children === "function" ? children() : children;
   return (
     <>

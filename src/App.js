@@ -1,15 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-util";
 import { Route, Switch } from "react-router-dom";
-import Root from "Root";
-import StoreProvider from "state/store";
+import { Provider } from "react-redux";
+import Root from "containers/Root";
+import store from "state/store";
 import * as Layout from "components/Layout";
 import { NoMatch } from "views";
 import { HOME, ADMIN } from "routes";
 
 function App() {
   return (
-    <StoreProvider>
+    <Provider store={store}>
       <Router>
         <Root>
           <Switch>
@@ -19,7 +20,7 @@ function App() {
           </Switch>
         </Root>
       </Router>
-    </StoreProvider>
+    </Provider>
   );
 }
 
