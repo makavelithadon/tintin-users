@@ -21,8 +21,4 @@ const store = createStore(
 
 sagaMiddleware.run(sagas);
 
-if (auth.isLogged()) {
-  store.dispatch({ type: LOGIN_SUCCESS, payload: { data: auth.getDecodedToken().user } });
-}
-
 export default store;

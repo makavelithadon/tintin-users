@@ -17,11 +17,12 @@ export default {
   },
   isLogged() {
     try {
-      if (storage.getItem(storageKey) === null) return false;
-      const decoded = this.decode(storage.getItem(storageKey));
+      const tokenFromStorage = this.getToken();
+      if (tokenFromStorage === null) return false;
+      const decoded = this.decode(tokenFromStorage);
       return !!decoded && !this.isExpired(decoded);
     } catch (err) {
-      console.error("Not logged.", err);
+      console.error("Failed to decode the provided storage token.", err);
       return false;
     }
     return true;

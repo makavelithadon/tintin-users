@@ -6,6 +6,7 @@ import { H2 } from "UI/Heading";
 import { lowercasify } from "utils";
 import { useForm } from "hooks";
 import globalAuth from "auth";
+import { ADMIN_PROFILE } from "routes";
 
 const StyledForm = styled.form`
   display: flex;
@@ -52,7 +53,7 @@ function FormLogin({ auth, login }) {
   const { isLoading } = auth;
 
   return globalAuth.isLogged() ? (
-    <Redirect to={"/admin/list"} />
+    <Redirect to={ADMIN_PROFILE} />
   ) : (
     <StyledForm onSubmit={handleSubmit}>
       <H2 color={"primary"}>Login</H2>
