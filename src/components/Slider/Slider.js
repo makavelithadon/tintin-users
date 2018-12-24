@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import ScrollHandler from "components/ScrollHandler";
-import { useStore } from "hooks";
 
 const StyledSlider = styled.section`
   position: relative;
@@ -10,7 +9,6 @@ const StyledSlider = styled.section`
 `;
 
 function Slider({ theme }) {
-  const [state, dispatch] = useStore();
   function handleScroll({ refTop, height, isOverTop }) {
     const distance = refTop - height + parseInt(theme.styles.sidebar.paddingBottom, 10);
     const isSecondarySidebarEmailAddress = distance < 0;

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, Component } from "react";
 import Burger from "./Burger";
-import Nav from "./Nav";
+import Nav from "containers/Nav";
 import Sidebar from "./Sidebar";
 
 const MenuContext = createContext();

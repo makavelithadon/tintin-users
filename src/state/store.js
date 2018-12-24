@@ -1,12 +1,6 @@
-import React, { createContext, useReducer } from "react";
 import rootReducer from "state/ducks";
-export const StoreContext = createContext();
+import { createStore } from "redux";
 
-export default function Store({ rootReducer, initialStore, ...rest }) {
-  const state = useReducer(rootReducer, initialStore, { type: "__INIT__" });
-  return <StoreContext.Provider {...rest} value={state} />;
-}
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-Store.defaultProps = {
-  rootReducer
-};
+export default store;
