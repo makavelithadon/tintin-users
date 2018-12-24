@@ -124,7 +124,6 @@ const StyledExitIconContainer = styled.div`
 `;
 
 function Nav({ theme, toggleTheme }) {
-  console.log("toggleTheme", toggleTheme);
   return (
     <Menu.Consumer>
       {({ isOpen, toggle }) => {
