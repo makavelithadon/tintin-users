@@ -6,14 +6,24 @@ import { formatRoute } from "react-router-named-routes";
 import { AdminLogin as Login, NoMatch } from "views";
 import Logout from "containers/Logout";
 import auth from "auth";
-import { ADMIN, ADMIN_LOGIN, ADMIN_LOGOUT } from "routes";
+import { ADMIN, ADMIN_LOGIN, ADMIN_LOGOUT, ADMIN_PROFILE } from "routes";
+import { connect } from "react-redux";
+import { getAuth } from "state/ducks/auth/selectors";
 
 const StyledMain = styled.main`
   position: relative;
   min-height: 100vh;
 `;
 
-const List = props => <div>List of all users</div>;
+const mapStateToProps = state => ({
+  auth: getAuth(state)
+});
+
+const Profile = connect(mapStateToProps)(props => (
+  <div>
+    {props.auth.data.id} {props.auth.data.email}
+  </div>
+));
 
 function Admin({ history }) {
   return (
@@ -24,9 +34,9 @@ function Admin({ history }) {
         <Route path={ADMIN_LOGIN} component={Login} />
         <Route path={ADMIN_LOGOUT} component={Logout} />
         <AuthenticatedRoute
-          path="/admin/list"
+          path={ADMIN_PROFILE}
           isAuthenticated={auth.isLogged()}
-          component={List}
+          component={Profile}
           loginPath={ADMIN_LOGIN}
         />
         <Route component={NoMatch} />

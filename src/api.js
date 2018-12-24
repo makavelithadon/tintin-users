@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const __ENDPOINT__ = process.env.REACT_APP_API_URL;
+const ENDPOINT = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 export default {
   login(credentials) {
-    return axios.post(`${__ENDPOINT__}/admin/login`, credentials);
+    return axios.post(`${ENDPOINT}/admin/login`, credentials);
   }
 };
