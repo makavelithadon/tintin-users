@@ -105,10 +105,10 @@ function Sidebar({ theme }) {
             <Burger color={"primary"} />
           </StyledBurgerContainer>
           <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
-            {match => (
-              <StyledEmailContainer>
-                <StyledEmailWrapper>
-                  {match ? (
+            {match =>
+              match ? (
+                <StyledEmailContainer>
+                  <StyledEmailWrapper>
                     <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>
                       <StyledEmailWithColor color={"primary"} zIndex={2}>
                         romuald.duconseil@hotmail.fr
@@ -117,10 +117,10 @@ function Sidebar({ theme }) {
                         romuald.duconseil@hotmail.fr
                       </StyledEmailWithColor>
                     </StyledEmail>
-                  ) : null}
-                </StyledEmailWrapper>
-              </StyledEmailContainer>
-            )}
+                  </StyledEmailWrapper>
+                </StyledEmailContainer>
+              ) : null
+            }
           </Media>
         </StyledSidebar>
       )}
