@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 import { H2 } from "UI/Heading";
 import { lowercasify } from "utils";
 import { useForm } from "hooks";
@@ -41,15 +40,14 @@ const StyledInput = styled.input.attrs(({ type, name }) => ({
 `;
 
 function FormLogin({ auth, login }) {
-  const { state, handleChange } = useForm({ email: "", password: "" });
+  const { fields, handleChange } = useForm({ email: "", password: "" });
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (auth.isLoading) return;
-    login(state);
+    login(fields);
   }
 
-  const { email, password } = state;
   const { isLoading } = auth;
 
   return globalAuth.isLogged() ? (
@@ -57,22 +55,17 @@ function FormLogin({ auth, login }) {
   ) : (
     <StyledForm onSubmit={handleSubmit}>
       <H2 color={"primary"}>Login</H2>
-      <StyledInput
-        autoComplete={lowercasify(`${process.env.REACT_APP_APPNAME}-email`)}
-        name={"email"}
-        type="email"
-        value={email}
-        onChange={handleChange}
-        readOnly={isLoading}
-      />
-      <StyledInput
-        autoComplete={lowercasify(`${process.env.REACT_APP_APPNAME}-password`)}
-        name={"password"}
-        type="password"
-        value={password}
-        onChange={handleChange}
-        readOnly={isLoading}
-      />
+      {[{ name: "email" }, { name: "password" }].map(({ name }) => (
+        <StyledInput
+          key={name}
+          autoComplete={lowercasify(`${process.env.REACT_APP_APPNAME}-${name}`)}
+          name={name}
+          type={name}
+          value={fields[name]}
+          onChange={handleChange}
+          readOnly={isLoading}
+        />
+      ))}
       <StyledInput type={"submit"} color={"secondary"} value={"Valider"} disabled={isLoading} />
       <a href="#" style={{ marginTop: "auto" }}>
         Reset password

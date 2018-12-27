@@ -10,7 +10,6 @@ import { NoMatch } from "views";
 import { HOME, ADMIN } from "routes";
 
 store.dispatch({ type: INIT_TYPE });
-
 export default function App() {
   return (
     <Provider store={store}>

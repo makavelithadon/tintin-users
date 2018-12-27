@@ -134,7 +134,7 @@ function Nav({ theme, toggleTheme }) {
             {props => (
               <StyledNav {...props} theme={theme} from={"left"}>
                 <StyledExitIconContainer>
-                  <Exit onClick={() => toggle(false)} animationState={animationState} />
+                  <Exit onClick={() => toggle(false)} animationState={animationState} immediate={false} />
                 </StyledExitIconContainer>
                 <AnimatedLinks
                   items={data.users}

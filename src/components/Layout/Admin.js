@@ -1,42 +1,56 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
-import { Route, Redirect, Switch, withRouter } from "react-router-dom";
+import { Route, Redirect, Switch, withRouter, NavLink } from "react-router-dom";
 import { AuthenticatedRoute } from "react-router-util";
-import { formatRoute } from "react-router-named-routes";
 import { AdminLogin as Login, NoMatch } from "views";
 import Logout from "containers/Logout";
 import auth from "auth";
 import { ADMIN, ADMIN_LOGIN, ADMIN_LOGOUT, ADMIN_PROFILE } from "routes";
+import SnackBar from "components/SnackBar";
 import { connect } from "react-redux";
 import { getAuth } from "state/ducks/auth/selectors";
+import { showLoginDialog } from "state/ducks/auth/actions";
+import { useShowLoginDialog } from "hooks";
+import NavBar from "components/Admin/NavBar";
 
 const StyledMain = styled.main`
   position: relative;
   min-height: 100vh;
 `;
 
-const mapStateToProps = state => ({
-  auth: getAuth(state)
-});
+const Characters = props => <div>List all characters</div>;
 
-const Profile = connect(mapStateToProps)(props => (
-  <div>
-    {props.auth.data.id} {props.auth.data.email}
-  </div>
-));
-
-function Admin({ history }) {
+function Admin({ history, auth: { showLoginDialog, data }, hideLoginDialog }) {
   return (
     <StyledMain>
+      {auth.isLogged() && <NavBar links={["Profile", "Characters"]} />}
       {auth.isLogged() && <button onClick={() => history.replace(ADMIN_LOGOUT)}>Logout</button>}
+      {auth.isLogged() && (
+        <SnackBar show={showLoginDialog} onClose={hideLoginDialog}>
+          Hello {data.email}
+        </SnackBar>
+      )}
       <Switch>
         <Redirect exact from={ADMIN} to={ADMIN_LOGIN} />
-        <Route path={ADMIN_LOGIN} component={Login} />
+        <Route
+          path={ADMIN_LOGIN}
+          render={props => (auth.isLogged() ? <Redirect to={ADMIN_PROFILE} /> : <Login {...props} />)}
+        />
         <Route path={ADMIN_LOGOUT} component={Logout} />
         <AuthenticatedRoute
           path={ADMIN_PROFILE}
           isAuthenticated={auth.isLogged()}
-          component={Profile}
+          component={props => (
+            <div>
+              {data.id} {data.email}
+            </div>
+          )}
+          loginPath={ADMIN_LOGIN}
+        />
+        <AuthenticatedRoute
+          path={"/admin/characters"}
+          isAuthenticated={auth.isLogged()}
+          component={Characters}
           loginPath={ADMIN_LOGIN}
         />
         <Route component={NoMatch} />
@@ -44,5 +58,18 @@ function Admin({ history }) {
     </StyledMain>
   );
 }
+
+const mapStateToProps = state => ({
+  auth: getAuth(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+  hideLoginDialog: () => dispatch(showLoginDialog(false))
+});
+
+Admin = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Admin);
 
 export default withRouter(withTheme(Admin));

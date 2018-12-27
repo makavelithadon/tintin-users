@@ -1,11 +1,19 @@
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, take, call, put } from "redux-saga/effects";
 import { LOGIN, LOGOUT } from "./types";
-import { loginSuccess, loginError } from "./actions";
+import { loginSuccess, loginError, showLoginDialog } from "./actions";
+import { INIT_TYPE } from "./../../../constants";
 import auth from "auth";
 import api from "api";
 
 async function postAuth(params) {
   return await api.login(params);
+}
+
+function* initWorkerSaga() {
+  if (auth.isLogged()) {
+    const { user } = auth.getDecodedToken();
+    yield put(loginSuccess({ data: user }));
+  }
 }
 
 function* loginWorker(action) {
@@ -15,6 +23,7 @@ function* loginWorker(action) {
     const { user } = auth.decode(token);
     auth.login(token);
     yield put(loginSuccess({ data: user }));
+    yield put(showLoginDialog(true));
   } catch (error) {
     yield put(loginError({ error: error.response }));
   }
@@ -27,4 +36,6 @@ function* logoutWorker() {
 export default function* authWatcherSaga() {
   yield takeLatest(LOGIN, loginWorker);
   yield takeLatest(LOGOUT, logoutWorker);
+  yield take(INIT_TYPE);
+  yield call(initWorkerSaga);
 }
