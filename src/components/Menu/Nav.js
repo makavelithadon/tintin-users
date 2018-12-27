@@ -41,11 +41,11 @@ const AnimatedLinks = Keyframes.Trail({
     {
       o: 1,
       slide: 0,
-      from: { o: 0, slide: 36 },
+      from: { o: 0, slide: 30 },
       config: { ...linksTrailConfigs.common, ...linksTrailConfigs.enter }
     }
   ],
-  leave: [{ o: 0, slide: 36, config: { ...linksTrailConfigs.common, ...linksTrailConfigs.leave } }]
+  leave: [{ o: 0, slide: 30, config: { ...linksTrailConfigs.common, ...linksTrailConfigs.leave } }]
 });
 
 const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
