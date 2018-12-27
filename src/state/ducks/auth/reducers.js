@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT } from "./types";
+import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, SHOW_LOGIN_DIALOG, HIDE_LOGIN_DIALOG } from "./types";
 
 const initialData = null;
 
@@ -42,8 +42,20 @@ const error = (state = initialError, action) => {
   }
 };
 
+const initialShowLoginDialog = false;
+
+const showLoginDialog = (state = initialShowLoginDialog, action) => {
+  switch (action.type) {
+    case SHOW_LOGIN_DIALOG:
+      return !!action.payload.show;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   data,
   isLoading,
-  error
+  error,
+  showLoginDialog
 });
