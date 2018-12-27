@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { withTheme } from 'styled-components';
+import styled, { withTheme } from "styled-components";
 import { createPortal } from "react-dom";
 import { Transition } from "react-spring";
 import SnackBar from "UI/SnackBar";
@@ -17,10 +17,9 @@ function SimpleSnackBar({ children, onClose, show, where, timeout, theme }) {
     timer = window.setTimeout(onClose, timeout || 6000);
   }
   let closeButtonProps = {
-    animationState: 'enter',
+    animationState: "enter",
     color: theme.colors.darkGrey,
     size: "tiny",
-    immediate: false,
     onClick: () => {
       onClose();
       window.clearTimeout(timer);
