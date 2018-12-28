@@ -3,7 +3,7 @@ import styled, { withTheme } from "styled-components";
 import Media from "react-media";
 import Markdown from "components/Markdown/Markdown";
 import { Spring } from "react-spring";
-import { easePolyOut } from "d3-ease";
+import { easeSinOut } from "d3-ease";
 import data from "data/index";
 import ScrolledPictures from "components/ScrolledPictures";
 import Slider from "components/Slider/Slider";
@@ -46,7 +46,7 @@ function User({ theme, location }) {
     <Spring
       from={{ o: 0, x: -101 }}
       to={{ o: 1, x: 0 }}
-      config={{ duration: 600, delay: 800, easing: easePolyOut }}
+      config={{ duration: 600, delay: 800, easing: easeSinOut }}
       native
     >
       {props => (

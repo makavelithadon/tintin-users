@@ -16,6 +16,10 @@ const StyledIcon = styled(animated.ul)`
   width: ${({ size }) => sizes[size]}px;
   height: ${({ size }) => sizes[size]}px;
   cursor: pointer;
+  transition: ${({ theme }) => theme.transitions.primary};
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 const StyledExitItem = styled(animated.li).attrs(({ o, w }) => ({
@@ -28,7 +32,7 @@ const StyledExitItem = styled(animated.li).attrs(({ o, w }) => ({
   left: 50%;
   top: 50%;
   transform: ${({ angle }) => `translate(-50%, -50%) rotate(${angle}deg);`};
-  height: 1px;
+  height: 1.5px;
   background-color: ${({ color }) => color};
   border-radius: 5px;
 `;
