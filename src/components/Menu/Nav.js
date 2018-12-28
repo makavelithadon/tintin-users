@@ -1,30 +1,21 @@
 import React, { memo } from "react";
 import styled, { withTheme } from "styled-components";
 import { formatRoute } from "react-router-named-routes";
-import { Keyframes, animated, config } from "react-spring";
+import { Keyframes, animated, config, interpolate } from "react-spring";
 import Menu from "./index";
 import { setDocumentElementStyles } from "./utils";
 import data from "data/index";
 import { AnimatedExit as Exit } from "UI/Icons";
-import {
-  easePolyIn,
-  easePolyOut,
-  easeExpOut,
-  easeSinOut,
-  easeBackOut,
-  easeQuadOut,
-  easeCubicInOut,
-  easePolyInOut
-} from "d3-ease";
+import { easePolyIn, easePolyOut, easeSinOut, easeBackOut, easeQuadOut, easeCubicInOut, easePolyInOut } from "d3-ease";
 import { media } from "utils";
 import NavLink from "components/NavLink";
 import { toggleTheme } from "state/ducks/theme/actions";
 import { CHARACTER } from "routes";
 
 const navSpringConfig = {
-  common: { duration: 550 },
-  enter: { easing: easeCubicInOut },
-  leave: key => ({ delay: key === "o" ? 650 : 550, easing: easeCubicInOut })
+  common: { duration: 450 },
+  enter: { easing: easeSinOut },
+  leave: key => ({ delay: key === "o" ? 650 : 550, easing: easeSinOut })
 };
 
 const linksTrailConfigs = {
@@ -50,11 +41,16 @@ const AnimatedLinks = Keyframes.Trail({
     {
       o: 1,
       rotate: 0,
-      from: { o: 0, rotate: 3 },
-      config: { ...linksTrailConfigs.common, ...linksTrailConfigs.enter }
+      y: 0,
+      from: { o: 0, rotate: 1, y: 8 },
+      config: key => {
+        const conf = { ...linksTrailConfigs.common, ...linksTrailConfigs.enter };
+        if (key === "rotate") conf.duration = 400;
+        return conf;
+      }
     }
   ],
-  leave: [{ o: 0, rotate: 3, config: { ...linksTrailConfigs.common, ...linksTrailConfigs.leave } }]
+  leave: [{ o: 0, rotate: 1, y: 8, config: { ...linksTrailConfigs.common, ...linksTrailConfigs.leave } }]
 });
 
 const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
@@ -96,10 +92,10 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   ${media.large`padding: 60px 60px 60px 220px;`};
 `;
 
-const StyledNavItem = styled(animated.li).attrs(({ o, rotate }) => ({
+const StyledNavItem = styled(animated.li).attrs(({ o, rotate, y }) => ({
   style: {
     //opacity: o.interpolate(o => o),
-    //transform: rotate.interpolate(r => `rotate(${r}deg)`),
+    transform: interpolate([rotate, y], (r, y) => `rotate(${r}deg)`),
     visibility: o.interpolate(o => (o > 0 ? "visible" : "hidden")),
     pointerEvents: o.interpolate(o => (o >= 1 ? "auto" : "none"))
   }
@@ -112,7 +108,7 @@ const StyledNavItem = styled(animated.li).attrs(({ o, rotate }) => ({
   color: ${({ theme }) => theme.colors.white};
   font-family: ${({ theme }) => theme.fonts.primary};
   text-transform: uppercase;
-  transform-origin: 0 50%;
+  transform-origin: -200px 50%;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -138,19 +134,16 @@ const AnimatedLinksLetter = Keyframes.Trail({
     {
       o: 1,
       y: 0,
-      from: { o: 0, y: 60 },
-      config: key => {
-        console.log("key", key);
-        return {
-          clamp: true,
-          duration: key === "o" ? 500 : 700,
-          easing: easeSinOut,
-          delay: 400
-        };
-      }
+      from: { o: 0, y: 100 },
+      config: key => ({
+        clamp: true,
+        duration: key === "o" ? 500 : 700,
+        easing: easeSinOut,
+        delay: 300
+      })
     }
   ],
-  leave: [{ o: 0, y: 60, config: { easing: easeCubicInOut, clamp: true, duration: 500 } }]
+  leave: [{ o: 0, y: 100, config: { easing: easeSinOut, clamp: true, duration: 500 } }]
 });
 
 const StyledLinkLetter = styled(animated.span).attrs(({ o, y }) => ({
@@ -183,7 +176,7 @@ function Nav({ theme, toggleTheme }) {
                     onClick={() => toggle(false)}
                     animationState={animationState}
                     immediate={false}
-                    color={theme.colors.primary}
+                    color={theme.colors.background}
                   />
                 </StyledExitIconContainer>
                 <AnimatedLinks
