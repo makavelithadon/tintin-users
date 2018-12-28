@@ -7,6 +7,7 @@ import Header from "components/Header";
 import { Home, User } from "views";
 import { scrollToTop } from "utils";
 import { HOME, CHARACTER } from "routes";
+import patternPicture from "assets/img/pattern.jpg";
 
 const StyledMain = styled.main`
   position: relative;
@@ -21,9 +22,9 @@ const StyledContent = styled.section`
 class Layout extends React.Component {
   componentDidMount() {
     scrollToTop();
-    console.log("mounting");
   }
   componentDidUpdate(prevProps) {
+    console.log("this.props.location", this.props.location, "prevProps.location", prevProps.location);
     if (this.props.location !== prevProps.location) {
       scrollToTop();
     }

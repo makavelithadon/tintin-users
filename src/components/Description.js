@@ -13,7 +13,7 @@ const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
   line-height: 1.4;
   text-align: left;
   min-height: 100vh;
-  ${media.forEach({ xs: "100%", medium: "70%" }, w => `width: ${w};`)};
+  ${media.forEach({ xs: "100%", medium: "60%" }, w => `width: ${w};`)};
   ${media.forEach({ xs: 0, medium: "6%" }, paddingLeft => `padding-left: ${paddingLeft};`)};
 `;
 

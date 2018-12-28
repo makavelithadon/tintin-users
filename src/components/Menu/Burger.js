@@ -10,6 +10,14 @@ const StyledBurgerContainer = styled.ul`
   width: ${burgerWidth}px;
   height: ${burgerHeight}px;
   cursor: pointer;
+  &:hover {
+    & ${StyledBurgerItem}:first-child {
+      transform: translate3d(0, -3px, 0);
+    }
+    & ${StyledBurgerItem}:last-child {
+      transform: translate3d(0, 3px, 0);
+    }
+  }
 `;
 
 const itemHeight = 2;
@@ -21,6 +29,7 @@ const StyledBurgerItem = styled.li`
   width: ${props => (props.index === 2 ? "75%" : "100%")};
   background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.darkGrey)}
   top: ${props => `${Math.floor(props.index * (burgerHeight / 2) - itemHeight)}px`};
+  transition: ${({ theme }) => theme.transitions.primary};
 `;
 
 export default function Burger({ color, ...props }) {

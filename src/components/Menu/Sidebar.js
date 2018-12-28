@@ -6,9 +6,9 @@ import Burger from "./Burger";
 import { media } from "utils";
 import Media from "react-media";
 import appLogo from "assets/img/logo.png";
-import { easeCircleOut } from "d3-ease";
+import { easeSinOut } from "d3-ease";
 
-const sidebarSpringConfig = { duration: 300, easing: easeCircleOut, delay: 2000 };
+const sidebarSpringConfig = { duration: 300, easing: easeSinOut, delay: 1500 };
 
 const StyledLogo = styled.img`
   display: block;
