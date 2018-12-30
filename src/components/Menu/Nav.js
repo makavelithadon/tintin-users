@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import styled, { withTheme } from "styled-components";
 import { formatRoute } from "react-router-named-routes";
-import { Keyframes, animated, config } from "react-spring";
+import { Keyframes, animated } from "react-spring";
 import Menu from "./index";
 import { setDocumentElementStyles } from "./utils";
 import data from "data/index";
@@ -148,7 +148,7 @@ const AnimatedLinksLetter = Keyframes.Trail({
 const StyledLinkLetter = styled(animated.span).attrs(({ o, y }) => ({
   style: {
     opacity: o.interpolate(o => o),
-    transform: y.interpolate(y => `translateY(${y}%)`)
+    transform: y.interpolate(y => `translate3d(0, ${y}%, 0)`)
   }
 }))`
   position: absolute;
