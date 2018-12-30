@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import styled, { withTheme } from "styled-components";
 import { formatRoute } from "react-router-named-routes";
-import { Keyframes, animated, config, interpolate } from "react-spring";
+import { Keyframes, animated, config } from "react-spring";
 import Menu from "./index";
 import { setDocumentElementStyles } from "./utils";
 import data from "data/index";
@@ -94,8 +94,7 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
 
 const StyledNavItem = styled(animated.li).attrs(({ o, rotate, y }) => ({
   style: {
-    //opacity: o.interpolate(o => o),
-    transform: interpolate([rotate, y], (r, y) => `rotate(${r}deg)`),
+    transform: rotate.interpolate(r => `rotate(${r}deg)`),
     visibility: o.interpolate(o => (o > 0 ? "visible" : "hidden")),
     pointerEvents: o.interpolate(o => (o >= 1 ? "auto" : "none"))
   }
