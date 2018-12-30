@@ -3,7 +3,7 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import styled, { withTheme } from "styled-components";
 import Media from "react-media";
 import Markdown from "components/Markdown/Markdown";
-import { Spring, Transition, animated } from "react-spring";
+import { Spring, Transition, Trail, animated } from "react-spring";
 import { easeSinOut } from "d3-ease";
 import data from "data/index";
 import ScrolledPictures from "components/ScrolledPictures";
@@ -48,10 +48,10 @@ const StyledUserContainer = styled.div`
   padding-bottom: 20vh;
 `;
 
-const StyledAnimatedCharacterDisplayName = styled(animated.h1).attrs(({ o, y }) => ({
+const StyledAnimatedCharacterDisplayName = styled(animated.h1).attrs(({ o, r }) => ({
   style: {
     opacity: o.interpolate(o => o),
-    transform: y.interpolate(y => `translateY(${y}px)`)
+    transform: r.interpolate(r => `rotate(${r}deg)`)
   }
 }))`
   position: absolute;
@@ -65,12 +65,62 @@ const StyledAnimatedCharacterDisplayName = styled(animated.h1).attrs(({ o, y }) 
   ${media.forEach({ xs: "4rem", small: "7rem" }, fZ => `font-size: ${fZ};`)};
 `;
 
-const CharacterDisplayName = withRouter(({ style, character: characterFromParent }) => {
-  const [character] = useState(characterFromParent);
+const StyledLinkLetter = styled(animated.span).attrs(({ o, y }) => ({
+  style: {
+    opacity: o.interpolate(o => o),
+    transform: y.interpolate(y => `translate3d(0, ${y}px, 0)`)
+  }
+}))`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
+
+const CharacterDisplayName = withRouter(({ style, name: nameFromParent }) => {
+  const [name] = useState(nameFromParent);
   return (
-    <StyledAnimatedCharacterDisplayName {...style} uppercase color={"primary"}>
-      {character.displayName}
+    <StyledAnimatedCharacterDisplayName
+      {...style}
+      uppercase
+      color={"primary"}
+      style={{ width: "100%", height: "100%" }}
+    >
+      <Trail
+        items={name.split("").map((letter, index) => ({
+          letter: letter === " " ? <span dangerouslySetInnerHTML={{ __html: "&nbsp;" }} /> : letter,
+          index
+        }))}
+        keys={item => `${item.letter}-${item.index}`}
+        from={{ o: 0, y: 60 }}
+        to={{ o: 1, y: 0 }}
+        config={key => ({
+          clamp: true,
+          duration: 500,
+          easing: easeSinOut
+        })}
+        native
+      >
+        {item => props => (
+          <span
+            style={{
+              display: "inline-block",
+              overflow: "hidden",
+              position: "relative"
+            }}
+          >
+            <span style={{ opacity: 0 }}>{item.letter}</span>
+            <StyledLinkLetter {...props}>{item.letter}</StyledLinkLetter>
+          </span>
+        )}
+      </Trail>
     </StyledAnimatedCharacterDisplayName>
+    /* <StyledAnimatedCharacterDisplayName {...style} uppercase color={"primary"}>
+      {name}
+    </StyledAnimatedCharacterDisplayName> */
   );
 });
 
@@ -106,13 +156,13 @@ function User({ theme, location }) {
                   }
                 </Media>
                 <Description {...props} description={<Markdown content={user.description} />}>
-                  <Spring from={{ height }} to={{ height }} native>
+                  <Spring from={{ height }} to={{ height }} native config={{ duration: 450, easing: easeSinOut }}>
                     {({ height }) => {
                       return (
                         <animated.div
                           style={{
                             position: "relative",
-                            marginBottom: 30,
+                            marginBottom: 40,
                             height: height.interpolate(h => h)
                           }}
                         >
@@ -121,21 +171,19 @@ function User({ theme, location }) {
                           </Heading.H1>
                           <Transition
                             keys={location.pathname}
-                            from={{ o: 0, y: 30 }}
-                            enter={{ o: 1, y: 0 }}
-                            leave={{ o: 0, y: -80 }}
+                            from={{ o: 0, r: 4 }}
+                            enter={{ o: 1, r: 0 }}
+                            leave={{ o: 0, r: 0 }}
                             config={(_, type) => {
-                              return { duration: type !== "leave" ? 600 : 280, easing: easeSinOut };
+                              return { duration: type !== "leave" ? 550 : 1, easing: easeSinOut };
                             }}
-                            reset={true}
-                            unique={true}
                             native
                           >
                             {item => style => (
                               <Switch location={location}>
                                 <Route
                                   path={CHARACTER}
-                                  render={props => <CharacterDisplayName style={style} character={user} />}
+                                  render={props => <CharacterDisplayName style={style} name={user.displayName} />}
                                 />
                               </Switch>
                             )}
