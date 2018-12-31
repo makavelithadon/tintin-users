@@ -6,6 +6,7 @@ import login01 from "assets/img/admin/login/01.jpg";
 import login02 from "assets/img/admin/login/02.jpg";
 import FormLogin from "containers/FormLogin";
 import NavLink from "components/NavLink";
+import { backgroundCover } from "style-utils";
 
 const images = [login01, login02];
 
@@ -29,8 +30,7 @@ const StyledCard = styled.article`
 `;
 
 const StyledImg = styled.div`
-  background: ${({ images }) => `url(${images[randomize(0, images.length - 1)]}) no-repeat center`};
-  background-size: cover;
+  ${backgroundCover(images[randomize(0, images.length - 1)])}
   flex-basis: 60%;
 `;
 

@@ -1,14 +1,8 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
-import { animated } from "react-spring";
 import { media } from "utils";
 
-const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
-  style: {
-    opacity: o.interpolate(o => o),
-    transform: x.interpolate(x => `translateY(${-x}px)`)
-  }
-}))`
+const StyledDescription = styled.div`
   color: ${({ theme }) => theme.colors.text};
   line-height: 1.4;
   text-align: left;
@@ -17,9 +11,9 @@ const StyledDescription = styled(animated.div).attrs(({ x, o }) => ({
   ${media.forEach({ xs: 0, medium: "6%" }, paddingLeft => `padding-left: ${paddingLeft};`)};
 `;
 
-function Description({ theme, description, children, ...rest }) {
+function Description({ theme, description, children }) {
   return (
-    <StyledDescription {...rest}>
+    <StyledDescription>
       {children && children}
       <article>{description && description}</article>
     </StyledDescription>

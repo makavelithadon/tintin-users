@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { withTheme } from "styled-components";
 import { Route, Switch, withRouter } from "react-router-dom";
 import Media from "react-media";
 import Menu from "components/Menu";
 import Header from "components/Header";
-import { Home, User } from "views";
+import { Home, Character } from "views";
 import { scrollToTop } from "utils";
 import { HOME, CHARACTER } from "routes";
 import patternPicture from "assets/img/pattern.jpg";
@@ -19,36 +19,30 @@ const StyledContent = styled.section`
   position: relative;
 `;
 
-class Layout extends React.Component {
-  componentDidMount() {
-    scrollToTop();
-  }
-  componentDidUpdate(prevProps) {
-    console.log("this.props.location", this.props.location, "prevProps.location", prevProps.location);
-    if (this.props.location !== prevProps.location) {
+function Layout({ theme, children, location }) {
+  useEffect(
+    () => {
       scrollToTop();
-    }
-  }
-  render() {
-    const { children, theme } = this.props;
-    const page = typeof children === "function" ? children() : children;
-    return (
-      <StyledMain>
-        <Menu>
-          <Menu.Nav />
-          <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
-            {matches => (matches ? <Menu.Sidebar /> : <Header />)}
-          </Media>
-        </Menu>
-        <StyledContent>
-          <Switch>
-            <Route exact path={HOME} component={Home} />
-            <Route exact path={CHARACTER} component={User} />
-          </Switch>
-        </StyledContent>
-      </StyledMain>
-    );
-  }
+    },
+    [location]
+  );
+  const page = typeof children === "function" ? children() : children;
+  return (
+    <StyledMain>
+      <Menu>
+        <Menu.Nav />
+        <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
+          {matches => (matches ? <Menu.Sidebar /> : <Header />)}
+        </Media>
+      </Menu>
+      <StyledContent>
+        <Switch>
+          <Route exact path={HOME} component={Home} />
+          <Route exact path={CHARACTER} component={Character} />
+        </Switch>
+      </StyledContent>
+    </StyledMain>
+  );
 }
 
 export default withRouter(withTheme(Layout));

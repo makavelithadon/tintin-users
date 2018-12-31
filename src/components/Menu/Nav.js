@@ -2,15 +2,15 @@ import React, { memo } from "react";
 import styled, { withTheme } from "styled-components";
 import { formatRoute } from "react-router-named-routes";
 import { Keyframes, animated } from "react-spring";
-import Menu from "./index";
+import Menu from "./";
 import { setDocumentElementStyles } from "./utils";
-import data from "data/index";
+import data from "data";
 import { AnimatedExit as Exit } from "UI/Icons";
-import { easePolyIn, easePolyOut, easeSinOut, easeBackOut, easeQuadOut, easeCubicInOut, easePolyInOut } from "d3-ease";
+import { easeSinOut, easeCubicInOut } from "d3-ease";
 import { media } from "utils";
 import NavLink from "components/NavLink";
-import { toggleTheme } from "state/ducks/theme/actions";
 import { CHARACTER } from "routes";
+import { fillSizes } from "style-utils";
 
 const navSpringConfig = {
   common: { duration: 450 },
@@ -151,13 +151,7 @@ const StyledLinkLetter = styled(animated.span).attrs(({ o, y }) => ({
     transform: y.interpolate(y => `translate3d(0, ${y}%, 0)`)
   }
 }))`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  ${fillSizes()}
 `;
 
 function Nav({ theme, toggleTheme }) {
@@ -165,9 +159,13 @@ function Nav({ theme, toggleTheme }) {
     <Menu.Consumer>
       {({ isOpen, toggle }) => {
         const animationState = isOpen ? "enter" : "leave";
-        setDocumentElementStyles(isOpen);
+        isOpen && setDocumentElementStyles(isOpen);
         return (
-          <AnimatedNav state={animationState} native>
+          <AnimatedNav
+            state={animationState}
+            native
+            onRest={({ o }) => o === 0 && !isOpen && setDocumentElementStyles(false)}
+          >
             {props => (
               <StyledNav {...props} theme={theme} from={"left"}>
                 <StyledExitIconContainer>

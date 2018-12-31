@@ -5,6 +5,9 @@ import haddockPicture01 from "assets/img/haddock/01/large.png";
 import haddockPicture03 from "assets/img/haddock/03/large.png";
 import tournesolPicture01 from "assets/img/tournesol/01/large.png";
 import tournesolPicture02 from "assets/img/tournesol/02/large.png";
+import dupondtPicture01 from "assets/img/dupondt/01/large.jpg";
+import dupondtPicture02 from "assets/img/dupondt/02/large.png";
+import dupondtPicture03 from "assets/img/dupondt/03/large.jpg";
 import faker from "faker";
 import tintinText from "./tintin.md.js";
 // import milouText from "./milou.md";
@@ -79,7 +82,21 @@ const data = {
       id: 5,
       slug: "dupondt",
       displayName: "Dupont et Dupond",
-      description: tintinText
+      description: tintinText,
+      pictures: [
+        {
+          src: dupondtPicture01,
+          caption: faker.lorem.sentence()
+        },
+        {
+          src: dupondtPicture02,
+          caption: faker.lorem.sentence()
+        },
+        {
+          src: dupondtPicture03,
+          caption: faker.lorem.sentence()
+        }
+      ]
     },
     {
       id: 6,

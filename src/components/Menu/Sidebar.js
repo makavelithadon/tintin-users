@@ -7,6 +7,7 @@ import { media } from "utils";
 import Media from "react-media";
 import appLogo from "assets/img/logo.png";
 import { easeSinOut } from "d3-ease";
+import { center } from "style-utils";
 
 const sidebarSpringConfig = { duration: 300, easing: easeSinOut, delay: 1500 };
 
@@ -37,10 +38,7 @@ const StyledSidebar = styled(animated.aside).attrs(({ o, x }) => ({
 `;
 
 const StyledBurgerContainer = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  ${center()}
 `;
 
 const emailHeight = "20px";

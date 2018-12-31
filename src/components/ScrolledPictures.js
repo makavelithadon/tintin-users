@@ -13,14 +13,13 @@ const StyledContainer = styled.div`
   background-color: ${({ theme }) => (isDev && DEBUG ? theme.colors.secondary : "none")};
 `;
 
-const StyledScrolledPictures = styled(animated.div).attrs(({ o, width, height, top, position, bottom }) => ({
+const StyledScrolledPictures = styled(animated.div).attrs(({ width, height, top, position, bottom }) => ({
   style: {
     position,
     bottom,
     width,
     height,
-    top,
-    opacity: o.interpolate(o => o)
+    top
   }
 }))`
   overflow: hidden;
@@ -76,6 +75,8 @@ const StyledImg = styled(Img)`
   margin: 0 auto;
   max-width: 100%;
   max-height: 100%;
+  object-fit: cover;
+  width: auto;
 `;
 
 const StyledPictureCaptionContainer = styled.div.attrs(({ top }) => ({
@@ -107,7 +108,7 @@ function getSlideOpacity(index, scrollerWidth, x) {
   return opacity;
 }
 
-function ScrolledPictures({ theme, pictures, altText, x, ...props }) {
+function ScrolledPictures({ theme, pictures, altText, x }) {
   return (
     <StyledContainer>
       <ScrollHandler ref={React.createRef()} wrapper={StyledScrollerWrapper}>
@@ -122,7 +123,6 @@ function ScrolledPictures({ theme, pictures, altText, x, ...props }) {
           const currentIndex = Math.floor(normalizedScrollX / refWidth);
           return (
             <StyledScrolledPictures
-              {...props}
               position={isOverflow ? "absolute" : "fixed"}
               width={refWidth}
               height={"100vh"}
