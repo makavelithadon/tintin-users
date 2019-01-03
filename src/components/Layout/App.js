@@ -1,18 +1,22 @@
 import React, { useEffect } from "react";
 import styled, { withTheme } from "styled-components";
 import { Route, Switch, withRouter } from "react-router-dom";
-import Media from "react-media";
-import Menu from "components/Menu";
-import Header from "components/Header";
 import { Home, Character } from "views";
 import { scrollToTop } from "utils";
 import { HOME, CHARACTER } from "routes";
-import patternPicture from "assets/img/pattern.jpg";
+
+/* const ScratchTest = withAnimation({
+  component: ({ style: { o, x }, style, children }) => (
+    <animated.div style={{ opacity: o.interpolate(o => o), transform: x.interpolate(x => `translateX(${x}px)`) }}>
+      {typeof children !== "undefined" && (typeof children === "function" ? children(style) : children)}
+    </animated.div>
+  ),
+  animation: <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={config.gentle} native />
+}); */
 
 const StyledMain = styled.main`
   position: relative;
   min-height: 100vh;
-  transition: ${props => props.theme.transitions.primary};
 `;
 
 const StyledContent = styled.section`
@@ -26,15 +30,8 @@ function Layout({ theme, children, location }) {
     },
     [location]
   );
-  const page = typeof children === "function" ? children() : children;
   return (
     <StyledMain>
-      <Menu>
-        <Menu.Nav />
-        <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
-          {matches => (matches ? <Menu.Sidebar /> : <Header />)}
-        </Media>
-      </Menu>
       <StyledContent>
         <Switch>
           <Route exact path={HOME} component={Home} />

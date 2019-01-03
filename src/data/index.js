@@ -5,9 +5,13 @@ import haddockPicture01 from "assets/img/haddock/01/large.png";
 import haddockPicture03 from "assets/img/haddock/03/large.png";
 import tournesolPicture01 from "assets/img/tournesol/01/large.png";
 import tournesolPicture02 from "assets/img/tournesol/02/large.png";
-import dupondtPicture01 from "assets/img/dupondt/01/large.jpg";
+import dupondtPicture01 from "assets/img/dupondt/01/large.png";
 import dupondtPicture02 from "assets/img/dupondt/02/large.png";
 import dupondtPicture03 from "assets/img/dupondt/03/large.jpg";
+import milouPicture01 from "assets/img/milou/01/large.png";
+import castafiorePicture01 from "assets/img/castafiore/01/large.png";
+import nestorPicture01 from "assets/img/nestor/01/large.png";
+import lampionPicture01 from "assets/img/lampion/01/large.png";
 import faker from "faker";
 import tintinText from "./tintin.md.js";
 // import milouText from "./milou.md";
@@ -44,6 +48,12 @@ const data = {
       id: 2,
       slug: "milou",
       displayName: "Milou",
+      pictures: [
+        {
+          src: milouPicture01,
+          caption: faker.lorem.sentence()
+        }
+      ],
       description: tintinText
     },
     {
@@ -102,19 +112,37 @@ const data = {
       id: 6,
       slug: "nestor",
       displayName: "Nestor",
-      description: tintinText
+      description: tintinText,
+      pictures: [
+        {
+          src: nestorPicture01,
+          caption: faker.lorem.sentence()
+        }
+      ]
     },
     {
       id: 7,
       slug: "castafiore",
       displayName: "Bianca Castafiore",
-      description: tintinText
+      description: tintinText,
+      pictures: [
+        {
+          src: castafiorePicture01,
+          caption: faker.lorem.sentence()
+        }
+      ]
     },
     {
       id: 8,
       slug: "lampion",
       displayName: "Séraphin Lampion",
-      description: tintinText
+      description: tintinText,
+      pictures: [
+        {
+          src: lampionPicture01,
+          caption: faker.lorem.sentence()
+        }
+      ]
     }
   ]
 };

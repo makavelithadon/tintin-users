@@ -5,7 +5,6 @@ import { fetchCharactersSuccess, fetchCharactersError } from "./actions";
 import data from "data";
 
 async function fetchCharacters(params) {
-  await delay(2500);
   return await data;
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getCharacters } from "state/ducks/characters/selectors";
 import { fetchCharacters } from "state/ducks/characters/actions";
@@ -6,13 +6,16 @@ import List from "components/Character/List";
 import Loader from "UI/Loader";
 
 function CharactersList({ characters: { items: characters, isLoading, error }, fetchCharacters }) {
-  useEffect(
-    () => {
-      if (!characters.length) fetchCharacters();
-    },
-    [characters]
-  );
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    if (!mounted) {
+      setMounted(true);
+      fetchCharacters();
+    }
+  });
+  //setS(false);
   let ui = null;
+  if (!mounted) return null;
   if (error) {
     ui = <p>Error: {error.message}</p>;
   } else if (isLoading) {

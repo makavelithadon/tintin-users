@@ -54,8 +54,8 @@ export function getSquareDiagonal(side) {
   return side * Math.sqrt(2);
 }
 
-export function scrollToTop() {
-  document.documentElement.scrollIntoView({ behavior: "smooth", block: "start" });
+export function scrollToTop(behavior = "smooth", block = "start") {
+  document.documentElement.scrollIntoView({ behavior, block });
 }
 
 function normalizeBrowserName(browserName) {
@@ -67,7 +67,8 @@ export function getBrowser() {
 }
 
 export function isOldBrowser() {
-  return /edge|ie/i.test(normalizeBrowserName(getBrowser().name));
+  const oldBrowsersRegExp = /edge|ie/i;
+  return oldBrowsersRegExp.test(normalizeBrowserName(getBrowser().name));
 }
 
 export function matchBrowser(pattern) {
@@ -114,4 +115,26 @@ export function lowercasify(str) {
 
 export function keepOnlyNotUndefinedValues(arr) {
   return arr.filter(x => typeof x !== "undefined");
+}
+
+export function stripUnits(someValueWithUnits) {
+  return parseInt(someValueWithUnits, 10);
+}
+
+export function filterObjectByKey(obj, keyString, exact = true) {
+  return Object.keys(obj)
+    .filter(key => (exact ? key === keyString : key.includes(keyString)))
+    .reduce((acc, key) => ({ ...acc, [key]: obj[key] }), {});
+}
+
+export function has(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+export function toArray(arrayLike) {
+  return [...arrayLike];
+}
+
+export function getCSSProperty(el, prop) {
+  return window.getComputedStyle(el).getPropertyValue(prop);
 }
