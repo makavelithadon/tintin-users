@@ -108,6 +108,7 @@ const StyledNavItem = styled(animated.li).attrs(({ o, rotate, y }) => ({
   font-family: ${({ theme }) => theme.fonts.primary};
   text-transform: uppercase;
   transform-origin: -200px 50%;
+  font-weight: 900;
 `;
 
 const StyledNavLink = styled(NavLink)`

@@ -10,6 +10,8 @@ import ScrolledPictures from "components/ScrolledPictures";
 import Slider from "components/Slider/Slider";
 import Description from "components/Description";
 import { DisplayName } from "components/Character";
+import Menu from "components/Menu";
+import Header from "components/Header";
 import * as Heading from "UI/Heading";
 import { media } from "utils";
 import { CHARACTER } from "routes";
@@ -70,13 +72,18 @@ function Character({ theme, location }) {
   const ref = useRef(null);
   useEffect(
     () => {
-      console.log("useEffect");
       setHeight(ref.current.clientHeight);
     },
     [location.pathname, windowWidth, windowHeight]
   );
   return (
     <>
+      <Menu>
+        <Menu.Nav />
+        <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
+          {matches => (matches ? <Menu.Sidebar /> : <Header />)}
+        </Media>
+      </Menu>
       <StyledUserContainer>
         {user.description && (
           <>

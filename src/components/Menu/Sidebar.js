@@ -8,8 +8,9 @@ import Media from "react-media";
 import appLogo from "assets/img/logo.png";
 import { easeSinOut } from "d3-ease";
 import { center } from "style-utils";
+import withSpring from "hocs/withSpring";
 
-const sidebarSpringConfig = { duration: 300, easing: easeSinOut, delay: 1500 };
+const sidebarSpringConfig = { duration: 300, easing: easeSinOut, delay: 750 };
 
 const StyledLogo = styled.img`
   display: block;
@@ -91,39 +92,39 @@ const StyledEmailWithColor = styled.span.attrs(({ color }) => ({
   transform: ${({ color }) => (color !== "primary" ? `translateX(100%)` : "none")};
 `;
 
-function Sidebar({ theme }) {
+function Sidebar({ theme, styles }) {
   return (
-    <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={sidebarSpringConfig} native>
-      {props => (
-        <StyledSidebar {...props}>
-          <Link to={"/"}>
-            <StyledLogo src={appLogo} alt="Logo" />
-          </Link>
-          <StyledBurgerContainer>
-            <Burger color={"primary"} />
-          </StyledBurgerContainer>
-          <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
-            {match =>
-              match ? (
-                <StyledEmailContainer>
-                  <StyledEmailWrapper>
-                    <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>
-                      <StyledEmailWithColor color={"primary"} zIndex={2}>
-                        romuald.duconseil@hotmail.fr
-                      </StyledEmailWithColor>
-                      <StyledEmailWithColor color={"secondary"} zIndex={1}>
-                        romuald.duconseil@hotmail.fr
-                      </StyledEmailWithColor>
-                    </StyledEmail>
-                  </StyledEmailWrapper>
-                </StyledEmailContainer>
-              ) : null
-            }
-          </Media>
-        </StyledSidebar>
-      )}
-    </Spring>
+    <StyledSidebar {...styles}>
+      <Link to={"/"}>
+        <StyledLogo src={appLogo} alt="Logo" />
+      </Link>
+      <StyledBurgerContainer>
+        <Burger color={"primary"} />
+      </StyledBurgerContainer>
+      <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
+        {match =>
+          match ? (
+            <StyledEmailContainer>
+              <StyledEmailWrapper>
+                <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>
+                  <StyledEmailWithColor color={"primary"} zIndex={2}>
+                    romuald.duconseil@hotmail.fr
+                  </StyledEmailWithColor>
+                  <StyledEmailWithColor color={"secondary"} zIndex={1}>
+                    romuald.duconseil@hotmail.fr
+                  </StyledEmailWithColor>
+                </StyledEmail>
+              </StyledEmailWrapper>
+            </StyledEmailContainer>
+          ) : null
+        }
+      </Media>
+    </StyledSidebar>
   );
 }
 
-export default withTheme(Sidebar);
+const AnimatedSidebar = withSpring(
+  <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={sidebarSpringConfig} native />
+)(Sidebar);
+
+export default withTheme(AnimatedSidebar);
