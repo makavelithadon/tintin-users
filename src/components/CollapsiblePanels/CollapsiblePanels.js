@@ -26,7 +26,6 @@ function debugHelper() {
 const StyledContainer = styled.ul`
   display: block;
   position: relative;
-  overflow: hidden;
   width: 100%;
   height: 100%;
   & > * {
@@ -42,7 +41,6 @@ let StyledPanel = styled.li.attrs(({ width, left }) => ({
   }
 }))`
   position: absolute;
-  overflow: hidden;
 `;
 
 function getStartAnimations(animations) {
@@ -60,7 +58,7 @@ function flatAnimatedObjectKeys(animationsObject, regExp = /\-(start|end)/i) {
   );
 }
 
-function setAnimationsList(list, hoveredIndex, isFirst = false) {
+function setAnimationsList(list, hoveredIndex, isFirst = false, growRatio) {
   const itemsCount = list.length;
   if (isFirst) {
     return list.reduce(
@@ -75,7 +73,6 @@ function setAnimationsList(list, hoveredIndex, isFirst = false) {
     );
   }
   const containerWidth = Math.ceil(stripUnits(getCSSProperty(list[0].parentNode, "width")));
-  const growRatio = 1.75;
   const hoveredWidth = Math.ceil((containerWidth / itemsCount) * growRatio);
   const unHoveredWidth = Math.ceil((containerWidth - hoveredWidth) / (itemsCount - 1));
   const mergedList = list.map((item, index) => {
@@ -95,21 +92,21 @@ function setAnimationsList(list, hoveredIndex, isFirst = false) {
   return { ...mergedList.reduce((acc, item) => ({ ...acc, ...item }), {}) };
 }
 
-function CollapsiblePanels({ children }) {
+function CollapsiblePanels({ children, growRatio }) {
   const { width, height } = useViewport();
-  const [animations, setAnimations] = useState(setAnimationsList(children, null, true));
+  const [animations, setAnimations] = useState(setAnimationsList(children, null, true, growRatio));
   const [lastHoveredIndex, setLastHoveredIndex] = useState(0);
   const refs = [];
   useEffect(
     () => {
-      setAnimations(setAnimationsList(refs, null, true));
+      setAnimations(setAnimationsList(refs, null, true, growRatio));
     },
     [width, height]
   );
   function onHover(index, resize = false) {
     if (lastHoveredIndex === index && !resize) return;
     setLastHoveredIndex(index);
-    setAnimations(setAnimationsList(refs, index));
+    setAnimations(setAnimationsList(refs, index, false, growRatio));
   }
   function onLeave() {}
   return (

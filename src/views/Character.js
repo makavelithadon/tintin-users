@@ -14,8 +14,9 @@ import Menu from "components/Menu";
 import Header from "components/Header";
 import * as Heading from "UI/Heading";
 import { media } from "utils";
-import { CHARACTER } from "routes";
+import { CHARACTER_SLUG } from "routes";
 import { useViewport } from "hooks";
+import Helpers from "UI/Helpers";
 
 const StyledUserContainer = styled.div`
   display: flex;
@@ -63,6 +64,7 @@ const StyledFakeCharacterDisplayNameContainer = styled(animated.div).attrs(({ he
 const StyledFakeCharacterDisplayName = styled(Heading.H1)`
   opacity: 0;
   margin: 0;
+  user-select: none;
 `;
 
 function Character({ theme, location }) {
@@ -99,9 +101,7 @@ function Character({ theme, location }) {
                 {({ height }) => {
                   return (
                     <StyledFakeCharacterDisplayNameContainer height={height}>
-                      <StyledFakeCharacterDisplayName uppercase ref={ref}>
-                        {user.displayName}
-                      </StyledFakeCharacterDisplayName>
+                      <StyledFakeCharacterDisplayName ref={ref}>{user.displayName}</StyledFakeCharacterDisplayName>
                       <Transition
                         keys={location.pathname}
                         from={{ o: 0, r: 4 }}
@@ -113,7 +113,7 @@ function Character({ theme, location }) {
                         {item => style => (
                           <Switch location={location}>
                             <Route
-                              path={CHARACTER}
+                              path={CHARACTER_SLUG}
                               render={() => <DisplayName style={style} name={user.displayName} />}
                             />
                           </Switch>

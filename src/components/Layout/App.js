@@ -3,7 +3,7 @@ import styled, { withTheme } from "styled-components";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Home, Character } from "views";
 import { scrollToTop } from "utils";
-import { HOME, CHARACTER } from "routes";
+import { HOME, CHARACTER_SLUG } from "routes";
 
 /* const ScratchTest = withAnimation({
   component: ({ style: { o, x }, style, children }) => (
@@ -35,7 +35,7 @@ function Layout({ theme, children, location }) {
       <StyledContent>
         <Switch>
           <Route exact path={HOME} component={Home} />
-          <Route exact path={CHARACTER} component={Character} />
+          <Route exact path={CHARACTER_SLUG} component={Character} />
         </Switch>
       </StyledContent>
     </StyledMain>
