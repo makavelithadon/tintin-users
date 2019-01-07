@@ -10,12 +10,11 @@ function CharactersList({ characters: { items: characters, isLoading, error }, f
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
-      fetchCharacters();
+      if (!characters.length) fetchCharacters();
     }
   });
-  //setS(false);
+  if (!characters.length && !mounted) return null;
   let ui = null;
-  if (!mounted) return null;
   if (error) {
     ui = <p>Error: {error.message}</p>;
   } else if (isLoading) {
