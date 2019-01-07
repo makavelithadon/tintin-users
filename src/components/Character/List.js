@@ -3,17 +3,27 @@ import styled, { withTheme } from "styled-components";
 import { withRouter } from "react-router-dom";
 import { formatRoute } from "react-router-named-routes";
 import Media from "react-media";
-import { CHARACTER } from "routes";
+import { CHARACTER_SLUG } from "routes";
 import { media } from "utils";
 import { fillSizes } from "style-utils";
 import CharacterListItem from "./ListItem";
 import CollapsiblePanels from "components/CollapsiblePanels";
 
 const StyledContainer = styled.div`
-  ${media.medium`max-width: 90vw;`}
   margin: 0 auto;
-  height: 40vh;
-  ${fillSizes()}
+  ${fillSizes()};
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 90vw;
+  ${media.medium`height: 50vh;`}
+`;
+
+const StyledWrapper = styled.li`
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  /*flex-shrink: 0;*/
 `;
 
 function CharactersList({ characters, history, theme }) {
@@ -22,13 +32,13 @@ function CharactersList({ characters, history, theme }) {
       {matches =>
         matches ? (
           <StyledContainer>
-            <CollapsiblePanels>
+            <CollapsiblePanels growRatio={1.5}>
               {characters.map(character => (
                 <CharacterListItem
                   count={characters.length}
                   character={character}
                   key={character.displayName}
-                  onSelect={() => history.push(formatRoute(CHARACTER, { character: character.slug }))}
+                  onSelect={() => history.push(formatRoute(CHARACTER_SLUG, { character: character.slug }))}
                 />
               ))}
             </CollapsiblePanels>

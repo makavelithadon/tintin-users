@@ -9,7 +9,7 @@ import { AnimatedExit as Exit } from "UI/Icons";
 import { easeSinOut, easeCubicInOut } from "d3-ease";
 import { media } from "utils";
 import NavLink from "components/NavLink";
-import { CHARACTER } from "routes";
+import { CHARACTER_SLUG } from "routes";
 import { fillSizes } from "style-utils";
 
 const navSpringConfig = {
@@ -187,7 +187,7 @@ function Nav({ theme, toggleTheme }) {
                   {item => props => (
                     <StyledNavItem {...props}>
                       <StyledNavLink
-                        to={formatRoute(CHARACTER, { character: item.slug })}
+                        to={formatRoute(CHARACTER_SLUG, { character: item.slug })}
                         onClick={e => {
                           if (!isOpen) {
                             e.preventDefault();

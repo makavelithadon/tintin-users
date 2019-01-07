@@ -1,26 +1,19 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Trail, animated } from "react-spring";
 import { easeSinOut } from "d3-ease";
-import { media } from "utils";
-import { fillSizes } from "style-utils";
+import { fillSizes, inheritComponent } from "style-utils";
+import Helpers from "UI/Helpers";
+import { H1 } from "UI/Heading";
 
-const StyledDisplayName = styled(animated.h1).attrs(({ o, r }) => ({
+const StyledDisplayName = styled(Helpers.FilterInvalidDOMAttributes).attrs(({ o, r }) => ({
   style: {
     opacity: o.interpolate(o => o),
     transform: r.interpolate(r => `rotate(${r}deg)`)
   }
 }))`
-  position: absolute;
-  top: 0;
-  margin: 0;
-  margin-top: 0;
-  line-height: 1;
-  color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.text)};
-  font-family: ${({ theme }) => theme.fonts.primary};
-  text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "initial")};
-  ${media.forEach({ xs: "4rem", small: "7rem" }, fZ => `font-size: ${fZ};`)};
+  ${props => inheritComponent(H1, props, `position: absolute; top: 0;`)}
 `;
 
 const StyledLetterContainer = styled.span`
@@ -31,6 +24,7 @@ const StyledLetterContainer = styled.span`
 
 const StyledFakeSpanLetter = styled.span`
   opacity: 0;
+  user-select: none;
 `;
 const StyledLetter = styled(animated.span).attrs(({ o, y }) => ({
   style: {
@@ -44,7 +38,7 @@ const StyledLetter = styled(animated.span).attrs(({ o, y }) => ({
 function CharacterDisplayName({ style, name: nameFromParent }) {
   const [name] = useState(nameFromParent);
   return (
-    <StyledDisplayName {...style} uppercase color={"primary"}>
+    <StyledDisplayName {...style} component={animated.h1} uppercase color={"primary"}>
       <Trail
         items={name.split("").map((letter, index) => ({
           letter,

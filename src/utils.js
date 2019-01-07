@@ -138,3 +138,7 @@ export function toArray(arrayLike) {
 export function getCSSProperty(el, prop) {
   return window.getComputedStyle(el).getPropertyValue(prop);
 }
+
+export function isValidDOMAttribute(attrLike, DOMElement) {
+  return DOMElement && attrLike in document.createElement(DOMElement);
+}

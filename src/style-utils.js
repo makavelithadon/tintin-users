@@ -1,3 +1,5 @@
+import { css } from "styled-components";
+
 export function truncate(width) {
   return `
     width: ${width};
@@ -71,5 +73,13 @@ export function backgroundCover(url, { position = "center center", attachment = 
     background-position: ${position};
     background-attachment: ${attachment};
     background-size: cover;
+  `;
+}
+
+export function inheritComponent(component, props, rules = ``) {
+  return css`
+    ${component.componentStyle.rules.reduce((acc, rule) => {
+      return acc + (typeof rule === "function" ? rule(props) : rule);
+    }, ``) + rules}
   `;
 }

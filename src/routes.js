@@ -1,5 +1,6 @@
 export const HOME = "/";
-export const CHARACTER = `/:character`;
+export const CHARACTER = `character`;
+export const CHARACTER_SLUG = `/:${CHARACTER}`;
 export const ADMIN = `/admin`;
 export const ADMIN_LOGIN = `${ADMIN}/login`;
 export const ADMIN_LOGOUT = `${ADMIN}/logout`;
