@@ -55,8 +55,8 @@ function CharacterDisplayName({ style, name: nameFromParent }) {
         native
       >
         {({ letter }) => props => {
-          let spanProps = {};
-          if (letter === " ") spanProps = { ...spanProps, dangerouslySetInnerHTML: { __html: "&nbsp;" } };
+          const spanProps = {};
+          if (letter === " ") spanProps.dangerouslySetInnerHTML = { __html: "&nbsp;" };
           return (
             <StyledLetterContainer>
               <StyledFakeSpanLetter {...spanProps}>{letter === " " ? null : letter}</StyledFakeSpanLetter>
