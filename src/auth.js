@@ -25,7 +25,6 @@ export default {
       console.error("Failed to decode the provided storage token.", err);
       return false;
     }
-    return true;
   },
   getToken() {
     return storage.getItem(storageKey);
