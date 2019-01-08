@@ -87,7 +87,6 @@
     "uuid": "^3.3.2",
     "validator": "^10.9.0",
     "webpack": "4.19.1",
-    "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "3.6.3"
   },
@@ -114,7 +113,8 @@
     "marked": "^0.5.2",
     "normalize.css": "^8.0.1",
     "react-hot-loader": "^4.3.12",
-    "the-platform": "^0.9.3"
+    "the-platform": "^0.9.3",
+    "webpack-dev-server": "^3.1.14"
   },
   "jest": {
     "collectCoverageFrom": [
