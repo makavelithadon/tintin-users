@@ -10,7 +10,10 @@ function CharactersList({ characters: { items: characters, isLoading, error }, f
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
-      if (!characters.length) fetchCharacters();
+      if (!characters.length) {
+        console.log("new fetch at", new Date());
+        fetchCharacters();
+      }
     }
   });
   if (!characters.length && !mounted) return null;
