@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Nav from "components/Menu/Nav";
+import Nav from "components/Menu/Nav/index";
 import { toggleTheme } from "state/ducks/theme/actions";
 
 const mapDispatchToProps = dispatch => ({
