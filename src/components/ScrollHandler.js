@@ -6,7 +6,7 @@ function round(n) {
 
 class ScrollHandler extends React.Component {
   static defaultProps = {
-    scrollerDefaultClassName: "scroll-handler--container",
+    scrollerClassName: "scroll-handler--container",
     onScroll: () => {}
   };
 
@@ -73,12 +73,12 @@ class ScrollHandler extends React.Component {
   }
 
   render() {
-    const { wrapper: Wrapper, children, innerRef, scrollerDefaultClassName } = this.props;
+    const { wrapper: Wrapper, children, innerRef, scrollerClassName } = this.props;
     const { state } = this;
     const ui = Wrapper ? (
       <Wrapper ref={innerRef}>{children(state)}</Wrapper>
     ) : (
-      <div className={scrollerDefaultClassName} ref={innerRef}>
+      <div className={scrollerClassName} ref={innerRef}>
         {children(state)}
       </div>
     );

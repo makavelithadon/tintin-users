@@ -1,19 +1,9 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 import P from "UI/P";
 import * as Heading from "UI/Heading";
 import Img from "UI/Img";
 import Media from "react-media";
-import theme from "theme";
-
-function ParagraphRenderer(props) {
-  return <P {...props} />;
-}
-
-function HeadingRenderer({ level, ...restHeadingProps }) {
-  const H = Heading[`H${level}`];
-  return <H {...restHeadingProps} />;
-}
 
 const StyledImg = styled(Img)`
   display: block;
@@ -21,13 +11,13 @@ const StyledImg = styled(Img)`
   max-width: 300px;
 `;
 
-const ResponsiveImg = ({ query, ...rest }) => {
+const ResponsiveImg = withTheme(({ query, theme, ...rest }) => {
   return (
     <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
       {matches => (matches ? null : <StyledImg {...rest} />)}
     </Media>
   );
-};
+});
 
 export default {
   /* link: props => props.children,

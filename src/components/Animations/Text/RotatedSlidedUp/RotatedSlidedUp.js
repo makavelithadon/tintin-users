@@ -1,49 +1,124 @@
 import React from "react";
-import { Keyframes } from "react-spring";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { Keyframes, animated } from "react-spring";
 import { easeSinOut } from "d3-ease";
+import { fillSizes } from "style-utils";
 
-const AnimatedLinksLetter = Keyframes.Trail({
+const initialConfig = {
+  enter: key => ({
+    clamp: true,
+    duration: key === "o" ? 500 : 700,
+    easing: easeSinOut,
+    delay: 300
+  }),
+  leave: { easing: easeSinOut, clamp: true, duration: 700 }
+};
+
+const initialAnimation = {
   enter: [
     {
       o: 1,
       y: 0,
-      from: { o: 0, y: 100 },
-      config: key => ({
-        clamp: true,
-        duration: key === "o" ? 500 : 700,
-        easing: easeSinOut,
-        delay: 300
-      })
+      from: { o: 0, y: 20 },
+      config: initialConfig.enter
     }
   ],
-  leave: [{ o: 0, y: 100, config: { easing: easeSinOut, clamp: true, duration: 500 } }]
-});
+  leave: [{ o: 0, y: 100, config: initialConfig.leave }]
+};
 
-const RotatedSlidedUpText = ({ text, animationState, children, ...rest }) => {
+const createConfig = (configProps, animationKey) => key => {
+  if (!configProps) {
+    return {
+      ...(typeof initialConfig[animationKey] === "function"
+        ? initialConfig[animationKey](key)
+        : initialConfig[animationKey])
+    };
+  }
+  let c = {
+    ...(typeof initialConfig[animationKey] === "function"
+      ? initialConfig[animationKey](key)
+      : initialConfig[animationKey]),
+    ...(typeof configProps === "function" ? configProps(key) : configProps)
+  };
+  return c;
+};
+
+function createAnimation(config) {
+  const init = Object.keys(initialAnimation).reduce((anim, key) => {
+    return {
+      ...anim,
+      [key]: [
+        { ...initialAnimation[key][0], config: createConfig(config && config[key] ? config[key] : undefined, key) }
+      ]
+    };
+  }, {});
+  const animation = Keyframes.Trail(init);
+  return animation;
+}
+
+const StyledContainer = styled.span`
+  overflow: hidden;
+  position: relative;
+`;
+
+const StyledFakeLetter = styled.span`
+  opacity: 0;
+  user-select: none;
+`;
+
+const StyledLetter = styled(animated.span).attrs(({ o, y }) => ({
+  style: {
+    opacity: o.interpolate(o => o),
+    transform: y.interpolate(y => `translate3d(0, ${y}px, 0)`)
+  }
+}))`
+  ${fillSizes()};
+  bottom: auto;
+  will-change: transform, opacity;
+`;
+
+const DefaultAnimation = createAnimation(initialConfig);
+
+const RotatedSlidedUpText = ({ animation: AnimationProps, text, animationState, children, ...rest }) => {
+  const ComponentToRender = AnimationProps ? AnimationProps : DefaultAnimation;
   return (
-    <AnimatedLinksLetter
-      items={text.split("").map((letter, index) => ({
-        letter: letter === " " ? <span dangerouslySetInnerHTML={{ __html: "&nbsp;" }} /> : letter,
-        index
-      }))}
+    <ComponentToRender
+      items={text.split("").map((letter, index) => ({ letter, index }))}
       keys={item => `${item.letter}-${item.index}`}
       state={animationState}
       {...rest}
     >
-      {item => props => children(item)(props)}
-    </AnimatedLinksLetter>
+      {item => props => {
+        return (
+          <StyledContainer>
+            <StyledFakeLetter>{item.letter}</StyledFakeLetter>
+            <StyledLetter {...props}>{item.letter}</StyledLetter>
+            {children && typeof children === "function" && children(item)(props)}
+          </StyledContainer>
+        );
+      }}
+    </ComponentToRender>
   );
 };
 
 RotatedSlidedUpText.defaultProps = {
-  text: "Oops! No text was passed to the Component!",
-  native: true,
-  reverse: true,
   animationState: "enter",
-  children: item => props => {
-    console.log("item", item, "props", props);
-    return "hello";
-  }
+  native: true
 };
 
+RotatedSlidedUpText.propTypes = {
+  text: PropTypes.string.isRequired,
+  animationState: PropTypes.string,
+  native: PropTypes.bool,
+  reverse: PropTypes.bool
+};
+
+RotatedSlidedUpText.displayName = RotatedSlidedUpText.name || "RotatedSlidedUpText";
+
 export default RotatedSlidedUpText;
+
+export const withConfig = config => {
+  const animation = createAnimation(config);
+  return props => <RotatedSlidedUpText {...props} animation={animation} />;
+};

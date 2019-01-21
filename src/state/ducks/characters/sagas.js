@@ -1,6 +1,5 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import { delay } from "redux-saga";
-import { FETCH_CHARACTERS, FETCH_CHARACTERS_SUCCESS, FETCH_CHARACTERS_ERROR } from "./types";
+import { FETCH_CHARACTERS } from "./types";
 import { fetchCharactersSuccess, fetchCharactersError } from "./actions";
 import data from "data";
 

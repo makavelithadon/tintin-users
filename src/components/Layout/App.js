@@ -1,18 +1,11 @@
 import React, { useEffect } from "react";
 import styled, { withTheme } from "styled-components";
 import { Route, Switch, withRouter } from "react-router-dom";
-import { Home, Character } from "views";
+import { Home, Character, Intro } from "views";
 import { scrollToTop } from "utils";
 import { HOME, CHARACTER_SLUG } from "routes";
 
-/* const ScratchTest = withAnimation({
-  component: ({ style: { o, x }, style, children }) => (
-    <animated.div style={{ opacity: o.interpolate(o => o), transform: x.interpolate(x => `translateX(${x}px)`) }}>
-      {typeof children !== "undefined" && (typeof children === "function" ? children(style) : children)}
-    </animated.div>
-  ),
-  animation: <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={config.gentle} native />
-}); */
+const showIntro = true;
 
 const StyledMain = styled.main`
   position: relative;
@@ -34,7 +27,14 @@ function Layout({ theme, children, location }) {
     <StyledMain>
       <StyledContent>
         <Switch>
-          <Route exact path={HOME} component={Home} />
+          <Route
+            exact
+            path={HOME}
+            render={props => {
+              const Comp = showIntro ? Intro : Home;
+              return <Comp {...props} />;
+            }}
+          />
           <Route exact path={CHARACTER_SLUG} component={Character} />
         </Switch>
       </StyledContent>

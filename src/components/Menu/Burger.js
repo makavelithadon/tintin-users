@@ -5,6 +5,18 @@ import Menu from "./index";
 const burgerWidth = 30;
 const burgerHeight = 16;
 
+const itemHeight = 2;
+
+const StyledBurgerItem = styled.li`
+  position: absolute;
+  height: ${itemHeight}px;
+  border-radius: 5px;
+  width: ${props => (props.index === 2 ? "75%" : "100%")};
+  background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.darkGrey)}
+  top: ${({ index }) => `${Math.floor(index * (burgerHeight / 2) - itemHeight)}px`};
+  transition: ${({ theme }) => theme.transitions.primary};
+`;
+
 const StyledBurgerContainer = styled.ul`
   position: relative;
   width: ${burgerWidth}px;
@@ -18,18 +30,6 @@ const StyledBurgerContainer = styled.ul`
       transform: translate3d(0, 3px, 0);
     }
   }
-`;
-
-const itemHeight = 2;
-
-const StyledBurgerItem = styled.li`
-  position: absolute;
-  height: ${itemHeight}px;
-  border-radius: 5px;
-  width: ${props => (props.index === 2 ? "75%" : "100%")};
-  background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.darkGrey)}
-  top: ${props => `${Math.floor(props.index * (burgerHeight / 2) - itemHeight)}px`};
-  transition: ${({ theme }) => theme.transitions.primary};
 `;
 
 export default function Burger({ color, ...props }) {

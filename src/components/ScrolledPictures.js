@@ -145,7 +145,7 @@ function ScrolledPictures({ theme, pictures, altText, x }) {
                           h={refWidth}
                           o={getSlideOpacity(index, refWidth, normalizedScrollX)}
                         >
-                          <StyledImg src={picture.src} alt={`${altText}:${picture.caption}`} />
+                          <StyledImg src={picture.src} alt={picture.caption} />
                         </StyledSliderItem>
                       );
                     })}

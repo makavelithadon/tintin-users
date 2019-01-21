@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
-import { Route, Redirect, Switch, withRouter, NavLink } from "react-router-dom";
+import { Route, Redirect, Switch, withRouter } from "react-router-dom";
 import { AuthenticatedRoute } from "react-router-util";
 import { AdminLogin as Login, NoMatch } from "views";
 import Logout from "containers/Logout";
@@ -11,7 +11,6 @@ import SideBar from "components/Admin/SideBar";
 import { connect } from "react-redux";
 import { getAuth } from "state/ducks/auth/selectors";
 import { showLoginDialog } from "state/ducks/auth/actions";
-import { useShowLoginDialog } from "hooks";
 
 const StyledMain = styled.main`
   position: relative;

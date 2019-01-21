@@ -63,7 +63,8 @@ const data = {
       pictures: [
         {
           src: haddockPicture01,
-          caption: faker.lorem.sentence()
+          caption:
+            "Le Capitaine Haddock est surtout connu pour ses nombreux jurons qui en font un personnage haut en couleurs."
         },
         {
           src: haddockPicture03,

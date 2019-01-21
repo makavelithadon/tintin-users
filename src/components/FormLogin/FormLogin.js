@@ -67,9 +67,6 @@ function FormLogin({ auth, login }) {
         />
       ))}
       <StyledInput type={"submit"} color={"secondary"} value={"Valider"} disabled={isLoading} />
-      <a href="#" style={{ marginTop: "auto" }}>
-        Reset password
-      </a>
     </StyledForm>
   );
 }
