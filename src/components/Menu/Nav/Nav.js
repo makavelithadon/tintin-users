@@ -10,10 +10,8 @@ import { AnimatedNav, AnimatedLinks } from "./animationConfigs";
 import { CHARACTER_SLUG } from "routes";
 import NavItem from "./NavItem";
 import NavLink from "./NavLink";
-import RotatedSlidedUpText, { withConfig } from "components/Animations/Text/RotatedSlidedUp";
+import RotatedSlidedUpText from "components/Animations/Text/RotatedSlidedUp";
 import NavExitIcon from "./NavExitIcon";
-
-const Rotated = withConfig();
 
 const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   style: {
