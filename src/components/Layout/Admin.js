@@ -71,9 +71,11 @@ const mapDispatchToProps = dispatch => ({
   hideLoginDialog: () => dispatch(showLoginDialog(false))
 });
 
-Admin = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Admin);
-
-export default withRouter(withTheme(Admin));
+export default withRouter(
+  withTheme(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(Admin)
+  )
+);

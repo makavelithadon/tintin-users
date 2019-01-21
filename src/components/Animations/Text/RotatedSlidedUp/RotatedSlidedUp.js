@@ -20,37 +20,32 @@ const initialAnimation = {
     {
       o: 1,
       y: 0,
-      from: { o: 0, y: 20 },
+      from: { o: 0, y: 60 },
       config: initialConfig.enter
     }
   ],
-  leave: [{ o: 0, y: 100, config: initialConfig.leave }]
+  leave: [{ o: 0, y: 60, config: initialConfig.leave }]
 };
 
+const normalizeConfig = (tested, arg) => (typeof tested === "function" ? tested(arg) : tested);
+
 const createConfig = (configProps, animationKey) => key => {
-  if (!configProps) {
-    return {
-      ...(typeof initialConfig[animationKey] === "function"
-        ? initialConfig[animationKey](key)
-        : initialConfig[animationKey])
-    };
-  }
-  let c = {
-    ...(typeof initialConfig[animationKey] === "function"
-      ? initialConfig[animationKey](key)
-      : initialConfig[animationKey]),
-    ...(typeof configProps === "function" ? configProps(key) : configProps)
+  let c = { ...normalizeConfig(initialConfig[animationKey], key) };
+  if (!configProps) return c;
+  return {
+    ...c,
+    ...normalizeConfig(configProps, key)
   };
-  return c;
 };
 
 function createAnimation(config) {
   const init = Object.keys(initialAnimation).reduce((anim, key) => {
     return {
       ...anim,
-      [key]: [
-        { ...initialAnimation[key][0], config: createConfig(config && config[key] ? config[key] : undefined, key) }
-      ]
+      [key]: initialAnimation[key].map(step => ({
+        ...step,
+        config: createConfig(config && config[key], key)
+      }))
     };
   }, {});
   const animation = Keyframes.Trail(init);
