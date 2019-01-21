@@ -38,6 +38,9 @@ export function center(position = "both") {
         transform: translate(-50%, -50%);
       `;
       break;
+    default:
+      styles = ``;
+      break;
   }
   return `
     position: absolute;

@@ -51,7 +51,7 @@ function getEndAnimations(animations) {
   return filterObjectByKey(animations, "end", false);
 }
 
-function flatAnimatedObjectKeys(animationsObject, regExp = /\-(start|end)/i) {
+function flatAnimatedObjectKeys(animationsObject, regExp = /-(start|end)/i) {
   return Object.entries(animationsObject).reduce(
     (acc, [key, value]) => ({ ...acc, [key.replace(regExp, "")]: value }),
     {}

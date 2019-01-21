@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { formatRoute } from "react-router-named-routes";
 import Media from "react-media";
 import { CHARACTER_SLUG } from "routes";
@@ -19,13 +19,6 @@ const StyledContainer = styled.div`
   ${media.medium`height: 50vh;`}
 `;
 
-const StyledWrapper = styled.li`
-  position: relative;
-  display: inline-block;
-  height: 100%;
-  /*flex-shrink: 0;*/
-`;
-
 function CharactersList({ characters, history, theme }) {
   return (
     <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
@@ -34,12 +27,9 @@ function CharactersList({ characters, history, theme }) {
           <StyledContainer>
             <CollapsiblePanels growRatio={1.5}>
               {characters.map(character => (
-                <CharacterListItem
-                  count={characters.length}
-                  character={character}
-                  key={character.displayName}
-                  onSelect={() => history.push(formatRoute(CHARACTER_SLUG, { character: character.slug }))}
-                />
+                <Link key={character.displayName} to={formatRoute(CHARACTER_SLUG, { character: character.slug })}>
+                  <CharacterListItem count={characters.length} character={character} onSelect={() => {}} />
+                </Link>
               ))}
             </CollapsiblePanels>
           </StyledContainer>

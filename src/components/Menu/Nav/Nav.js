@@ -10,9 +10,10 @@ import { AnimatedNav, AnimatedLinks } from "./animationConfigs";
 import { CHARACTER_SLUG } from "routes";
 import NavItem from "./NavItem";
 import NavLink from "./NavLink";
-import NavLinkLetter from "./NavLinkLetter";
-import RotatedSlidedUpText from "components/Animations/Text/RotatedSlidedUp";
+import RotatedSlidedUpText, { withConfig } from "components/Animations/Text/RotatedSlidedUp";
 import NavExitIcon from "./NavExitIcon";
+
+const Rotated = withConfig();
 
 const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   style: {
@@ -53,13 +54,7 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   ${media.large`padding: 60px 60px 60px 220px;`};
 `;
 
-const StyledNavLinkLetterContainer = styled.span`
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-`;
-
-function Nav({ theme /* toggleTheme */ }) {
+function Nav({ theme }) {
   return (
     <Menu.Consumer>
       {({ isOpen, toggle }) => {
@@ -98,14 +93,7 @@ function Nav({ theme /* toggleTheme */ }) {
                           animationState={animationState}
                           reverse={!isOpen}
                           native
-                        >
-                          {item => props => (
-                            <StyledNavLinkLetterContainer>
-                              <span style={{ opacity: 0 }}>{item.letter}</span>
-                              <NavLinkLetter {...props}>{item.letter}</NavLinkLetter>
-                            </StyledNavLinkLetterContainer>
-                          )}
-                        </RotatedSlidedUpText>
+                        />
                       </NavLink>
                     </NavItem>
                   )}

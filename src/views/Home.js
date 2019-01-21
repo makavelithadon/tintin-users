@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { media } from "utils";
 import CharactersList from "containers/CharactersList";
 
 const StyledPage = styled.div`
@@ -11,7 +10,7 @@ const StyledPage = styled.div`
   overflow: hidden;
 `;
 
-const StyledSkewed = styled.div`
+/* const StyledSkewed = styled.div`
   position: fixed;
   z-index: 0;
   width: 50vw;
@@ -20,12 +19,12 @@ const StyledSkewed = styled.div`
   left: 10%;
   background-color: var(--primary-color);
   height: 9999px;
-`;
+`; */
 
 export default function Home() {
   return (
     <StyledPage>
-      <StyledSkewed />
+      {/* <StyledSkewed /> */}
       <CharactersList />
     </StyledPage>
   );

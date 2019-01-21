@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { media, stripUnits, filterObjectByKey } from "utils";
+import { media, stripUnits } from "utils";
 import { H2 } from "UI/Heading";
 import { fillSizes } from "style-utils";
 

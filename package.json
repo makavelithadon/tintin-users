@@ -112,6 +112,7 @@
     "markdown-to-jsx": "^6.9.0",
     "marked": "^0.5.2",
     "normalize.css": "^8.0.1",
+    "prop-types": "^15.6.2",
     "react-hot-loader": "^4.3.12",
     "the-platform": "^0.9.3",
     "webpack-dev-server": "^3.1.14"
