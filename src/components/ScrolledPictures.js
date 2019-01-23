@@ -1,11 +1,16 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
+import { withRouter } from "react-router-dom";
 import { animated, Spring, config } from "react-spring";
+import { easeSinOut } from "d3-ease";
 import PictureCaption from "./PictureCaption";
+import { CHARACTER_SLUG } from "routes";
 import { media, isDev, isOldBrowser } from "utils";
 import { DEBUG } from "shared";
 import ScrollHandler from "./ScrollHandler";
+import SliderRevealer from "./SliderRevealer";
 import Img from "UI/Img";
+import TransitionedComponent from "components/TransitionedComponent";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -13,13 +18,14 @@ const StyledContainer = styled.div`
   background-color: ${({ theme }) => (isDev && DEBUG ? theme.colors.secondary : "none")};
 `;
 
-const StyledScrolledPictures = styled(animated.div).attrs(({ width, height, top, position, bottom }) => ({
+const StyledScrolledPictures = styled(animated.div).attrs(({ o, width, height, top, position, bottom }) => ({
   style: {
     position,
     bottom,
     width,
     height,
     top
+    //opacity: o.interpolate(o => o)
   }
 }))`
   overflow: hidden;
@@ -27,8 +33,9 @@ const StyledScrolledPictures = styled(animated.div).attrs(({ width, height, top,
   background-color: ${({ bgColor }) => (bgColor ? bgColor : "transparent")};
 `;
 
-const StyledSlider = styled(animated.ul).attrs(({ w, h, x }) => ({
+const StyledSlider = styled(animated.ul).attrs(({ w, h, o, x }) => ({
   style: {
+    opacity: o.interpolate(o => o),
     width: w,
     height: h,
     transform: `translate3d(-${x}px, -50%, 0)`
@@ -108,7 +115,18 @@ function getSlideOpacity(index, scrollerWidth, x) {
   return opacity;
 }
 
-function ScrolledPictures({ theme, pictures, altText, x }) {
+const sliderTransition = {
+  from: { o: 0 },
+  enter: { o: 1 },
+  leave: { o: 0 },
+  config: (_, type) => ({
+    duration: type !== "leave" ? 500 : 250,
+    delay: type !== "leave" ? 350 : 1,
+    easing: easeSinOut
+  })
+};
+
+function ScrolledPictures({ altText, location, pictures, style, theme, x, show }) {
   return (
     <StyledContainer>
       <ScrollHandler ref={React.createRef()} wrapper={StyledScrollerWrapper}>
@@ -128,6 +146,7 @@ function ScrolledPictures({ theme, pictures, altText, x }) {
               height={"100vh"}
               top={isOverBottom ? "auto" : 0}
               bottom={isOverBottom ? 0 : "auto"}
+              {...style}
             >
               <Spring
                 from={{ w: 0, h: 0 }}
@@ -136,20 +155,30 @@ function ScrolledPictures({ theme, pictures, altText, x }) {
                 native
               >
                 {({ x, w, h }) => (
-                  <StyledSlider w={w} h={h} x={normalizedScrollX}>
-                    {pictures.map((picture, index) => {
-                      return (
-                        <StyledSliderItem
-                          key={picture.src}
-                          w={refWidth}
-                          h={refWidth}
-                          o={getSlideOpacity(index, refWidth, normalizedScrollX)}
-                        >
-                          <StyledImg src={picture.src} alt={picture.caption} />
-                        </StyledSliderItem>
-                      );
-                    })}
-                  </StyledSlider>
+                  <TransitionedComponent
+                    transition={sliderTransition}
+                    path={CHARACTER_SLUG}
+                    render={style => (
+                      <>
+                        <SliderRevealer height={refWidth} pictures={pictures}>
+                          {pics => (
+                            <StyledSlider w={w} h={h} x={normalizedScrollX} o={style.o}>
+                              {pics.map((picture, index) => (
+                                <StyledSliderItem
+                                  key={picture.src}
+                                  w={refWidth}
+                                  h={refWidth}
+                                  o={getSlideOpacity(index, refWidth, normalizedScrollX)}
+                                >
+                                  <StyledImg src={picture.src} alt={picture.caption} />
+                                </StyledSliderItem>
+                              ))}
+                            </StyledSlider>
+                          )}
+                        </SliderRevealer>
+                      </>
+                    )}
+                  />
                 )}
               </Spring>
               {pictures[currentIndex] && (
@@ -165,4 +194,4 @@ function ScrolledPictures({ theme, pictures, altText, x }) {
   );
 }
 
-export default withTheme(ScrolledPictures);
+export default withRouter(withTheme(ScrolledPictures));

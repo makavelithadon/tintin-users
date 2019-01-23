@@ -23,7 +23,7 @@ import castafioreText from "./castafiore.md";
 import lampionText from "./lampion.md"; */
 
 const data = {
-  users: [
+  characters: [
     {
       id: 1,
       slug: "tintin",

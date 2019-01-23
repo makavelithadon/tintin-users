@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Menu from "./index";
+import Menu from ".";
 
 const burgerWidth = 30;
 const burgerHeight = 16;
@@ -23,10 +23,10 @@ const StyledBurgerContainer = styled.ul`
   height: ${burgerHeight}px;
   cursor: pointer;
   &:hover {
-    & ${StyledBurgerItem}:first-child {
+    ${StyledBurgerItem}:first-child {
       transform: translate3d(0, -3px, 0);
     }
-    & ${StyledBurgerItem}:last-child {
+    ${StyledBurgerItem}:last-child {
       transform: translate3d(0, 3px, 0);
     }
   }

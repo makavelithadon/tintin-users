@@ -2,7 +2,7 @@ const fallbackFonts =
   "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol";
 
 let fonts = {
-  primary: "Montserrat",
+  primary: "Rubik",
   secondary: "Averia Serif Libre",
   tertiary: "Tintin Bold"
 };

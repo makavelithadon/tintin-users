@@ -1,23 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import React from "react";
 import styled, { withTheme } from "styled-components";
 import Media from "react-media";
-import Markdown from "components/Markdown/Markdown";
-import { Spring, Transition, animated } from "react-spring";
-import { easeSinOut } from "d3-ease";
-import data from "data/index";
+import { Redirect } from "react-router-dom";
 import ScrolledPictures from "components/ScrolledPictures";
 import Slider from "components/Slider/Slider";
-import Description from "components/Description";
-import { DisplayName } from "components/Character";
-import Menu from "components/Menu";
-import Header from "components/Header";
-import * as Heading from "UI/Heading";
+import Description from "components/Description/index";
 import { media } from "utils";
-import { CHARACTER_SLUG } from "routes";
-import { useViewport } from "hooks";
+import { NOT_FOUND } from "routes";
 
-const StyledUserContainer = styled.div`
+const StyledCharacterContainer = styled.div`
   display: flex;
   margin: 0 auto;
   left: 0;
@@ -51,87 +42,21 @@ const StyledUserContainer = styled.div`
   padding-bottom: 20vh;
 `;
 
-const StyledFakeCharacterDisplayNameContainer = styled(animated.div).attrs(({ height }) => ({
-  style: {
-    height: height.interpolate(h => h)
-  }
-}))`
-  position: relative;
-  margin-bottom: 40px;
-  /* overflow: hidden; */
-`;
-
-const StyledFakeCharacterDisplayName = styled(Heading.H1)`
-  opacity: 0;
-  margin: 0;
-  user-select: none;
-  text-transform: uppercase;
-`;
-
-function Character({ theme, location }) {
-  const [height, setHeight] = useState(0);
-  const { width: windowWidth, height: windowHeight } = useViewport();
-  const user = data.users.find(user => location.pathname.includes(user.slug));
-  const ref = useRef(null);
-  useEffect(
-    () => {
-      setHeight(ref.current.clientHeight);
-    },
-    [location.pathname, windowWidth, windowHeight]
-  );
+function Character({ theme, location, character }) {
+  if (!character) return <Redirect to={NOT_FOUND} />;
+  const hasPictures = character.pictures && character.pictures.length;
+  const hasDescription = character.description;
   return (
     <>
-      <Menu>
-        <Menu.Nav />
-        <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
-          {matches => (matches ? <Menu.Sidebar /> : <Header />)}
+      <StyledCharacterContainer>
+        <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
+          {matches => {
+            const show = matches && hasPictures;
+            return show && <ScrolledPictures pictures={character.pictures} altText={character.displayName} />;
+          }}
         </Media>
-      </Menu>
-      <StyledUserContainer>
-        {user.description && (
-          <>
-            <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
-              {matches =>
-                matches && user.pictures && user.pictures.length ? (
-                  <ScrolledPictures pictures={user.pictures} altText={user.displayName} />
-                ) : null
-              }
-            </Media>
-            <Description description={<Markdown content={user.description} />}>
-              <Spring from={{ height }} to={{ height }} native config={{ duration: 450, easing: easeSinOut }}>
-                {({ height }) => {
-                  return (
-                    <StyledFakeCharacterDisplayNameContainer height={height}>
-                      <StyledFakeCharacterDisplayName ref={ref}>
-                        {user.displayName.split("").map((letter, index) => (
-                          <span key={letter + index}>{letter}</span>
-                        ))}
-                      </StyledFakeCharacterDisplayName>
-                      <Transition
-                        keys={location.pathname}
-                        from={{ o: 0, r: 4 }}
-                        enter={{ o: 1, r: 0 }}
-                        leave={{ o: 0, r: 0 }}
-                        config={(_, type) => ({ duration: type !== "leave" ? 550 : 1, easing: easeSinOut })}
-                        native
-                      >
-                        {item => style => (
-                          <Switch location={location}>
-                            <Route
-                              path={CHARACTER_SLUG}
-                              render={() => <DisplayName style={style} name={user.displayName} />}
-                            />
-                          </Switch>
-                        )}
-                      </Transition>
-                    </StyledFakeCharacterDisplayNameContainer>
-                  );
-                }}
-              </Spring>
-            </Description>
-          </>
-        )}
-      </StyledUserContainer>
+        {hasDescription && <Description character={character} />}
+      </StyledCharacterContainer>
       <Slider />
     </>
   );

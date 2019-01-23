@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import Media from "react-media";
-import Menu from "components/Menu/index";
+import Menu from "components/Menu";
 import { media } from "utils";
 
 const StyledHeader = styled.header`
@@ -14,6 +14,7 @@ const StyledHeader = styled.header`
   padding: 0 20px;
   background-color: ${({ theme }) => theme.colors.background};
   ${({ theme }) => media.forEach(theme.styles.header.height, height => `height: ${height}`)};
+  ${({ theme }) => media.forEach({ xs: theme.shadows.box, small: "none" }, bs => `box-shadow: ${bs};`)};
 `;
 
 function Header({ theme }) {

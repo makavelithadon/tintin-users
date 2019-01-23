@@ -27,7 +27,7 @@ const initialAnimation = {
   leave: [{ o: 0, y: 60, config: initialConfig.leave }]
 };
 
-const normalizeConfig = (tested, arg) => (typeof tested === "function" ? tested(arg) : tested);
+const normalizeConfig = (config, arg) => (typeof config === "function" ? config(arg) : config);
 
 const createConfig = (configProps, animationKey) => key => {
   let c = { ...normalizeConfig(initialConfig[animationKey], key) };
@@ -38,19 +38,19 @@ const createConfig = (configProps, animationKey) => key => {
   };
 };
 
-function createAnimation(config) {
-  const init = Object.keys(initialAnimation).reduce((anim, key) => {
-    return {
-      ...anim,
-      [key]: initialAnimation[key].map(step => ({
-        ...step,
-        config: createConfig(config && config[key], key)
-      }))
-    };
-  }, {});
-  const animation = Keyframes.Trail(init);
-  return animation;
-}
+const createAnimation = config =>
+  Keyframes.Trail(
+    Object.keys(initialAnimation).reduce(
+      (anim, key) => ({
+        ...anim,
+        [key]: initialAnimation[key].map(step => ({
+          ...step,
+          config: createConfig(config && config[key], key)
+        }))
+      }),
+      {}
+    )
+  );
 
 const StyledContainer = styled.span`
   overflow: hidden;

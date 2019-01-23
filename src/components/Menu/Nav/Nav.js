@@ -1,16 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import styled, { withTheme } from "styled-components";
-import { formatRoute } from "react-router-named-routes";
 import { animated } from "react-spring";
-import Menu from "./../index";
+import Menu from "./..";
 import { setDocumentElementStyles } from "./../utils";
-import data from "data";
 import { media } from "utils";
-import { AnimatedNav, AnimatedLinks } from "./animationConfigs";
-import { CHARACTER_SLUG } from "routes";
-import NavItem from "./NavItem";
-import NavLink from "./NavLink";
-import RotatedSlidedUpText from "components/Animations/Text/RotatedSlidedUp";
+import { AnimatedNav } from "./animationConfigs";
+import ListItems from "./NavItems/List";
 import NavExitIcon from "./NavExitIcon";
 
 const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
@@ -52,7 +47,10 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   ${media.large`padding: 60px 60px 60px 220px;`};
 `;
 
-function Nav({ theme }) {
+function Nav({ theme, characters, fetchCharacters }) {
+  useEffect(() => {
+    if (!characters.items.length) fetchCharacters();
+  });
   return (
     <Menu.Consumer>
       {({ isOpen, toggle }) => {
@@ -67,36 +65,18 @@ function Nav({ theme }) {
             {props => (
               <StyledNav {...props} theme={theme} from={"left"}>
                 <NavExitIcon onClick={() => toggle(false)} animationState={animationState} />
-                <AnimatedLinks
-                  items={data.users}
-                  keys={item => item.id}
-                  state={animationState}
-                  reverse={!isOpen}
-                  native
-                >
-                  {item => props => (
-                    <NavItem {...props}>
-                      <NavLink
-                        to={formatRoute(CHARACTER_SLUG, { character: item.slug })}
-                        onClick={e => {
-                          if (!isOpen) {
-                            e.preventDefault();
-                            return;
-                          }
-                          toggle(false);
-                        }}
-                      >
-                        <RotatedSlidedUpText
-                          text={item.displayName}
-                          animationState={animationState}
-                          reverse={!isOpen}
-                          native
-                        />
-                      </NavLink>
-                    </NavItem>
-                  )}
-                </AnimatedLinks>
-                {/* <button onClick={toggleTheme}>Toggle theme</button> */}
+                <ListItems
+                  list={characters.items}
+                  isNavOpen={isOpen}
+                  animationState={animationState}
+                  onClick={e => {
+                    if (!isOpen) {
+                      e.preventDefault();
+                      return;
+                    }
+                    toggle(false);
+                  }}
+                />
               </StyledNav>
             )}
           </AnimatedNav>
