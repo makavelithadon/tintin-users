@@ -36,6 +36,8 @@ TransitionedComponent.defaultProps = {
 };
 
 TransitionedComponent.propTypes = {
+  location: PropTypes.object,
+  path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
   transition: PropTypes.shape({
     from: PropTypes.object.isRequired,

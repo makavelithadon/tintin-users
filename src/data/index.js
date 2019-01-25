@@ -14,8 +14,11 @@ import nestorPicture01 from "assets/img/nestor/01/large.png";
 import lampionPicture01 from "assets/img/lampion/01/large.png";
 import faker from "faker";
 import tintinText from "./tintin.md.js";
-// import milouText from "./milou.md";
 import haddockText from "./haddock.md.js";
+import tournesolText from "./tournesol.md.js";
+import nestorText from "./nestor.md.js";
+import castafioreText from "./castafiore.md.js";
+// import milouText from "./milou.md";
 /* import tournesolText from "./tournesol.md";
 import dupondtText from "./dupondt.md";
 import nestorText from "./nestor.md";
@@ -87,7 +90,7 @@ const data = {
           caption: faker.lorem.sentence()
         }
       ],
-      description: tintinText
+      description: tournesolText
     },
     {
       id: 5,
@@ -113,7 +116,7 @@ const data = {
       id: 6,
       slug: "nestor",
       displayName: "Nestor",
-      description: tintinText,
+      description: nestorText,
       pictures: [
         {
           src: nestorPicture01,
@@ -125,7 +128,7 @@ const data = {
       id: 7,
       slug: "castafiore",
       displayName: "Bianca Castafiore",
-      description: tintinText,
+      description: castafioreText,
       pictures: [
         {
           src: castafiorePicture01,
