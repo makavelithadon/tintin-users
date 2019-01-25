@@ -49,7 +49,7 @@ const StyledLayer = styled(animated.div).attrs(({ left, right, width }) => ({
   z-index: 1;
 `;
 
-function SliderRevealer({ height, children, pictures: picturesFromParent }) {
+function Revealer({ height, children, pictures: picturesFromParent }) {
   const [pictures] = useState(picturesFromParent);
   return (
     <StyledSliderRevealer height={height}>
@@ -61,4 +61,8 @@ function SliderRevealer({ height, children, pictures: picturesFromParent }) {
   );
 }
 
-export default SliderRevealer;
+Revealer.defaultProps = {
+  height: "auto"
+};
+
+export default Revealer;

@@ -8,7 +8,7 @@ import { CHARACTER_SLUG } from "routes";
 import { media, isDev, isOldBrowser } from "utils";
 import { DEBUG } from "shared";
 import ScrollHandler from "./ScrollHandler";
-import SliderRevealer from "./SliderRevealer";
+import Revealer from "components/Revealer";
 import Img from "UI/Img";
 import TransitionedComponent from "components/TransitionedComponent";
 
@@ -160,7 +160,7 @@ function ScrolledPictures({ altText, location, pictures, style, theme, x, show }
                     path={CHARACTER_SLUG}
                     render={style => (
                       <>
-                        <SliderRevealer height={refWidth} pictures={pictures}>
+                        <Revealer height={refWidth} pictures={pictures}>
                           {pics => (
                             <StyledSlider w={w} h={h} x={normalizedScrollX} o={style.o}>
                               {pics.map((picture, index) => (
@@ -175,7 +175,7 @@ function ScrolledPictures({ altText, location, pictures, style, theme, x, show }
                               ))}
                             </StyledSlider>
                           )}
-                        </SliderRevealer>
+                        </Revealer>
                       </>
                     )}
                   />
