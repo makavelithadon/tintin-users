@@ -5,11 +5,7 @@ import { animated } from "react-spring";
 import { inheritComponent } from "style-utils";
 import Helpers from "UI/Helpers";
 import { H1 } from "UI/Heading";
-import { withConfig } from "components/Animations/Text/RotatedSlidedUp";
-
-const RotatedSlidedUpTextWithConfig = withConfig({
-  enter: { delay: 1 }
-});
+import RotatedSlidedUpText from "components/Animations/Text/RotatedSlidedUp";
 
 const StyledDisplayName = styled(Helpers.FilterInvalidDOMAttributes).attrs(({ o, r }) => ({
   style: {
@@ -24,7 +20,13 @@ function CharacterDisplayName({ style, name: nameFromParent }) {
   const [name] = useState(nameFromParent);
   return (
     <StyledDisplayName {...style} component={animated.h1} uppercase color={"primary"}>
-      <RotatedSlidedUpTextWithConfig text={name} animationState={"enter"} />
+      <RotatedSlidedUpText
+        text={name}
+        animationState={"enter"}
+        config={{
+          enter: { delay: 1 }
+        }}
+      />
     </StyledDisplayName>
   );
 }

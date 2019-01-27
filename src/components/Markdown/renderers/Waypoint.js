@@ -15,7 +15,7 @@ const Waypoint = props => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   return (
-    <SimpleWaypoint bottomOffset={"35%"} onEnter={handleShow}>
+    <SimpleWaypoint bottomOffset={"30%"} onEnter={handleShow}>
       <Spring
         from={{ opacity: 0, gap: 15 }}
         to={{ opacity: Number(show), gap: show ? 0 : 15 }}
