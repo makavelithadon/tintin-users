@@ -4,13 +4,7 @@ import NavLink from "components/NavLink";
 import { media } from "utils";
 import { CHARACTER_SLUG } from "routes";
 import { formatRoute } from "react-router-named-routes";
-import { withConfig } from "components/Animations/Text/RotatedSlidedUp";
-
-const RotatedSlidedUpTextWithConfig = withConfig({
-  leave: {
-    delay: 1
-  }
-});
+import RotatedSlidedUpText from "components/Animations/Text/RotatedSlidedUp";
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -33,11 +27,15 @@ export default function NavItem({ item, onClick, animationState, isNavOpen }) {
   return (
     <StyledNavItem>
       <StyledNavLink to={formatRoute(CHARACTER_SLUG, { character: item.slug })} onClick={onClick}>
-        <RotatedSlidedUpTextWithConfig
+        <RotatedSlidedUpText
           text={item.displayName}
+          config={{
+            leave: {
+              delay: 1
+            }
+          }}
           animationState={animationState}
           reverse={!isNavOpen}
-          native
         />
       </StyledNavLink>
     </StyledNavItem>
