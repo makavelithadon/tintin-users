@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { animated, Keyframes } from "react-spring";
 import { easeSinOut } from "d3-ease";
 
-const StyledSliderRevealer = styled.div.attrs(({ height }) => ({
-  style: {
-    height
-  }
-}))`
-  width: 100%;
-  top: 50%;
-  left: 0;
-  position: absolute;
-  transform: translateY(-50%);
+const StyledDefaultRevealerContainer = styled.div`
+  position: relative;
+`;
+
+const StyledRevealerContainer = styled(({ component, ...props }) => React.cloneElement(component, props))`
   z-index: 10;
 `;
 
@@ -45,24 +40,29 @@ const StyledLayer = styled(animated.div).attrs(({ left, right, width }) => ({
   top: 0;
   bottom: 0;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme, color }) => (theme.colors[color] ? theme.colors[color] : theme.colors.background)};
   z-index: 1;
 `;
 
-function Revealer({ height, children, pictures: picturesFromParent }) {
-  const [pictures] = useState(picturesFromParent);
-  return (
-    <StyledSliderRevealer height={height}>
+function Revealer({ wrapper: Wrapper, color, children }) {
+  const UI = (
+    <>
       <Layer state={"peek"} native>
-        {props => <StyledLayer {...props} />}
+        {props => <StyledLayer color={color} {...props} />}
       </Layer>
-      {children(pictures)}
-    </StyledSliderRevealer>
+      {children}
+    </>
+  );
+  return Wrapper.type ? (
+    <StyledRevealerContainer component={Wrapper}>{UI}</StyledRevealerContainer>
+  ) : (
+    <Wrapper>{UI}</Wrapper>
   );
 }
 
 Revealer.defaultProps = {
-  height: "auto"
+  wrapper: StyledDefaultRevealerContainer,
+  color: "background"
 };
 
 export default Revealer;

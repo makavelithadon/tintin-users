@@ -3,7 +3,7 @@ import styled, { withTheme } from "styled-components";
 import Media from "react-media";
 import { Redirect } from "react-router-dom";
 import ScrolledPictures from "components/ScrolledPictures";
-import Slider from "components/Slider/Slider";
+import Gallery from "components/Gallery";
 import Description from "components/Description/index";
 import { media } from "utils";
 import { NOT_FOUND } from "routes";
@@ -52,12 +52,12 @@ function Character({ theme, location, character }) {
         <Media query={`(min-width: ${theme.breakpoints.values.medium})`}>
           {matches => {
             const show = matches && hasPictures;
-            return show && <ScrolledPictures pictures={character.pictures} altText={character.displayName} />;
+            return show && <ScrolledPictures pictures={character.pictures} />;
           }}
         </Media>
         {hasDescription && <Description character={character} />}
       </StyledCharacterContainer>
-      <Slider />
+      <Gallery />
     </>
   );
 }
