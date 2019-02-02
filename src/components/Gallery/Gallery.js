@@ -2,13 +2,13 @@ import React from "react";
 import styled, { withTheme } from "styled-components";
 import ScrollHandler from "components/ScrollHandler";
 
-const StyledSlider = styled.section`
+const StyledGallery = styled.section`
   position: relative;
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.primary};
 `;
 
-function Slider({ theme }) {
+function Gallery({ theme }) {
   function handleScroll({ refTop, height, isOverTop }) {
     const distance = refTop - height + parseInt(theme.styles.sidebar.paddingBottom, 10);
     const isSecondarySidebarEmailAddress = distance < 0;
@@ -20,7 +20,7 @@ function Slider({ theme }) {
     //console.log("isOverTop", isOverTop, "refTop", refTop);
   }
   return (
-    <ScrollHandler ref={React.createRef()} wrapper={StyledSlider} onScroll={handleScroll}>
+    <ScrollHandler ref={React.createRef()} wrapper={StyledGallery} onScroll={handleScroll}>
       {({ refTop, height }) => {
         return <div>Hello</div>;
       }}
@@ -28,4 +28,4 @@ function Slider({ theme }) {
   );
 }
 
-export default withTheme(Slider);
+export default withTheme(Gallery);

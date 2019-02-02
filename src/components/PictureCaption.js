@@ -28,7 +28,7 @@ const PictureCaption = ({ caption }) => {
       from={{ x: 40, o: 0 }}
       enter={{ x: 0, o: 1 }}
       leave={{ x: -40, o: 0 }}
-      config={(item, type) => {
+      config={type => {
         const returnedConfig = {
           ...config.default,
           duration: type === "enter" ? 400 : 250,
