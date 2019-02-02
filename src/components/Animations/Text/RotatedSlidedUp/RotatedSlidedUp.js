@@ -76,9 +76,6 @@ const StyledLetter = styled(animated.span).attrs(({ o, y }) => ({
 
 class RotatedSlidedUpText extends Component {
   Animation = createAnimation(this.props.config ? this.props.config : initialConfig);
-  shouldComponentUpdate(nextProps) {
-    return !deepEqual(nextProps.animationState, this.props.animationState) || !deepEqual(nextProps.config, this.props.config);
-  }
   render() {
     const { config, text, animationState, children, ...rest } = this.props;
     const { Animation } = this;
