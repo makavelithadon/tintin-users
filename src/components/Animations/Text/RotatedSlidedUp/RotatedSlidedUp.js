@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Keyframes, animated } from "react-spring";
 import { easeSinOut } from "d3-ease";
 import { fillSizes } from "style-utils";
+import deepEqual from "deep-equal";
 
 const initialConfig = {
   enter: key => ({
