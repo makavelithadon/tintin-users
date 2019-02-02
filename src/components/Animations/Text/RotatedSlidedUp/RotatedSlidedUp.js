@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Keyframes, animated } from "react-spring";
@@ -73,29 +73,31 @@ const StyledLetter = styled(animated.span).attrs(({ o, y }) => ({
   will-change: transform, opacity;
 `;
 
-const DefaultAnimation = createAnimation(initialConfig);
-
-const RotatedSlidedUpText = ({ animation: AnimationProps, text, animationState, children, ...rest }) => {
-  const ComponentToRender = AnimationProps ? AnimationProps : DefaultAnimation;
-  return (
-    <ComponentToRender
-      items={text.split("").map((letter, index) => ({ letter, index }))}
-      keys={item => `${item.letter}-${item.index}`}
-      state={animationState}
-      {...rest}
-    >
-      {item => props => {
-        return (
-          <StyledContainer>
-            <StyledFakeLetter>{item.letter}</StyledFakeLetter>
-            <StyledLetter {...props}>{item.letter}</StyledLetter>
-            {children && typeof children === "function" && children(item)(props)}
-          </StyledContainer>
-        );
-      }}
-    </ComponentToRender>
-  );
-};
+class RotatedSlidedUpText extends Component {
+  Animation = createAnimation(this.props.config ? this.props.config : initialConfig);
+  render() {
+    const { config, text, animationState, children, ...rest } = this.props;
+    const { Animation } = this;
+    return (
+      <Animation
+        items={text.split("").map((letter, index) => ({ letter, index }))}
+        keys={item => `${item.letter}-${item.index}`}
+        state={animationState}
+        {...rest}
+      >
+        {item => props => {
+          return (
+            <StyledContainer>
+              <StyledFakeLetter>{item.letter}</StyledFakeLetter>
+              <StyledLetter {...props}>{item.letter}</StyledLetter>
+              {children && typeof children === "function" && children(item)(props)}
+            </StyledContainer>
+          );
+        }}
+      </Animation>
+    );
+  }
+}
 
 RotatedSlidedUpText.defaultProps = {
   animationState: "enter",
