@@ -3,6 +3,7 @@ const black = "#000000";
 const grey = "#797979";
 const darkGrey = "#222222";
 const lightGrey = "#D1D1D1";
+const lighterGrey = "#e5e5e5";
 const red = "#d52727";
 const text = darkGrey;
 
@@ -19,6 +20,7 @@ export default {
   grey,
   darkGrey,
   lightGrey,
+  lighterGrey,
   red,
   danger,
   text
