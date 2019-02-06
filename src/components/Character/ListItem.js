@@ -22,7 +22,7 @@ const StyledCharacterBase = styled.div`
   transition: 0.125s ease-in;
   background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.transparent : theme.colors.white)};
   box-shadow: ${({ theme, isSelected }) => (isSelected ? "none" : theme.shadows.box2)};
-  border-radius: 4px;
+  border-radius: 6px;
   transition: ${({ isSelected }) => (isSelected ? "350ms 175ms ease-out" : "250ms ease-out")};
 `;
 

@@ -8,10 +8,12 @@
  *  http://www.opensource.org/licenses/mit-license.php
  */
 
-import $ from "jquery";
 import "jquery-ui-bundle";
+window.jQuery = window.$ = require("jquery");
+const Velocity = (window.Velocity = require("velocity-animate"));
+require("velocity-animate/velocity.ui");
 
-const kwicks = (function($) {
+(function($) {
   /**
    *  API methods for the plugin
    */
@@ -36,7 +38,7 @@ const kwicks = (function($) {
         interval: 2500,
         interactive: true
       };
-      var o = $.extend(defaults, opts);
+      const o = { ...defaults, ...opts };
 
       // validate and normalize options
       if (o.minSize !== -1 && o.maxSize !== -1)
@@ -65,7 +67,9 @@ const kwicks = (function($) {
         }
       });
 
+      // Weird for me at this moment ... refactor latter
       return this.each(function() {
+        // console.log("$(this)", $(this));
         $(this).data("kwicks", new Kwick(this, o));
       });
     },
@@ -267,7 +271,8 @@ const kwicks = (function($) {
     this.secondaryAlignment = opts.isVertical ? "bottom" : "right";
 
     // object for creating a "master" animation loop for all panel animations
-    this.$timer = $({ progress: 0 });
+    this.$timer = /*$({ progress: 0 }); */ document.documentElement;
+    Velocity(this.$timer, { progress: 0 }, { duration: 0 });
 
     // keeps track of whether or not an animation is in progress
     this.isAnimated = false;
@@ -376,15 +381,13 @@ const kwicks = (function($) {
    *  doesn't belong on Kwick.prototype, but here it is...
    */
   Kwick.prototype.setStyle = (function() {
-    if ($.support.style) {
-      return function(el, style) {
-        el.setAttribute("style", style);
-      };
-    } else {
-      return function(el, style) {
-        el.style.cssText = style;
-      };
-    }
+    return function(element, style) {
+      const properties = Object.keys(style);
+      for (let i = 0, j = properties.length; i < j; i++) {
+        const prop = properties[i];
+        element.style[prop] = style[prop];
+      }
+    };
   })();
 
   /**
@@ -404,7 +407,7 @@ const kwicks = (function($) {
     // the kwicks-processed class ensures that panels are absolutely positioned, but on our
     // first pass we need to set offsets, width|length, and positioning atomically to prevent
     // mid-update repaints
-    var stylePrefix = !!this._stylesInited ? "" : "position:absolute;",
+    var /*stylePrefix = !!this._stylesInited ? "" : "position:absolute;",*/
       offset,
       size,
       prevOffset,
@@ -418,12 +421,20 @@ const kwicks = (function($) {
       offset = Math.round(offsets[i]);
       if (i === $panels.length - 1) {
         size = containerSize - offset;
-        style = sAlign + ":0;" + pDim + ":" + size + "px;";
+        //style = sAlign + ":0;" + pDim + ":" + size + "px;";
+        style = {
+          [sAlign]: 0,
+          [pDim]: `${size}px`
+        };
       } else {
         size = prevOffset - offset - spacing;
-        style = pAlign + ":" + offset + "px;" + pDim + ":" + size + "px;";
+        //style = pAlign + ":" + offset + "px;" + pDim + ":" + size + "px;";
+        style = {
+          [pAlign]: `${offset}px`,
+          [pDim]: `${size}px`
+        };
       }
-      this.setStyle($panels[i], stylePrefix + style);
+      this.setStyle($panels[i], style);
     }
 
     if (!this._stylesInited) {
@@ -622,9 +633,10 @@ const kwicks = (function($) {
    * 5) Removes the 'kwicks' data value from the container
    */
   Kwick.prototype.destroy = function() {
-    this.$timer.stop();
-    for (var i = 0, len = this.onDestroyHandlers.length; i < len; i++) {
-      this.onDestroyHandlers[i]();
+    Velocity(this.$timer, "stop", true);
+    Velocity(this.$timer, { progress: 0 }, { duration: 0 });
+    for (const handler of this.onDestroyHandlers) {
+      handler();
     }
     this.$panels.attr("style", "").removeClass("kwicks-expanded kwicks-selected kwicks-collapsed");
     this.$container
@@ -695,14 +707,27 @@ const kwicks = (function($) {
       offsets = this.offsets,
       targetOffsets = this.getOffsetsForExpanded();
 
-    $timer.stop()[0].progress = 0;
+    Velocity($timer, "stop", true);
+    Velocity($timer, { progress: 0 }, { duration: 0 });
     this.isAnimated = true;
-    $timer.animate(
+    /* $(document.documentElement).velocity("stop");
+    $(document.documentElement).velocity({ opacity: 1 }, { duration: 0 });
+    $(document.documentElement).velocity(
+      { opacity: 0 },
+      {
+        duration: 10000,
+        progress: function progress(...args) {
+          console.log("...args", ...args);
+        }
+      }
+    ); */
+    Velocity(
+      $timer,
       { progress: 1 },
       {
         duration: this.opts.duration,
-        easing: this.opts.easing,
-        step: function(progress) {
+        //easing: "easeInOutCirc",
+        progress: function(el, progress) {
           // check if we've resized mid-animation (yes, we're thorough)
           if (self._dirtyOffsets) {
             offsets = self.offsets;
@@ -720,11 +745,11 @@ const kwicks = (function($) {
         complete: function() {
           self.isAnimated = false;
           self.$container.trigger("expand-complete.kwicks", {
-            index: index,
+            index,
+            oldIndex,
+            oldExpanded,
             expanded: self.getExpandedPanel(),
             collapsed: self.getCollapsedPanels(),
-            oldIndex: oldIndex,
-            oldExpanded: oldExpanded,
             // note: this will always be false but is included to match expand event
             isAnimated: false
           });
@@ -732,4 +757,4 @@ const kwicks = (function($) {
       }
     );
   };
-})($);
+})(window.$);

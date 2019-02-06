@@ -44,6 +44,7 @@ const StyledContainer = styled.div`
 const StyledItemContainer = styled.div`
   height: 100%;
   overflow: initial !important;
+  will-chnage: left, right, width;
 `;
 
 function CharactersList({ characters, history, theme }) {
