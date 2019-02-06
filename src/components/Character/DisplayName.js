@@ -13,7 +13,7 @@ const StyledDisplayName = styled(Helpers.FilterInvalidDOMAttributes).attrs(({ o,
     transform: r.interpolate(r => `rotate(${r}deg)`)
   }
 }))`
-  ${props => inheritComponent(H1, props, `position: absolute; top: 0;`)}
+  ${props => inheritComponent(H1, props, `position: absolute; top: 0; color: ${props.theme.colors.white};`)}
 `;
 
 function CharacterDisplayName({ style, name: nameFromParent }) {

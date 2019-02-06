@@ -5,6 +5,7 @@ import "./polyfills";
 import "./shared";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import "./App.css";
 
 const rootElement = document.getElementById("root");
 

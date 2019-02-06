@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Averia Serif Libre', sans-serif;
     -webkit-font-smoothing: antialiased!important;
     font-size: 1.6em; /* base font-size is equivalent "14px" */
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.secondary};
   }
   ul, li {
     list-style-type: none;

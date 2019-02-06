@@ -142,3 +142,7 @@ export function getCSSProperty(el, prop) {
 export function isValidDOMAttribute(attrLike, DOMElement) {
   return DOMElement && attrLike in document.createElement(DOMElement);
 }
+
+export function getDeepKey(obj, path) {
+  return path.split(".").reduce((acc, key) => acc[key], obj);
+}

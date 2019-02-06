@@ -1,1 +1,3 @@
-export { H2 as default } from 'UI/Heading';
+import { H2 } from "UI/Heading";
+
+export default H2;

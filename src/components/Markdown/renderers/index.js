@@ -1,5 +1,5 @@
 import Waypoint from "./Waypoint";
-import Paragraph from './Paragraph'
+import Paragraph from "./Paragraph";
 import H2 from "./H2";
 import ResponsiveImg from "./ResponsiveImg";
 

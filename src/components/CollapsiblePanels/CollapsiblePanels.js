@@ -5,7 +5,7 @@ import { useViewport } from "hooks";
 import { easeSinOut } from "d3-ease";
 import { stripUnits, filterObjectByKey, getCSSProperty } from "utils";
 
-const debug = false;
+const debug = true;
 let debugColors = ["#0ebeff", "#30acf4", "#539be9", "#7589de", "#9877d4", "#ba65c9", "#dd54be", "#ff42b3"];
 
 function debugHelper() {

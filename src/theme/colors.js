@@ -4,16 +4,18 @@ const grey = "#797979";
 const darkGrey = "#222222";
 const lightGrey = "#D1D1D1";
 const red = "#d52727";
-const text = darkGrey;
+const transparent = "rgba(255,255,255, 0)";
 
 const primary = "#0a529b";
-const secondary = "#ffc86b";
+const secondary = "#f5d67d";
 const danger = red;
+const background = secondary;
+const text = darkGrey;
 
 export default {
   primary,
   secondary,
-  background: white,
+  background,
   white,
   black,
   grey,
@@ -21,5 +23,6 @@ export default {
   lightGrey,
   red,
   danger,
-  text
+  text,
+  transparent
 };
