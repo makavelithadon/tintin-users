@@ -17,8 +17,8 @@ const Waypoint = props => {
   return (
     <SimpleWaypoint bottomOffset={"30%"} onEnter={handleShow}>
       <Spring
-        from={{ opacity: 0, gap: 15 }}
-        to={{ opacity: Number(show), gap: show ? 0 : 15 }}
+        from={{ opacity: 0, gap: 30 }}
+        to={{ opacity: Number(show), gap: show ? 0 : 30 }}
         config={key => ({ duration: key === "opacity" ? 125 : 300, delay: 125, easing: easeSinOut })}
         native
       >

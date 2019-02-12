@@ -4,10 +4,12 @@ import { Route, Switch } from "react-router-dom";
 import { INIT_TYPE } from "./constants";
 import { Provider } from "react-redux";
 import Root from "containers/Root";
-import store from "state/store";
+import configureStore from "state/store";
 import * as Layout from "components/Layout";
 import { NoMatch } from "views";
 import { HOME, NOT_FOUND, ADMIN } from "routes";
+
+const store = configureStore();
 
 store.dispatch({ type: INIT_TYPE });
 
