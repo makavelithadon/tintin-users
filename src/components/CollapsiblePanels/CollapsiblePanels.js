@@ -5,7 +5,7 @@ import { useViewport } from "hooks";
 import { easeSinOut } from "d3-ease";
 import { stripUnits, filterObjectByKey, getCSSProperty } from "utils";
 
-const debug = false;
+const debug = true;
 let debugColors = ["#0ebeff", "#30acf4", "#539be9", "#7589de", "#9877d4", "#ba65c9", "#dd54be", "#ff42b3"];
 
 function debugHelper() {
@@ -26,7 +26,7 @@ function debugHelper() {
 const StyledContainer = styled.ul`
   display: block;
   position: relative;
-  width: 100%;
+  width: ${({ width }) => `${width}px`};
   height: 100%;
   & > * {
     height: 100%;
@@ -92,7 +92,7 @@ function setAnimationsList(list, hoveredIndex, isFirst = false, growRatio) {
   return { ...mergedList.reduce((acc, item) => ({ ...acc, ...item }), {}) };
 }
 
-function CollapsiblePanels({ children, growRatio }) {
+function CollapsiblePanels({ children, growRatio, width: sliderWidth }) {
   const { width, height } = useViewport();
   const [animations, setAnimations] = useState(setAnimationsList(children, null, true, growRatio));
   const [lastHoveredIndex, setLastHoveredIndex] = useState(0);
@@ -110,7 +110,7 @@ function CollapsiblePanels({ children, growRatio }) {
   }
   function onLeave() {}
   return (
-    <StyledContainer onMouseLeave={onLeave}>
+    <StyledContainer onMouseLeave={onLeave} width={sliderWidth}>
       <Spring
         from={flatAnimatedObjectKeys(getStartAnimations(animations))}
         to={flatAnimatedObjectKeys(getEndAnimations(animations))}
@@ -135,5 +135,9 @@ function CollapsiblePanels({ children, growRatio }) {
     </StyledContainer>
   );
 }
+
+CollapsiblePanels.defaultProps = {
+  width: window.innerWidth
+};
 
 export default memo(CollapsiblePanels);

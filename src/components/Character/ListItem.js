@@ -24,16 +24,7 @@ const StyledCharacter = styled.div`
 `;
 
 const StyledImg = styled.img`
-  ${({ theme, charactersCount }) =>
-    media.medium`width: ${(80 * stripUnits(theme.breakpoints.values.medium)) / 100 / charactersCount}px;`}
-  ${({ theme, charactersCount }) =>
-    media.large`width: ${(75 * stripUnits(theme.breakpoints.values.large)) / 100 / charactersCount}px;`}
-  transition: ${({ theme }) => theme.transitions.primary};
-  transform-origin: 50% 100%;
-  ${StyledCharacter}:hover & {
-    transition-delay: 300ms;
-    transform: scale(1.2);
-  }
+  width: 100px;
 `;
 
 const StyledCharacterDisplayName = styled(H2)`
