@@ -1,13 +1,14 @@
 import React, { useRef, useState } from "react";
-import styled, { withTheme } from "styled-components";
-import { withRouter } from "react-router-dom";
+import styled, { css, withTheme } from "styled-components";
 import Media from "react-media";
 import { media } from "utils";
 import { fillSizes } from "style-utils";
 import CharacterListItem from "./ListItem";
 import KwicksSlider from "components/KwicksSlider";
-import { Spring } from "react-spring";
+import { Spring, animated, interpolate } from "react-spring";
 import { easeCircleInOut } from "d3-ease";
+import { inheritComponent } from "style-utils";
+import Helpers from "UI/Helpers";
 
 const sliderWidth = 80;
 
@@ -34,20 +35,43 @@ const StyledSlider = styled.div`
   }
 `;
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.ul`
   margin: 0 auto;
   ${fillSizes()};
   position: relative;
   ${media.small`height: 50vh;`}
 `;
 
-const StyledItemContainer = styled.div`
+const StyledItemContainer = styled(Helpers.FilterInvalidDOMAttributes).attrs(({ x }) => ({
+  style: {
+    transform: x.interpolate(x => `translate3d(${x}px, 0, 0)`)
+  }
+}))`
+  ${props => {
+    const baseComponent = styled.li``;
+    return inheritComponent(baseComponent, props);
+  }};
   height: 100%;
   overflow: initial !important;
-  will-chnage: left, right, width;
+  will-change: left, right, width, transform;
+  background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.transparent : theme.colors.white)};
+  box-shadow: ${({ theme, isSelected }) => (isSelected ? "none" : theme.shadows.box2)};
+  border-radius: 8px;
+  transition: ${({ duration, delay }) => {
+    const tranisitionedProperties = ["background-color", "box-shadow"];
+    return css`
+      ${tranisitionedProperties.reduce(
+        (rules, property, index) =>
+          rules +
+          `${property} ${duration}ms ${delay}ms ease-out${(index !== tranisitionedProperties.length - 1 && ", ") ||
+            ""}`,
+        ``
+      )}
+    `;
+  }};
 `;
 
-function CharactersList({ characters, history, theme }) {
+function CharactersList({ characters, theme }) {
   //const [sliderX, setSliderX] = useState(0);
   const sliderRef = useRef(null);
   const itemsCount = characters.length;
@@ -55,6 +79,8 @@ function CharactersList({ characters, history, theme }) {
   const itemDefaultWidth = 220 + spacing;
   const containerWidth = itemDefaultWidth * itemsCount;
   const expandedWidth = itemDefaultWidth + 180;
+  const delayBeforeTriggerSlide = 125;
+  const durationSlideAnimation = 350;
   // const minimalSize = Math.round((containerWidth - expandedWidth) / (itemsCount - 1));
   return (
     <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
@@ -67,10 +93,10 @@ function CharactersList({ characters, history, theme }) {
               containerWidth={containerWidth}
               maxSize={expandedWidth}
               spacing={spacing}
-              duration={550}
+              duration={durationSlideAnimation}
               behavior={"menu"}
-              easing={"easeInOutCirc"}
-              delayMouseIn={125}
+              easing={"easeInCirc"}
+              delayMouseIn={delayBeforeTriggerSlide}
             >
               {({ expanded }) => {
                 const allCollapsed = expanded === -1;
@@ -85,16 +111,25 @@ function CharactersList({ characters, history, theme }) {
                       key={character.displayName}
                       from={{ x: 0 }}
                       to={{ x: xTransform }}
-                      config={{ easing: easeCircleInOut, duration: 250 }}
+                      config={{
+                        easing: easeCircleInOut,
+                        duration: durationSlideAnimation,
+                        delay: delayBeforeTriggerSlide
+                      }}
                       native
                     >
                       {({ x }) => {
                         return (
-                          <StyledItemContainer>
+                          <StyledItemContainer
+                            component={animated.li}
+                            x={x}
+                            isSelected={isExpanded}
+                            duration={durationSlideAnimation}
+                            delay={delayBeforeTriggerSlide}
+                          >
                             <CharacterListItem
                               count={characters.length}
                               character={character}
-                              x={x}
                               isSelected={isExpanded}
                             />
                           </StyledItemContainer>
@@ -112,4 +147,4 @@ function CharactersList({ characters, history, theme }) {
   );
 }
 
-export default withRouter(withTheme(CharactersList));
+export default withTheme(CharactersList);

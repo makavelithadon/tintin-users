@@ -421,14 +421,12 @@ require("velocity-animate/velocity.ui");
       offset = Math.round(offsets[i]);
       if (i === $panels.length - 1) {
         size = containerSize - offset;
-        //style = sAlign + ":0;" + pDim + ":" + size + "px;";
         style = {
           [sAlign]: 0,
           [pDim]: `${size}px`
         };
       } else {
         size = prevOffset - offset - spacing;
-        //style = pAlign + ":" + offset + "px;" + pDim + ":" + size + "px;";
         style = {
           [pAlign]: `${offset}px`,
           [pDim]: `${size}px`
@@ -635,8 +633,8 @@ require("velocity-animate/velocity.ui");
   Kwick.prototype.destroy = function() {
     Velocity(this.$timer, "stop", true);
     Velocity(this.$timer, { progress: 0 }, { duration: 0 });
-    for (const handler of this.onDestroyHandlers) {
-      handler();
+    for (const onDestroyHandler of this.onDestroyHandlers) {
+      onDestroyHandler();
     }
     this.$panels.attr("style", "").removeClass("kwicks-expanded kwicks-selected kwicks-collapsed");
     this.$container

@@ -1,3 +1,4 @@
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Nav from "components/Menu/Nav";
 import { toggleTheme } from "state/ducks/theme/actions";
@@ -8,10 +9,16 @@ const mapStateToProps = state => ({
   characters: getCharacters(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  toggleTheme: () => dispatch(toggleTheme()),
-  fetchCharacters: () => dispatch(fetchCharacters())
-});
+const actionCreators = dispatch =>
+  bindActionCreators(
+    {
+      toggleTheme,
+      fetchCharacters
+    },
+    dispatch
+  );
+
+const mapDispatchToProps = actionCreators;
 
 export default connect(
   mapStateToProps,

@@ -17,10 +17,10 @@ const StyledExitIconContainer = styled.div`
   }};
 `;
 
-const NavExitIcon = ({ animationState, onClick, theme }) => (
+const NavExitIcon = ({ animationState, onClick }) => (
   <StyledExitIconContainer>
-    <Exit onClick={onClick} animationState={animationState} immediate={false} color={theme.colors.background} />
+    <Exit onClick={onClick} animationState={animationState} immediate={false} color={"white"} />
   </StyledExitIconContainer>
 );
 
-export default withTheme(NavExitIcon);
+export default NavExitIcon;

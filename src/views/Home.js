@@ -4,7 +4,7 @@ import CharactersList from "containers/CharactersList";
 
 const StyledPage = styled.div`
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;

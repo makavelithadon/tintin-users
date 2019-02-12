@@ -33,7 +33,8 @@ const StyledExitItem = styled(animated.li).attrs(({ o, w }) => ({
   top: 50%;
   transform: ${({ angle }) => `translate(-50%, -50%) rotate(${angle}deg);`};
   height: 1.5px;
-  background-color: ${({ color }) => color};
+  background-color: ${({ theme, color }) =>
+    color ? (theme.colors[color] ? theme.colors[color] : color) : theme.colors.white};
   border-radius: 5px;
 `;
 

@@ -89,7 +89,7 @@ const StyledEmailWithColor = styled.span.attrs(({ color }) => ({
   color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.primary)};
   text-decoration: inherit;
   z-index: ${({ zIndex }) => zIndex};
-  transform: ${({ color }) => (color !== "primary" ? `translateX(100%)` : "none")};
+  /*transform: ${({ color }) => (color !== "primary" ? `translateX(100%)` : "none")};*/
 `;
 
 function Sidebar({ theme, styles }) {
@@ -99,7 +99,7 @@ function Sidebar({ theme, styles }) {
         <StyledLogo src={appLogo} alt="Logo" />
       </Link>
       <StyledBurgerContainer>
-        <Burger color={"primary"} />
+        <Burger color={"white"} />
       </StyledBurgerContainer>
       <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
         {match =>
@@ -107,12 +107,12 @@ function Sidebar({ theme, styles }) {
             <StyledEmailContainer>
               <StyledEmailWrapper>
                 <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>
-                  <StyledEmailWithColor color={"primary"} zIndex={2}>
+                  <StyledEmailWithColor color={"white"} zIndex={2}>
                     romuald.duconseil@hotmail.fr
                   </StyledEmailWithColor>
-                  <StyledEmailWithColor color={"secondary"} zIndex={1}>
+                  {/* <StyledEmailWithColor color={"secondary"} zIndex={1}>
                     romuald.duconseil@hotmail.fr
-                  </StyledEmailWithColor>
+                  </StyledEmailWithColor> */}
                 </StyledEmail>
               </StyledEmailWrapper>
             </StyledEmailContainer>
