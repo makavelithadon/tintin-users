@@ -6,7 +6,7 @@ function round(n) {
 
 class ScrollHandler extends React.Component {
   static defaultProps = {
-    scrollerClassName: "scroll-handler--container",
+    scrollerClassName: "scroll-handler",
     onScroll: () => {}
   };
 
