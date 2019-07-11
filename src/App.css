@@ -1,33 +1,41 @@
-.App {
-  text-align: center;
+/*!
+ *  Kwicks: Sexy Sliding Panels for jQuery - v2.2.1
+ *  http://devsmash.com/projects/kwicks
+ *
+ *  Copyright 2013 Jeremy Martin (jmar777)
+ *  Contributors: Duke Speer (Duke3D), Guillermo Guerrero (gguerrero)
+ *  Released under the MIT license
+ *  http://www.opensource.org/licenses/mit-license.php
+ */
+.kwicks {
+  display: block;
+  list-style-type: none;
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.kwicks>* {
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.kwicks.kwicks-processed>* {
+  margin: 0;
+  position: absolute;
 }
 
-.App-link {
-  color: #61dafb;
+.kwicks-horizontal>* {
+  float: left;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.kwicks-horizontal> :first-child {
+  margin-left: 0;
+}
+
+.kwicks-vertical> :first-child {
+  margin-top: 0;
 }
