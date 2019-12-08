@@ -1,6 +1,7 @@
 import { css } from "styled-components";
 import theme from "theme";
 import { UserAgent } from "shared";
+import flatten from "array.prototype.flat";
 
 const {
   breakpoints: { values: breakpoints, order: breakpointsOrder }
@@ -47,15 +48,16 @@ export function getGoogleFonts() {
     ...document.documentElement.querySelectorAll('head link[rel="stylesheet"]')
   ].filter(link => link.href.includes("fonts.googleapis.com"));
 
-  if (links.length) {
-    let normalizedFonts = flat(
-      links.map(link => {
-        const { href } = link;
-        return href.slice(href.indexOf("=") + 1).split("|");
-      })
-    ).map(font => font.replace(/\+/g, " "));
-    return (normalizedFonts = [...new Set(normalizedFonts)]);
+  if (!links.length) {
+    return [];
   }
+  let normalizedFonts = flat(
+    links.map(link => {
+      const { href } = link;
+      return href.slice(href.indexOf("=") + 1).split("|");
+    })
+  ).map(font => font.replace(/\+/g, " "));
+  return (normalizedFonts = [...new Set(normalizedFonts)]);
 }
 
 export function getSquareDiagonal(side) {
@@ -83,8 +85,8 @@ export function matchBrowser(pattern) {
   new RegExp(pattern).test(getBrowser().name);
 }
 
-export function flat(...args) {
-  return Array.prototype.flat.call(...args);
+export function flat(array) {
+  return flatten(array);
 }
 
 export function throttle(func, threshhold = 250, scope) {

@@ -35,7 +35,8 @@ const StyledSidebar = styled(animated.aside).attrs(({ o, x }) => ({
   justify-content: space-between;
   align-items: center;
   padding: ${({ theme }) => `30px 0 ${theme.styles.sidebar.paddingBottom} 0;`};
-  ${({ theme }) => media.forEach(theme.styles.sidebar.width, h => `width: ${h};`)};
+  ${({ theme }) =>
+    media.forEach(theme.styles.sidebar.width, h => `width: ${h};`)};
 `;
 
 const StyledBurgerContainer = styled.div`
@@ -86,10 +87,12 @@ const StyledEmailWithColor = styled.span.attrs(({ color }) => ({
   display: block;
   width: 100%;
   height: 100%;
-  color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.primary)};
+  color: ${({ theme, color }) =>
+    color ? theme.colors[color] : theme.colors.primary};
   text-decoration: inherit;
   z-index: ${({ zIndex }) => zIndex};
-  /*transform: ${({ color }) => (color !== "primary" ? `translateX(100%)` : "none")};*/
+  /*transform: ${({ color }) =>
+    color !== "primary" ? `translateX(100%)` : "none"};*/
 `;
 
 function Sidebar({ theme, styles }) {
@@ -103,7 +106,7 @@ function Sidebar({ theme, styles }) {
       </StyledBurgerContainer>
       <Media query={`(min-height: ${theme.breakpoints.values.small})`}>
         {match =>
-          match ? (
+          match && (
             <StyledEmailContainer>
               <StyledEmailWrapper>
                 <StyledEmail href={"mailto:romuald.duconseil@hotmail.fr"}>
@@ -116,7 +119,7 @@ function Sidebar({ theme, styles }) {
                 </StyledEmail>
               </StyledEmailWrapper>
             </StyledEmailContainer>
-          ) : null
+          )
         }
       </Media>
     </StyledSidebar>
@@ -124,7 +127,12 @@ function Sidebar({ theme, styles }) {
 }
 
 const AnimatedSidebar = withSpring(
-  <Spring from={{ o: 0, x: -20 }} to={{ o: 1, x: 0 }} config={sidebarSpringConfig} native />
+  <Spring
+    from={{ o: 0, x: -20 }}
+    to={{ o: 1, x: 0 }}
+    config={sidebarSpringConfig}
+    native
+  />
 )(Sidebar);
 
 export default withTheme(AnimatedSidebar);

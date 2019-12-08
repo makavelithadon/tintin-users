@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import NavLink from "components/NavLink";
 import { media } from "utils";
 import { CHARACTER_SLUG } from "routes";
@@ -15,18 +15,39 @@ const StyledNavItem = styled.li`
   text-align: left;
   user-select: none;
   line-height: 1;
-  ${media.forEach({ xs: 3.5, small: 4, medium: 4.5, large: 5.5 }, fZ => `font-size: ${fZ}rem;`)};
-  color: ${({ theme }) => theme.colors.white};
+  ${media.forEach(
+    { xs: 3.5, small: 4, medium: 4.5, large: 5.5 },
+    fZ => `font-size: ${fZ}rem;`
+  )};
+  color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.primary : theme.colors.white};
   font-family: ${({ theme }) => theme.fonts.primary};
   text-transform: uppercase;
   transform-origin: -200px 50%;
   font-weight: 900;
+  ${({ isHoverable }) =>
+    isHoverable &&
+    css`
+      &:hover {
+        color: ${({ theme }) => theme.colors.primary};
+      }
+    `}
 `;
 
-export default function NavItem({ item, onClick, animationState, isNavOpen }) {
+export default function NavItem({
+  isActive,
+  isHoverable,
+  item,
+  onClick,
+  animationState,
+  isNavOpen
+}) {
   return (
-    <StyledNavItem>
-      <StyledNavLink to={formatRoute(CHARACTER_SLUG, { character: item.slug })} onClick={onClick}>
+    <StyledNavItem isActive={isActive} isHoverable={isHoverable}>
+      <StyledNavLink
+        to={formatRoute(CHARACTER_SLUG, { character: item.slug })}
+        onClick={onClick}
+      >
         <RotatedSlidedUpText
           text={item.displayName}
           config={{

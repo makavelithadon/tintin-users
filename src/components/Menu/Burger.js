@@ -12,8 +12,10 @@ const StyledBurgerItem = styled.li`
   height: ${itemHeight}px;
   border-radius: 5px;
   width: ${props => (props.index === 2 ? "75%" : "100%")};
-  background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.darkGrey)}
-  top: ${({ index }) => `${Math.floor(index * (burgerHeight / 2) - itemHeight)}px`};
+  background-color: ${({ theme, color }) =>
+    color ? theme.colors[color] : theme.colors.darkGrey}
+  top: ${({ index }) =>
+    `${Math.floor(index * (burgerHeight / 2) - itemHeight)}px`};
   transition: ${({ theme }) => theme.transitions.primary};
 `;
 
@@ -33,6 +35,7 @@ const StyledBurgerContainer = styled.ul`
 `;
 
 export default function Burger({ color, ...props }) {
+  console.log({ color });
   return (
     <Menu.Consumer>
       {({ toggle }) => (

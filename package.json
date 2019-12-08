@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/polyfill": "^7.0.0",
     "@hugmanrique/react-markdown-loader": "^0.0.2",
     "@svgr/webpack": "2.4.1",

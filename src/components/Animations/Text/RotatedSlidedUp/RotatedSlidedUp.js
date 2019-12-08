@@ -28,7 +28,8 @@ const initialAnimation = {
   leave: [{ o: 0, y: 60, config: initialConfig.leave }]
 };
 
-const normalizeConfig = (config, arg) => (typeof config === "function" ? config(arg) : config);
+const normalizeConfig = (config, arg) =>
+  typeof config === "function" ? config(arg) : config;
 
 const createConfig = (configProps, animationKey) => key => {
   let c = { ...normalizeConfig(initialConfig[animationKey], key) };
@@ -74,29 +75,44 @@ const StyledLetter = styled(animated.span).attrs(({ o, y }) => ({
   will-change: transform, opacity;
 `;
 
+const StyledWord = styled.span`
+  display: inline-block;
+  white-space: nowrap;
+`;
+
 class RotatedSlidedUpText extends Component {
-  Animation = createAnimation(this.props.config ? this.props.config : initialConfig);
+  Animation = createAnimation(
+    this.props.config ? this.props.config : initialConfig
+  );
   render() {
     const { config, text, animationState, children, ...rest } = this.props;
     const { Animation } = this;
-    return (
-      <Animation
-        items={text.split("").map((letter, index) => ({ letter, index }))}
-        keys={item => `${item.letter}-${item.index}`}
-        state={animationState}
-        {...rest}
-      >
-        {item => props => {
-          return (
-            <StyledContainer>
-              <StyledFakeLetter>{item.letter}</StyledFakeLetter>
-              <StyledLetter {...props}>{item.letter}</StyledLetter>
-              {children && typeof children === "function" && children(item)(props)}
-            </StyledContainer>
-          );
-        }}
-      </Animation>
-    );
+    const words = text.split(" ");
+    return words.map((word, index) => (
+      <StyledWord>
+        <Animation
+          items={word.split("").map((letter, index) => ({ letter, index }))}
+          keys={item => `${item.letter}-${item.index}`}
+          state={animationState}
+          {...rest}
+        >
+          {item => props => {
+            return (
+              <StyledContainer>
+                <StyledFakeLetter>{item.letter}</StyledFakeLetter>
+                <StyledLetter {...props}>{item.letter}</StyledLetter>
+                {children &&
+                  typeof children === "function" &&
+                  children(item)(props)}
+              </StyledContainer>
+            );
+          }}
+        </Animation>
+        {index !== words.length - 1 && (
+          <span dangerouslySetInnerHTML={{ __html: "&nbsp;" }} />
+        )}
+      </StyledWord>
+    ));
   }
 }
 
@@ -112,7 +128,8 @@ RotatedSlidedUpText.propTypes = {
   reverse: PropTypes.bool
 };
 
-RotatedSlidedUpText.displayName = RotatedSlidedUpText.name || "RotatedSlidedUpText";
+RotatedSlidedUpText.displayName =
+  RotatedSlidedUpText.name || "RotatedSlidedUpText";
 
 export default RotatedSlidedUpText;
 

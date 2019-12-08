@@ -13,15 +13,20 @@ const StyledHeader = styled.header`
   align-items: center;
   padding: 0 20px;
   background-color: ${({ theme }) => theme.colors.background};
-  ${({ theme }) => media.forEach(theme.styles.header.height, height => `height: ${height}`)};
-  ${({ theme }) => media.forEach({ xs: theme.shadows.box, small: "none" }, bs => `box-shadow: ${bs};`)};
+  ${({ theme }) =>
+    media.forEach(theme.styles.header.height, height => `height: ${height}`)};
+  ${({ theme }) =>
+    media.forEach(
+      { xs: theme.shadows.box, small: "none" },
+      bs => `box-shadow: ${bs};`
+    )};
 `;
 
 function Header({ theme }) {
   return (
     <StyledHeader>
       <Media query={`min-with: (${theme.breakpoints.values.small})`}>
-        {matches => (matches ? null : <Menu.Burger color={"text"} />)}
+        {matches => (matches ? null : <Menu.Burger color={"white"} />)}
       </Media>
     </StyledHeader>
   );

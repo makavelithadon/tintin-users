@@ -4,19 +4,21 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { easeSinOut } from "d3-ease";
 
-const TransitionedComponent = ({ location, path, render, transition, ...restProps }) => {
+const TransitionedComponent = ({
+  location,
+  path,
+  render,
+  transition,
+  ...restProps
+}) => {
   return (
-    <Transition
-      keys={location.pathname}
-      from={transition.from}
-      enter={transition.enter}
-      leave={transition.leave}
-      config={transition.config}
-      native
-    >
+    <Transition keys={location.pathname} {...transition} native>
       {item => transitionedStyles => (
         <Switch location={location}>
-          <Route path={path} render={props => render(transitionedStyles, props)} />
+          <Route
+            path={path}
+            render={props => render(transitionedStyles, props)}
+          />
         </Switch>
       )}
     </Transition>
@@ -47,6 +49,7 @@ TransitionedComponent.propTypes = {
   })
 };
 
-TransitionedComponent.displayName = TransitionedComponent.name || "TransitionedComponent";
+TransitionedComponent.displayName =
+  TransitionedComponent.name || "TransitionedComponent";
 
 export default withRouter(TransitionedComponent);

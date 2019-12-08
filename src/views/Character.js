@@ -16,8 +16,14 @@ const StyledCharacterContainer = styled.div`
   bottom: 0;
   padding-top: 15vh;
   min-height: 100vh;
-  ${media.forEach({ xs: "100%", medium: "90%", large: "80%" }, w => `width: ${w};`)};
-  ${media.forEach({ xs: "30px", small: "50px", medium: "80px" }, paddingRight => `padding-right: ${paddingRight};`)};
+  ${media.forEach(
+    { xs: "100%", medium: "90%", large: "80%" },
+    w => `width: ${w};`
+  )};
+  ${media.forEach(
+    { xs: "30px", small: "50px", medium: "80px" },
+    paddingRight => `padding-right: ${paddingRight};`
+  )};
   ${({ theme }) => {
     const { xs, ...otherSizes } = theme.styles.sidebar.width;
     return media.forEach(
@@ -44,8 +50,8 @@ const StyledCharacterContainer = styled.div`
 
 function Character({ theme, location, character }) {
   if (!character) return <Redirect to={NOT_FOUND} />;
-  const hasPictures = character.pictures && character.pictures.length;
-  const hasDescription = character.description;
+  const hasPictures = character.pictures && !!character.pictures.length;
+  const hasDescription = !!character.description;
   return (
     <>
       <StyledCharacterContainer>
