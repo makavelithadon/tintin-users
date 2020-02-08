@@ -129,7 +129,7 @@
     }
   },
   "lint-staged": {
-    "*.+(js|jsx)": "eslint ./src --fix",
+    "*.+(js|jsx)": "eslint --fix",
     "*.+(json|css|md)": "prettier --write"
   },
   "browserslist": {
