@@ -8,7 +8,9 @@ const MenuContext = createContext();
 function Consumer({ children }) {
   const context = useContext(MenuContext);
   if (!context) {
-    throw new Error("Context is undefined, please be sure that you are well placed on the correspondig provider");
+    throw new Error(
+      "Context is undefined, please be sure that you are well placed on the correspondig provider"
+    );
   }
   return children(context);
 }
@@ -18,7 +20,10 @@ export default class Menu extends Component {
   static Burger = Burger;
   static Nav = Nav;
   static Sidebar = Sidebar;
-  toggle = value => this.setState(state => ({ isOpen: typeof value !== "undefined" ? value : !state.isOpen }));
+  toggle = value =>
+    this.setState(state => ({
+      isOpen: typeof value !== "undefined" ? value : !state.isOpen
+    }));
   state = {
     isOpen: false,
     toggle: this.toggle

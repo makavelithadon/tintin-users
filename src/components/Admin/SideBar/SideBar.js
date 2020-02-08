@@ -39,7 +39,9 @@ export default function SideBar({ links }) {
       <StyledLinksContainer>
         {links.map(link => (
           <StyledSideBarItem key={link.displayName}>
-            <NavLink to={`/admin/${lowercasify(link.slug)}`}>{link.displayName}</NavLink>
+            <NavLink to={`/admin/${lowercasify(link.slug)}`}>
+              {link.displayName}
+            </NavLink>
           </StyledSideBarItem>
         ))}
       </StyledLinksContainer>

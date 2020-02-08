@@ -30,7 +30,8 @@ const StyledInput = styled.input.attrs(({ type, name }) => ({
   border-radius: 4px;
   border: ${({ theme }) => `2px solid ${theme.colors.lightGrey}`};
   padding: 6px 12px;
-  background-color: ${({ theme, color }) => (color ? theme.colors[color] : "transparent")};
+  background-color: ${({ theme, color }) =>
+    color ? theme.colors[color] : "transparent"};
   &:focus {
     border: ${({ theme }) => `2px solid ${theme.colors.secondary}`};
   }
@@ -66,7 +67,12 @@ function FormLogin({ auth, login }) {
           readOnly={isLoading}
         />
       ))}
-      <StyledInput type={"submit"} color={"secondary"} value={"Valider"} disabled={isLoading} />
+      <StyledInput
+        type={"submit"}
+        color={"secondary"}
+        value={"Valider"}
+        disabled={isLoading}
+      />
     </StyledForm>
   );
 }

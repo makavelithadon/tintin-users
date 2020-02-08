@@ -5,7 +5,8 @@ const StyledHeading = styled.h1.attrs(props => ({
 }))`
   margin-top: 0;
   line-height: 1;
-  color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.text)};
+  color: ${({ theme, color }) =>
+    color ? theme.colors[color] : theme.colors.text};
   font-family: ${({ theme }) => theme.fonts.primary};
   font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 900)};
   text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "initial")};

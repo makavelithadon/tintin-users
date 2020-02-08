@@ -25,10 +25,15 @@ function Admin({ history, auth: { showLoginDialog, data }, hideLoginDialog }) {
     <StyledMain>
       {auth.isLogged() && (
         <SideBar
-          links={[{ displayName: "Profil", slug: "profile" }, { displayName: "Personnages", slug: "characters" }]}
+          links={[
+            { displayName: "Profil", slug: "profile" },
+            { displayName: "Personnages", slug: "characters" }
+          ]}
         />
       )}
-      {auth.isLogged() && <button onClick={() => history.replace(ADMIN_LOGOUT)}>Logout</button>}
+      {auth.isLogged() && (
+        <button onClick={() => history.replace(ADMIN_LOGOUT)}>Logout</button>
+      )}
       {auth.isLogged() && (
         <SnackBar show={showLoginDialog} onClose={hideLoginDialog}>
           Bienvenue {data.email}
@@ -38,7 +43,13 @@ function Admin({ history, auth: { showLoginDialog, data }, hideLoginDialog }) {
         <Redirect exact from={ADMIN} to={ADMIN_LOGIN} />
         <Route
           path={ADMIN_LOGIN}
-          render={props => (auth.isLogged() ? <Redirect to={ADMIN_PROFILE} /> : <Login {...props} />)}
+          render={props =>
+            auth.isLogged() ? (
+              <Redirect to={ADMIN_PROFILE} />
+            ) : (
+              <Login {...props} />
+            )
+          }
         />
         <Route path={ADMIN_LOGOUT} component={Logout} />
         <AuthenticatedRoute
@@ -72,10 +83,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-  withTheme(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(Admin)
-  )
+  withTheme(connect(mapStateToProps, mapDispatchToProps)(Admin))
 );

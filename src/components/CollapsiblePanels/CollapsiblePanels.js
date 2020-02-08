@@ -6,7 +6,16 @@ import { easeSinOut } from "d3-ease";
 import { stripUnits, filterObjectByKey, getCSSProperty } from "utils";
 
 const debug = true;
-let debugColors = ["#0ebeff", "#30acf4", "#539be9", "#7589de", "#9877d4", "#ba65c9", "#dd54be", "#ff42b3"];
+let debugColors = [
+  "#0ebeff",
+  "#30acf4",
+  "#539be9",
+  "#7589de",
+  "#9877d4",
+  "#ba65c9",
+  "#dd54be",
+  "#ff42b3"
+];
 
 function debugHelper() {
   return css`
@@ -72,9 +81,13 @@ function setAnimationsList(list, hoveredIndex, isFirst = false, growRatio) {
       {}
     );
   }
-  const containerWidth = Math.ceil(stripUnits(getCSSProperty(list[0].parentNode, "width")));
+  const containerWidth = Math.ceil(
+    stripUnits(getCSSProperty(list[0].parentNode, "width"))
+  );
   const hoveredWidth = Math.ceil((containerWidth / itemsCount) * growRatio);
-  const unHoveredWidth = Math.ceil((containerWidth - hoveredWidth) / (itemsCount - 1));
+  const unHoveredWidth = Math.ceil(
+    (containerWidth - hoveredWidth) / (itemsCount - 1)
+  );
   const mergedList = list.map((item, index) => {
     const isHovered = index === hoveredIndex;
     const isBefore = index < hoveredIndex;
@@ -94,15 +107,14 @@ function setAnimationsList(list, hoveredIndex, isFirst = false, growRatio) {
 
 function CollapsiblePanels({ children, growRatio, width: sliderWidth }) {
   const { width, height } = useViewport();
-  const [animations, setAnimations] = useState(setAnimationsList(children, null, true, growRatio));
+  const [animations, setAnimations] = useState(
+    setAnimationsList(children, null, true, growRatio)
+  );
   const [lastHoveredIndex, setLastHoveredIndex] = useState(0);
   const refs = [];
-  useEffect(
-    () => {
-      setAnimations(setAnimationsList(refs, null, true, growRatio));
-    },
-    [width, height]
-  );
+  useEffect(() => {
+    setAnimations(setAnimationsList(refs, null, true, growRatio));
+  }, [width, height]);
   function onHover(index, resize = false) {
     if (lastHoveredIndex === index && !resize) return;
     setLastHoveredIndex(index);
@@ -123,7 +135,11 @@ function CollapsiblePanels({ children, growRatio, width: sliderWidth }) {
               <StyledPanel
                 width={props[`${index}-width`]}
                 left={props[`${index}-left`]}
-                ref={node => (refs.length < React.Children.count(children) ? refs.push(node) : null)}
+                ref={node =>
+                  refs.length < React.Children.count(children)
+                    ? refs.push(node)
+                    : null
+                }
                 onMouseOver={() => onHover(index)}
               >
                 {child}

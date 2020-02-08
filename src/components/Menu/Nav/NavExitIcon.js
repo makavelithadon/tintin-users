@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { withTheme } from "styled-components";
+import styled from "styled-components";
 import { AnimatedExit as Exit } from "UI/Icons";
 import { media } from "utils";
 
@@ -13,13 +13,21 @@ const StyledExitIconContainer = styled.div`
   ${({ theme }) => {
     const sizes = { ...theme.styles.sidebar.width };
     delete sizes.xs;
-    return media.forEach(sizes, h => `left: ${parseInt(h, 10) / 2}px; top: 50%; right: auto;`);
+    return media.forEach(
+      sizes,
+      h => `left: ${parseInt(h, 10) / 2}px; top: 50%; right: auto;`
+    );
   }};
 `;
 
 const NavExitIcon = ({ animationState, onClick }) => (
   <StyledExitIconContainer>
-    <Exit onClick={onClick} animationState={animationState} immediate={false} color={"white"} />
+    <Exit
+      onClick={onClick}
+      animationState={animationState}
+      immediate={false}
+      color={"white"}
+    />
   </StyledExitIconContainer>
 );
 

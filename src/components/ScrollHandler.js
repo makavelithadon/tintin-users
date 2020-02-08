@@ -39,15 +39,24 @@ class ScrollHandler extends React.Component {
     this.setState({});
   };
 
-  handleResize = () => ({ width: window.innerWidth, height: window.innerHeight });
+  handleResize = () => ({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
 
   handleScroll = () => {
     const y = window.pageYOffset;
     const x = window.pageXOffset;
     const node = this.props.innerRef.current;
-    const { top: refTop, bottom: refBottom, width: refWidth, height: refHeight } = node.getBoundingClientRect();
+    const {
+      top: refTop,
+      bottom: refBottom,
+      width: refWidth,
+      height: refHeight
+    } = node.getBoundingClientRect();
     const isOverTop = refTop > 0;
-    const isOverBottom = round(refHeight) + round(refTop) - round(window.innerHeight) < 0;
+    const isOverBottom =
+      round(refHeight) + round(refTop) - round(window.innerHeight) < 0;
     return {
       x,
       y,
@@ -73,7 +82,12 @@ class ScrollHandler extends React.Component {
   }
 
   render() {
-    const { wrapper: Wrapper, children, innerRef, scrollerClassName } = this.props;
+    const {
+      wrapper: Wrapper,
+      children,
+      innerRef,
+      scrollerClassName
+    } = this.props;
     const { state } = this;
     const ui = Wrapper ? (
       <Wrapper ref={innerRef}>{children(state)}</Wrapper>
@@ -87,4 +101,6 @@ class ScrollHandler extends React.Component {
   }
 }
 
-export default React.forwardRef((props, ref) => <ScrollHandler innerRef={ref} {...props} />);
+export default React.forwardRef((props, ref) => (
+  <ScrollHandler innerRef={ref} {...props} />
+));

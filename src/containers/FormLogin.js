@@ -11,7 +11,4 @@ const mapDispatchToProps = dispatch => ({
   login: credentials => dispatch(login(credentials))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FormLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(FormLogin);

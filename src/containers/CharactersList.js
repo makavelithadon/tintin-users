@@ -5,7 +5,10 @@ import { fetchCharacters } from "state/ducks/characters/actions";
 import List from "components/Character/List";
 import Loader from "UI/Loader";
 
-function CharactersList({ characters: { items: characters, isLoading, error }, fetchCharacters }) {
+function CharactersList({
+  characters: { items: characters, isLoading, error },
+  fetchCharacters
+}) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     if (!mounted) {
@@ -32,9 +35,8 @@ function CharactersList({ characters: { items: characters, isLoading, error }, f
 
 const mapStateToProps = state => ({ characters: getCharacters(state) });
 
-const mapDispatchToProps = dispatch => ({ fetchCharacters: () => dispatch(fetchCharacters()) });
+const mapDispatchToProps = dispatch => ({
+  fetchCharacters: () => dispatch(fetchCharacters())
+});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CharactersList);
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersList);

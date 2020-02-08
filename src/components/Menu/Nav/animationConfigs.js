@@ -16,5 +16,7 @@ export const AnimatedNav = Keyframes.Spring({
       config: { ...nav.common, ...nav.enter }
     }
   ],
-  leave: [{ o: 0, slide: -100, config: key => ({ ...nav.common, ...nav.leave(key) }) }]
+  leave: [
+    { o: 0, slide: -100, config: key => ({ ...nav.common, ...nav.leave(key) }) }
+  ]
 });

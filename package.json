@@ -6,16 +6,13 @@
     "@babel/core": "7.1.0",
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/polyfill": "^7.0.0",
+    "@babel/preset-react": "^7.8.3",
     "@hugmanrique/react-markdown-loader": "^0.0.2",
     "@svgr/webpack": "2.4.1",
     "array.prototype.flat": "^1.2.1",
     "axios": "^0.18.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "10.0.1",
-    "babel-loader": "8.0.5",
     "babel-plugin-named-asset-import": "^0.2.3",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-react-app": "^6.1.0",
     "bcrypt": "^3.0.2",
     "bfj": "6.1.1",
     "bluebird": "^3.5.3",
@@ -74,7 +71,7 @@
     "react-router-dom": "^4.4.0-beta.6",
     "react-router-named-routes": "^0.0.23",
     "react-router-util": "^0.7.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "3.3.1",
     "react-smooth-scrollbar": "^8.0.6",
     "react-spring": "^6.1.8",
     "react-waypoint": "^8.1.0",
@@ -86,7 +83,7 @@
     "smooth-scrollbar": "^8.3.1",
     "strip-indent": "^2.0.0",
     "style-loader": "0.23.0",
-    "styled-components": "^4.1.1",
+    "styled-components": "^5.0.1",
     "terser-webpack-plugin": "1.1.0",
     "ua-parser-js": "^0.7.19",
     "unfetch": "^4.0.1",
@@ -98,8 +95,12 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "d3-ease": "^1.0.5",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "faker": "^4.1.0",
     "html-loader": "^0.5.5",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.7",
     "markdown-image-loader": "^2.0.0",
     "markdown-to-jsx": "^6.9.0",
     "marked": "^0.5.2",
@@ -112,10 +113,24 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src --fix",
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "plugin:prettier/recommended"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": "eslint --fix",
+    "*.+(json|css|md)": "prettier --write"
   },
   "browserslist": {
     "production": [

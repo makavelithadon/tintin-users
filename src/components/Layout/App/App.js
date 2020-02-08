@@ -19,12 +19,9 @@ const StyledContent = styled.section`
 `;
 
 function Layout({ theme, children, location }) {
-  useEffect(
-    () => {
-      scrollToTop();
-    },
-    [location]
-  );
+  useEffect(() => {
+    scrollToTop();
+  }, [location]);
   return (
     <StyledMain>
       <StyledContent>

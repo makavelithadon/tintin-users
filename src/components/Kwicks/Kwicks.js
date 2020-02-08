@@ -9,7 +9,12 @@ class KwicksSlider extends React.Component {
   options = null;
   componentDidMount() {
     this.$container = window.$(".kwicks");
-    const { container, orientation, containerWidth, ...kwicksOptions } = this.props;
+    const {
+      container,
+      orientation,
+      containerWidth,
+      ...kwicksOptions
+    } = this.props;
     this.options = kwicksOptions;
     this.$container.kwicks({
       ...this.options,
@@ -36,7 +41,12 @@ class KwicksSlider extends React.Component {
     this.$container.kwicks("destroy");
   };
   render() {
-    const { container: Container, orientation, containerWidth, children } = this.props;
+    const {
+      container: Container,
+      orientation,
+      containerWidth,
+      children
+    } = this.props;
     const classes = `kwicks kwicks-${orientation}`;
     const CustomContainer = Container ? Container : <ul />;
     return (

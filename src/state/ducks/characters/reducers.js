@@ -1,5 +1,9 @@
 import { combineReducers } from "redux";
-import { FETCH_CHARACTERS, FETCH_CHARACTERS_SUCCESS, FETCH_CHARACTERS_ERROR } from "./types";
+import {
+  FETCH_CHARACTERS,
+  FETCH_CHARACTERS_SUCCESS,
+  FETCH_CHARACTERS_ERROR
+} from "./types";
 import data from "data";
 
 const initialItems = data.characters;

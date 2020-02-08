@@ -10,7 +10,8 @@ const StyledGallery = styled.section`
 
 function Gallery({ theme }) {
   function handleScroll({ refTop, height, isOverTop }) {
-    const distance = refTop - height + parseInt(theme.styles.sidebar.paddingBottom, 10);
+    const distance =
+      refTop - height + parseInt(theme.styles.sidebar.paddingBottom, 10);
     const isSecondarySidebarEmailAddress = distance < 0;
     if (isSecondarySidebarEmailAddress) {
       //console.log("distance", distance);
@@ -20,7 +21,11 @@ function Gallery({ theme }) {
     //console.log("isOverTop", isOverTop, "refTop", refTop);
   }
   return (
-    <ScrollHandler ref={React.createRef()} wrapper={StyledGallery} onScroll={handleScroll}>
+    <ScrollHandler
+      ref={React.createRef()}
+      wrapper={StyledGallery}
+      onScroll={handleScroll}
+    >
       {({ refTop, height }) => {
         return <div>Hello</div>;
       }}

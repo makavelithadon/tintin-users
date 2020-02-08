@@ -6,7 +6,6 @@ import { media, stripUnits } from "utils";
 import { H2 } from "UI/Heading";
 import { fillSizes } from "style-utils";
 import { inheritComponent } from "style-utils";
-import Helpers from "UI/Helpers";
 import Button from "UI/Button";
 import { easeCircleInOut } from "d3-ease";
 
@@ -21,9 +20,13 @@ const StyledCharacter = styled.div`
 
 const StyledImg = styled.img`
   ${({ theme, charactersCount }) =>
-    media.small`width: ${(80 * stripUnits(theme.breakpoints.values.medium)) / 100 / charactersCount}px;`}
+    media.small`width: ${(80 * stripUnits(theme.breakpoints.values.medium)) /
+      100 /
+      charactersCount}px;`}
   ${({ theme, charactersCount }) =>
-    media.large`width: ${(75 * stripUnits(theme.breakpoints.values.large)) / 100 / charactersCount}px;`}
+    media.large`width: ${(75 * stripUnits(theme.breakpoints.values.large)) /
+      100 /
+      charactersCount}px;`}
   transition: ${({ theme }) => theme.transitions.primary};
   transform-origin: 50% 100%;
 `;
@@ -51,7 +54,9 @@ function CharacterListItem({ character, count, isSelected, history }) {
   const hasPicture = pictures && pictures.length;
   return (
     <StyledCharacter component={animated.div} isSelected={isSelected}>
-      {hasPicture && <StyledImg src={pictures[0].src} charactersCount={count} />}
+      {hasPicture && (
+        <StyledImg src={pictures[0].src} charactersCount={count} />
+      )}
       <StyledCharacterDisplayName color={"text"} uppercase>
         {displayName.includes(" ")
           ? displayName.split(" ").map(word => (
@@ -69,7 +74,11 @@ function CharacterListItem({ character, count, isSelected, history }) {
         native
       >
         {({ opacity, y }) => (
-          <StyledButton onClick={() => isSelected && history.push(character.slug)} opacity={opacity} y={y}>
+          <StyledButton
+            onClick={() => isSelected && history.push(character.slug)}
+            opacity={opacity}
+            y={y}
+          >
             {"c'est parti"}
           </StyledButton>
         )}

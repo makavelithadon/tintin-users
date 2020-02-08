@@ -34,7 +34,11 @@ const StyledExitItem = styled(animated.li).attrs(({ o, w }) => ({
   transform: ${({ angle }) => `translate(-50%, -50%) rotate(${angle}deg);`};
   height: 1.5px;
   background-color: ${({ theme, color }) =>
-    color ? (theme.colors[color] ? theme.colors[color] : color) : theme.colors.white};
+    color
+      ? theme.colors[color]
+        ? theme.colors[color]
+        : color
+      : theme.colors.white};
   border-radius: 5px;
 `;
 
@@ -54,7 +58,12 @@ const IconAnimation = Keyframes.Spring({
 export function AnimatedExit(props) {
   const { color, animationState, size, immediate, ...rest } = props;
   return (
-    <IconAnimation state={animationState} size={size} immediate={immediate} native>
+    <IconAnimation
+      state={animationState}
+      size={size}
+      immediate={immediate}
+      native
+    >
       {styles => (
         <StyledIcon size={size} {...rest} rotate={styles.rotate}>
           <StyledExitItem color={color} angle={45} {...styles} />
