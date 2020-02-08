@@ -129,14 +129,8 @@
     }
   },
   "lint-staged": {
-    "*.+(js|jsx)": [
-      "eslint ./src --fix",
-      "git add"
-    ],
-    "*.+(json|css|md)": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.+(js|jsx)": "eslint ./src --fix",
+    "*.+(json|css|md)": "prettier --write"
   },
   "browserslist": {
     "production": [
