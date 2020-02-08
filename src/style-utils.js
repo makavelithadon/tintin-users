@@ -69,7 +69,10 @@ export function hardwareAcceleration({ x = 0, y = 0, z = 0 } = {}) {
   `;
 }
 
-export function backgroundCover(url, { position = "center center", attachment = "initial" } = {}) {
+export function backgroundCover(
+  url,
+  { position = "center center", attachment = "initial" } = {}
+) {
   return `
     background: url(${url});
     background-repeat no-repeat;

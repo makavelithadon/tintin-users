@@ -21,8 +21,14 @@ const StyledLogin = styled.section`
 const StyledCard = styled.article`
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.background};
-  ${media.forEach({ medium: "45vh" }, minHeight => `min-height: ${minHeight};`)};
-  ${media.forEach({ xs: "auto", small: "500px", large: "40vw" }, width => `width: ${width};`)};
+  ${media.forEach(
+    { medium: "45vh" },
+    minHeight => `min-height: ${minHeight};`
+  )};
+  ${media.forEach(
+    { xs: "auto", small: "500px", large: "40vw" },
+    width => `width: ${width};`
+  )};
   transition: ${props => props.theme.transitions.primary};
   box-shadow: ${({ theme }) => theme.shadows.box};
   display: flex;

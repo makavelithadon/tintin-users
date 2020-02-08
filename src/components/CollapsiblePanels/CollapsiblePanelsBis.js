@@ -4,17 +4,31 @@ import { Spring } from "react-spring";
 import PropTypes from "prop-types";
 import * as easings from "d3-ease";
 import { getDeepKey, getCSSProperty, stripUnits } from "utils";
-import { getStartAnimations, getEndAnimations, flatAnimatedObjectKeys, setAnimationsList } from "./utils";
+import {
+  getStartAnimations,
+  getEndAnimations,
+  flatAnimatedObjectKeys
+} from "./utils";
 
 const debug = true;
-const debugColors = ["#0ebeff", "#30acf4", "#539be9", "#7589de", "#9877d4", "#ba65c9", "#dd54be", "#ff42b3"];
+const debugColors = [
+  "#0ebeff",
+  "#30acf4",
+  "#539be9",
+  "#7589de",
+  "#9877d4",
+  "#ba65c9",
+  "#dd54be",
+  "#ff42b3"
+];
 const container = {
   debugColor: theme => getDeepKey(theme, "colors.primary"),
   debugHeight: "400px"
 };
 
 const Container = styled.div`
-  background-color: ${({ theme }) => (debug ? container.debugColor(theme) : "transparent")};
+  background-color: ${({ theme }) =>
+    debug ? container.debugColor(theme) : "transparent"};
   height: ${debug ? container.debugHeight : "auto"};
 `;
 
@@ -49,7 +63,9 @@ export default class CollapsiblePanels extends React.Component {
           : isBefore
           ? stripUnits(index * unHoveredWidth)
           : (index - 1) * unHoveredWidth + hoveredWidth,
-        [`${index}-width-end`]: isHovered ? hoveredWidth + 3 : unHoveredWidth + 3
+        [`${index}-width-end`]: isHovered
+          ? hoveredWidth + 3
+          : unHoveredWidth + 3
       };
     });
     return { ...mergedList.reduce((acc, item) => ({ ...acc, ...item }), {}) };
@@ -120,7 +136,9 @@ export default class CollapsiblePanels extends React.Component {
     //setLastHoveredIndex(index);
     const { expandedRatio, onHover } = this.props;
     this.setState({ hoveredIndex: index });
-    this.setState({ animations: this._setAnimationsList(index, false, expandedRatio) });
+    this.setState({
+      animations: this._setAnimationsList(index, false, expandedRatio)
+    });
     onHover && onHover(index);
   };
   handleMouseLeave = index => {
@@ -163,7 +181,10 @@ CollapsiblePanels.propTypes = {
   flexBox: PropTypes.bool,
   container: PropTypes.shape({
     ref: PropTypes.shape({
-      current: PropTypes.oneOfType([PropTypes.object, PropTypes.instanceOf(Element)])
+      current: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.instanceOf(Element)
+      ])
     }),
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }),

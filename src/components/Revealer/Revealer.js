@@ -7,7 +7,9 @@ const StyledDefaultRevealerContainer = styled.div`
   position: relative;
 `;
 
-const StyledRevealerContainer = styled(({ component, ...props }) => React.cloneElement(component, props))`
+const StyledRevealerContainer = styled(({ component, ...props }) =>
+  React.cloneElement(component, props)
+)`
   z-index: 10;
 `;
 
@@ -40,7 +42,8 @@ const StyledLayer = styled(animated.div).attrs(({ left, right, width }) => ({
   top: 0;
   bottom: 0;
   height: 100%;
-  background-color: ${({ theme, color }) => (theme.colors[color] ? theme.colors[color] : theme.colors.background)};
+  background-color: ${({ theme, color }) =>
+    theme.colors[color] ? theme.colors[color] : theme.colors.background};
   z-index: 1;
 `;
 

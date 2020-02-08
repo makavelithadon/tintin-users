@@ -17,7 +17,7 @@ function useURLCharacter({ location, list, match }) {
   useEffect(
     () =>
       setCurrentId(getCurrentSelectedCharacter(list, match.params.character)),
-    [location.pathname]
+    [location.pathname, list, match.params.character]
   );
   return currentId;
 }

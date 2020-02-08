@@ -6,21 +6,26 @@ import { isOldBrowser } from "utils";
 import { isDev } from "utils";
 import { DEBUG } from "shared";
 
-const StyledSlider = styled(animated.ul).attrs(({ width, height, opacity, x }) => ({
-  style: {
-    opacity: opacity.interpolate(o => o),
-    width,
-    height,
-    transform: `translate3d(-${x}px, -50%, 0)`
-  }
-}))`
+const StyledSlider = styled(animated.ul).attrs(
+  ({ width, height, opacity, x }) => ({
+    style: {
+      opacity: opacity.interpolate(o => o),
+      width,
+      height,
+      transform: `translate3d(-${x}px, -50%, 0)`
+    }
+  })
+)`
   position: absolute;
   top: 50%;
   text-align: left;
   font-size: 0;
   will-change: width, height, transform;
   overflow: hidden;
-  transition: ${({ theme }) => (isOldBrowser() ? "0.0s 0.0s linear" : `transform ${theme.transitions.primary}`)};
+  transition: ${({ theme }) =>
+    isOldBrowser()
+      ? "0.0s 0.0s linear"
+      : `transform ${theme.transitions.primary}`};
 `;
 
 const StyledSliderItem = styled.li.attrs(({ width, height, opacity }) => ({
@@ -62,11 +67,14 @@ function getSlideOpacity(index, scrollerWidth, x) {
   let opacity;
   if (isVisible) {
     const rightCornerDistance = x + scrollerWidth;
-    const isAppearing = rightCornerDistance > start && rightCornerDistance < end;
+    const isAppearing =
+      rightCornerDistance > start && rightCornerDistance < end;
     const decalage = isAppearing ? rightCornerDistance - start : end - x;
     const visibilityPercentage = (decalage / scrollerWidth) * 100;
     opacity = visibilityPercentage / 100;
-    opacity = isAppearing ? opacity + visibilityPercentage / 100 : opacity / (100 / visibilityPercentage);
+    opacity = isAppearing
+      ? opacity + visibilityPercentage / 100
+      : opacity / (100 / visibilityPercentage);
     opacity = opacity < 0 ? 0 : opacity > 1 ? 1 : opacity;
   } else {
     opacity = 0;
@@ -74,7 +82,12 @@ function getSlideOpacity(index, scrollerWidth, x) {
   return opacity;
 }
 
-const ScrolledPicturesSlider = ({ items: persistentItems, refWidth, children, ...restProps }) => {
+const ScrolledPicturesSlider = ({
+  items: persistentItems,
+  refWidth,
+  children,
+  ...restProps
+}) => {
   const [items] = useState(persistentItems);
   return (
     <StyledSlider {...restProps}>

@@ -7,6 +7,9 @@ let fonts = {
   tertiary: "Tintin Bold"
 };
 
-fonts = Object.entries(fonts).reduce((acc, [name, value]) => ({ ...acc, [name]: `${value}, ${fallbackFonts};` }), {});
+fonts = Object.entries(fonts).reduce(
+  (acc, [name, value]) => ({ ...acc, [name]: `${value}, ${fallbackFonts};` }),
+  {}
+);
 
 export default fonts;

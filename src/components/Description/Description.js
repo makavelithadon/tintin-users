@@ -11,7 +11,10 @@ const StyledDescription = styled.div`
   min-height: 100vh;
   perspective: 400px;
   ${media.forEach({ xs: "100%", medium: "60%" }, w => `width: ${w};`)};
-  ${media.forEach({ xs: 0, medium: "6%" }, paddingLeft => `padding-left: ${paddingLeft};`)};
+  ${media.forEach(
+    { xs: 0, medium: "6%" },
+    paddingLeft => `padding-left: ${paddingLeft};`
+  )};
 `;
 
 function Description({ character }) {

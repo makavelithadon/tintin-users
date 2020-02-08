@@ -3,7 +3,10 @@ import api from "api";
 import { parseText } from "api/utils";
 
 export default function useDescription(raw) {
-  const [{ description, error }, setDescription] = useState({ description: "", error: null });
+  const [{ description, error }, setDescription] = useState({
+    description: "",
+    error: null
+  });
   async function getDescription() {
     let state = {};
     try {
@@ -19,12 +22,9 @@ export default function useDescription(raw) {
     }
   }
 
-  useEffect(
-    () => {
-      getDescription();
-    },
-    [raw]
-  );
+  useEffect(() => {
+    getDescription();
+  }, [raw]);
 
   return { description, error };
 }

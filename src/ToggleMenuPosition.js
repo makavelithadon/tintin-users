@@ -19,6 +19,7 @@ const StyledToggle = styled.button`
 
 export default function ToggleMenuPosition({ children }) {
   const { app, setApp } = useContext(AppContext);
-  const updateMenuPosition = () => setApp({ menu: { from: app.menu.from === "left" ? "top" : "left" } });
+  const updateMenuPosition = () =>
+    setApp({ menu: { from: app.menu.from === "left" ? "top" : "left" } });
   return <StyledToggle onClick={updateMenuPosition}>{children}</StyledToggle>;
 }

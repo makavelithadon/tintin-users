@@ -39,9 +39,13 @@ import jQuery from "jquery";
 
       // validate and normalize options
       if (o.minSize !== -1 && o.maxSize !== -1)
-        throw new Error("Kwicks options minSize and maxSize may not both be set");
+        throw new Error(
+          "Kwicks options minSize and maxSize may not both be set"
+        );
       if (o.behavior && o.behavior !== "menu" && o.behavior !== "slideshow")
-        throw new Error("Unrecognized Kwicks behavior specified: " + o.behavior);
+        throw new Error(
+          "Unrecognized Kwicks behavior specified: " + o.behavior
+        );
       $.each(["minSize", "maxSize", "spacing"], function(i, prop) {
         var val = o[prop];
         switch (typeof val) {
@@ -56,11 +60,15 @@ import jQuery from "jquery";
               o[prop + "Units"] = "px";
               o[prop] = +val.slice(0, -2);
             } else {
-              throw new Error("Invalid value for Kwicks option " + prop + ": " + val);
+              throw new Error(
+                "Invalid value for Kwicks option " + prop + ": " + val
+              );
             }
             break;
           default:
-            throw new Error("Invalid value for Kwicks option " + prop + ": " + val);
+            throw new Error(
+              "Invalid value for Kwicks option " + prop + ": " + val
+            );
         }
       });
 
@@ -191,7 +199,10 @@ import jQuery from "jquery";
    */
   $.fn.kwicks = function(opts) {
     if (methods[opts]) {
-      return methods[opts].apply(this, Array.prototype.slice.call(arguments, 1));
+      return methods[opts].apply(
+        this,
+        Array.prototype.slice.call(arguments, 1)
+      );
     } else if (typeof opts === "object" || !opts) {
       return methods.init.apply(this, arguments);
     } else {
@@ -560,7 +571,9 @@ import jQuery from "jquery";
   Kwick.prototype.getContainerSize = function(clearCache) {
     var containerSize = this._containerSize;
     if (clearCache || !containerSize) {
-      containerSize = this._containerSize = this.$container[this.primaryDimension]();
+      containerSize = this._containerSize = this.$container[
+        this.primaryDimension
+      ]();
     }
     return containerSize;
   };
@@ -625,7 +638,9 @@ import jQuery from "jquery";
     for (var i = 0, len = this.onDestroyHandlers.length; i < len; i++) {
       this.onDestroyHandlers[i]();
     }
-    this.$panels.attr("style", "").removeClass("kwicks-expanded kwicks-selected kwicks-collapsed");
+    this.$panels
+      .attr("style", "")
+      .removeClass("kwicks-expanded kwicks-selected kwicks-collapsed");
     this.$container
       // note: kwicks and kwicks-<orientation> classes have extra smarts around them
       // back in the constructor
@@ -711,7 +726,9 @@ import jQuery from "jquery";
           offsets.length = 0;
           for (var i = 0; i < numPanels; i++) {
             var targetOffset = targetOffsets[i],
-              newOffset = targetOffset - (targetOffset - startOffsets[i]) * (1 - progress);
+              newOffset =
+                targetOffset -
+                (targetOffset - startOffsets[i]) * (1 - progress);
             offsets[i] = newOffset;
           }
           self.updatePanelStyles();

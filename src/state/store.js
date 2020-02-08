@@ -8,11 +8,18 @@ import { isDev, keepOnlyNotUndefinedValues } from "utils";
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+  const reduxDevTools =
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION__();
 
   const store = createStore(
     rootReducer,
-    compose(...keepOnlyNotUndefinedValues([applyMiddleware(sagaMiddleware), reduxDevTools]))
+    compose(
+      ...keepOnlyNotUndefinedValues([
+        applyMiddleware(sagaMiddleware),
+        reduxDevTools
+      ])
+    )
   );
 
   sagaMiddleware.run(sagas);

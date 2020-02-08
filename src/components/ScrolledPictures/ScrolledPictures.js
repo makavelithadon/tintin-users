@@ -15,18 +15,21 @@ import TransitionedComponent from "components/TransitionedComponent";
 const StyledContainer = styled.div`
   position: relative;
   ${media.forEach({ xs: "100%", medium: "30%" }, w => `width: ${w};`)};
-  background-color: ${({ theme }) => (isDev && DEBUG ? theme.colors.secondary : "none")};
+  background-color: ${({ theme }) =>
+    isDev && DEBUG ? theme.colors.secondary : "none"};
 `;
 
-const StyledScrolledPictures = styled(animated.div).attrs(({ o, width, height, top, position, bottom }) => ({
-  style: {
-    position,
-    bottom,
-    width,
-    height,
-    top
-  }
-}))`
+const StyledScrolledPictures = styled(animated.div).attrs(
+  ({ o, width, height, top, position, bottom }) => ({
+    style: {
+      position,
+      bottom,
+      width,
+      height,
+      top
+    }
+  })
+)`
   overflow: hidden;
   will-change: width, opacity, top, bottom;
   background-color: ${({ bgColor }) => (bgColor ? bgColor : "transparent")};
@@ -64,9 +67,18 @@ function ScrolledPictures({ pictures, style }) {
   return (
     <StyledContainer>
       <ScrollHandler ref={React.createRef()} wrapper={StyledScrollerWrapper}>
-        {({ height, isOverflow, isOverTop, isOverBottom, refWidth, refHeight, refTop }) => {
+        {({
+          height,
+          isOverflow,
+          isOverTop,
+          isOverBottom,
+          refWidth,
+          refHeight,
+          refTop
+        }) => {
           const sliderWidth = refWidth * pictures.length;
-          const frictionCoefficient = (refHeight - height) / (sliderWidth - refWidth);
+          const frictionCoefficient =
+            (refHeight - height) / (sliderWidth - refWidth);
           const normalizedScrollX = isOverTop
             ? 0
             : isOverBottom
@@ -93,7 +105,9 @@ function ScrolledPictures({ pictures, style }) {
                     transition={sliderTransition}
                     path={CHARACTER_SLUG}
                     render={({ opacity }) => (
-                      <Revealer wrapper={<StyledRevealerContainer height={refWidth} />}>
+                      <Revealer
+                        wrapper={<StyledRevealerContainer height={refWidth} />}
+                      >
                         <Slider
                           refWidth={refWidth}
                           items={pictures}
@@ -108,7 +122,10 @@ function ScrolledPictures({ pictures, style }) {
                 )}
               </Spring>
               {pictures[currentIndex] && (
-                <Caption top={height / 2 + refWidth / 2 + 16} caption={pictures[currentIndex].caption} />
+                <Caption
+                  top={height / 2 + refWidth / 2 + 16}
+                  caption={pictures[currentIndex].caption}
+                />
               )}
             </StyledScrolledPictures>
           );

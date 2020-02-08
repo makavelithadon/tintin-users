@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import styled, { css, withTheme } from "styled-components";
 import Media from "react-media";
 import { media } from "utils";
 import { fillSizes } from "style-utils";
 import CharacterListItem from "./ListItem";
 import KwicksSlider from "components/KwicksSlider";
-import { Spring, animated, interpolate } from "react-spring";
+import { Spring, animated } from "react-spring";
 import { easeCircleInOut } from "d3-ease";
 import { inheritComponent } from "style-utils";
 import Helpers from "UI/Helpers";
@@ -42,11 +42,13 @@ const StyledContainer = styled.ul`
   ${media.small`height: 50vh;`}
 `;
 
-const StyledItemContainer = styled(Helpers.FilterInvalidDOMAttributes).attrs(({ x }) => ({
-  style: {
-    transform: x.interpolate(x => `translate3d(${x}px, 0, 0)`)
-  }
-}))`
+const StyledItemContainer = styled(Helpers.FilterInvalidDOMAttributes).attrs(
+  ({ x }) => ({
+    style: {
+      transform: x.interpolate(x => `translate3d(${x}px, 0, 0)`)
+    }
+  })
+)`
   ${props => {
     const baseComponent = styled.li``;
     return inheritComponent(baseComponent, props);
@@ -54,8 +56,10 @@ const StyledItemContainer = styled(Helpers.FilterInvalidDOMAttributes).attrs(({ 
   height: 100%;
   overflow: initial !important;
   will-change: left, right, width, transform;
-  background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.transparent : theme.colors.white)};
-  box-shadow: ${({ theme, isSelected }) => (isSelected ? "none" : theme.shadows.box2)};
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.transparent : theme.colors.white};
+  box-shadow: ${({ theme, isSelected }) =>
+    isSelected ? "none" : theme.shadows.box2};
   border-radius: 8px;
   transition: ${({ duration, delay }) => {
     const tranisitionedProperties = ["background-color", "box-shadow"];
@@ -63,7 +67,9 @@ const StyledItemContainer = styled(Helpers.FilterInvalidDOMAttributes).attrs(({ 
       ${tranisitionedProperties.reduce(
         (rules, property, index) =>
           rules +
-          `${property} ${duration}ms ${delay}ms ease-out${(index !== tranisitionedProperties.length - 1 && ", ") ||
+          `${property} ${duration}ms ${delay}ms ease-out${(index !==
+            tranisitionedProperties.length - 1 &&
+            ", ") ||
             ""}`,
         ``
       )}
@@ -105,7 +111,13 @@ function CharactersList({ characters, theme }) {
                   const isBefore = expanded > index;
                   const isAfter = expanded < index;
                   const isExpanded = expanded === index;
-                  const xTransform = allCollapsed ? 0 : isBefore ? -gapX : isAfter ? gapX : 0;
+                  const xTransform = allCollapsed
+                    ? 0
+                    : isBefore
+                    ? -gapX
+                    : isAfter
+                    ? gapX
+                    : 0;
                   return (
                     <Spring
                       key={character.displayName}

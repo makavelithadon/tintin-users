@@ -12,7 +12,9 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   style: {
     display: o.interpolate(o => (o > 0 ? "flex" : "none")),
     visibility: o.interpolate(o => (o > 0 ? "visible" : "hidden")),
-    transform: slide.interpolate(slide => `translate${from === "left" ? "X" : "Y"}(${slide}%)`)
+    transform: slide.interpolate(
+      slide => `translate${from === "left" ? "X" : "Y"}(${slide}%)`
+    )
   }
 }))`
   position: fixed;
@@ -31,13 +33,21 @@ const StyledNav = styled(animated.nav).attrs(({ o, slide, from }) => ({
   transition: ${({ theme }) => `padding ${theme.transitions.primary}`};
   top: 0;
   ${({ theme }) => {
-    const selfPaddings = { xs: "20px 30px 20px", small: "30px 30px 30px", medium: "60px 60px 60px" };
+    const selfPaddings = {
+      xs: "20px 30px 20px",
+      small: "30px 30px 30px",
+      medium: "60px 60px 60px"
+    };
     const { width: sidebarWidth } = theme.styles.sidebar;
     return media.forEach(
       Object.entries(selfPaddings).reduce(
         (acc, [breakpoint, value]) => ({
           ...acc,
-          [breakpoint]: `${value} ${parseInt(sidebarWidth[breakpoint], 10) !== 0 ? sidebarWidth[breakpoint] : "30px"}`
+          [breakpoint]: `${value} ${
+            parseInt(sidebarWidth[breakpoint], 10) !== 0
+              ? sidebarWidth[breakpoint]
+              : "30px"
+          }`
         }),
         {}
       ),
@@ -60,11 +70,16 @@ function Nav({ theme, characters, fetchCharacters }) {
           <AnimatedNav
             state={animationState}
             native
-            onRest={({ o }) => o === 0 && !isOpen && setDocumentElementStyles(false)}
+            onRest={({ o }) =>
+              o === 0 && !isOpen && setDocumentElementStyles(false)
+            }
           >
             {props => (
               <StyledNav {...props} theme={theme} from={"left"}>
-                <NavExitIcon onClick={() => toggle(false)} animationState={animationState} />
+                <NavExitIcon
+                  onClick={() => toggle(false)}
+                  animationState={animationState}
+                />
                 <ListItems
                   list={characters.items}
                   isNavOpen={isOpen}

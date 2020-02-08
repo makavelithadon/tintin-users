@@ -1,13 +1,26 @@
 import { stripUnits, filterObjectByKey, getCSSProperty } from "utils";
 
-export const getStartAnimations = animations => filterObjectByKey(animations, "start", false);
+export const getStartAnimations = animations =>
+  filterObjectByKey(animations, "start", false);
 
-export const getEndAnimations = animations => filterObjectByKey(animations, "end", false);
+export const getEndAnimations = animations =>
+  filterObjectByKey(animations, "end", false);
 
-export const flatAnimatedObjectKeys = (animationsObject, regExp = /-(start|end)/i) =>
-  Object.entries(animationsObject).reduce((acc, [key, value]) => ({ ...acc, [key.replace(regExp, "")]: value }), {});
+export const flatAnimatedObjectKeys = (
+  animationsObject,
+  regExp = /-(start|end)/i
+) =>
+  Object.entries(animationsObject).reduce(
+    (acc, [key, value]) => ({ ...acc, [key.replace(regExp, "")]: value }),
+    {}
+  );
 
-export const setAnimationsList = (list, hoveredIndex, isFirst = false, growRatio) => {
+export const setAnimationsList = (
+  list,
+  hoveredIndex,
+  isFirst = false,
+  growRatio
+) => {
   const itemsCount = list.length;
   if (isFirst) {
     return list.reduce(
@@ -21,9 +34,13 @@ export const setAnimationsList = (list, hoveredIndex, isFirst = false, growRatio
       {}
     );
   }
-  const containerWidth = Math.ceil(stripUnits(getCSSProperty(list[0].parentNode, "width")));
+  const containerWidth = Math.ceil(
+    stripUnits(getCSSProperty(list[0].parentNode, "width"))
+  );
   const hoveredWidth = Math.ceil((containerWidth / itemsCount) * growRatio);
-  const unHoveredWidth = Math.ceil((containerWidth - hoveredWidth) / (itemsCount - 1));
+  const unHoveredWidth = Math.ceil(
+    (containerWidth - hoveredWidth) / (itemsCount - 1)
+  );
   const mergedList = list.map((item, index) => {
     const isHovered = index === hoveredIndex;
     const isBefore = index < hoveredIndex;

@@ -19,7 +19,11 @@ const Waypoint = props => {
       <Spring
         from={{ opacity: 0, gap: 30 }}
         to={{ opacity: Number(show), gap: show ? 0 : 30 }}
-        config={key => ({ duration: key === "opacity" ? 125 : 300, delay: 125, easing: easeSinOut })}
+        config={key => ({
+          duration: key === "opacity" ? 125 : 300,
+          delay: 125,
+          easing: easeSinOut
+        })}
         native
       >
         {styles => <StyledWaypoint {...styles} {...props} />}

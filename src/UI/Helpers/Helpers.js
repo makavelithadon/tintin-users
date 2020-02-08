@@ -6,7 +6,9 @@ export const FilterInvalidDOMAttributes = styled(
   forwardRef(({ component: Component, ...rest }, ref) => {
     const finalProps = Object.entries(rest).reduce(
       (acc, [attr, value]) =>
-        isValidDOMAttribute(attr, Component.target ? Component.target : "div") ? { ...acc, [attr]: value } : acc,
+        isValidDOMAttribute(attr, Component.target ? Component.target : "div")
+          ? { ...acc, [attr]: value }
+          : acc,
       {}
     );
     return <Component {...finalProps} ref={ref} />;

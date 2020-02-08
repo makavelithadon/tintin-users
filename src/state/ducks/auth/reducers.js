@@ -1,5 +1,11 @@
 import { combineReducers } from "redux";
-import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, SHOW_LOGIN_DIALOG } from "./types";
+import {
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGOUT,
+  SHOW_LOGIN_DIALOG
+} from "./types";
 
 const initialData = null;
 

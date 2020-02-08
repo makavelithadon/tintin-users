@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import CharactersList from "containers/CharactersList";
+import { css } from "styled-components/macro";
+// import CharactersList from "containers/CharactersList";
 
 const StyledPage = styled.div`
   position: relative;
@@ -21,11 +22,37 @@ const StyledPage = styled.div`
   height: 9999px;
 `; */
 
+const CIRCLE_SIZE = 200;
+
+const StyledCircle = styled.div`
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+`;
+
+function CircleWrapper({ circle: CircleElement }) {
+  return (
+    <div
+      css={css`
+        position: absolute;
+        width: ${CIRCLE_SIZE}vh;
+        height: ${CIRCLE_SIZE}vh;
+        right: 0;
+        transform: translateX(calc(${CIRCLE_SIZE}vh / 2));
+      `}
+    >
+      <CircleElement />
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <StyledPage>
       {/* <StyledSkewed /> */}
-      <CharactersList />
+      {/* <CharactersList /> */}
+      <CircleWrapper circle={StyledCircle} />
     </StyledPage>
   );
 }

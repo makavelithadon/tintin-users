@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
-const StyledCommonImg = styled.img.attrs(({ alt = "An image", ariaLabel = "Image" }) => ({
-  alt,
-  "aria-label": ariaLabel,
-  role: "img"
-}))`
+const StyledCommonImg = styled.img.attrs(
+  ({ alt = "An image", ariaLabel = "Image" }) => ({
+    alt,
+    "aria-label": ariaLabel,
+    role: "img"
+  })
+)`
   display: inline-block;
   width: 100%;
   border: none;

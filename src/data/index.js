@@ -34,7 +34,8 @@ const data = {
       pictures: [
         {
           src: tintinPicture02,
-          caption: "Tintin est toujours accompagné de son fidèle compagnon, Milou."
+          caption:
+            "Tintin est toujours accompagné de son fidèle compagnon, Milou."
         },
         {
           src: tintinPicture03,
@@ -42,7 +43,8 @@ const data = {
         },
         {
           src: tintinPicture04,
-          caption: "Rien ne fait peur à notre cher Tintin, pas même une petite escapade sur la Lune !"
+          caption:
+            "Rien ne fait peur à notre cher Tintin, pas même une petite escapade sur la Lune !"
         }
       ],
       description: tintinText
