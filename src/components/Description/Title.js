@@ -64,7 +64,7 @@ function Title({ title, location, character }) {
             <StyledFakeCharacterDisplayName ref={ref}>
               {words.map((letter, index) => {
                 return (
-                  <StyledWord>
+                  <StyledWord key={`${letter}-${index}`}>
                     <span key={letter + index}>{letter}</span>
                     {index !== words.length - 1 && (
                       <span dangerouslySetInnerHTML={{ __html: "&nbsp;" }} />

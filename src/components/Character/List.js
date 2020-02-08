@@ -4,7 +4,6 @@ import Media from "react-media";
 import { media } from "utils";
 import { fillSizes } from "style-utils";
 import CharacterListItem from "./ListItem";
-import KwicksSlider from "components/KwicksSlider";
 import { Spring, animated } from "react-spring";
 import { easeCircleInOut } from "d3-ease";
 import { inheritComponent } from "style-utils";
@@ -92,67 +91,7 @@ function CharactersList({ characters, theme }) {
     <Media query={`(min-width: ${theme.breakpoints.values.small})`}>
       {matches =>
         matches ? (
-          <StyledSlider ref={sliderRef}>
-            <KwicksSlider
-              orientation={"horizontal"}
-              container={StyledContainer}
-              containerWidth={containerWidth}
-              maxSize={expandedWidth}
-              spacing={spacing}
-              duration={durationSlideAnimation}
-              behavior={"menu"}
-              easing={"easeInCirc"}
-              delayMouseIn={delayBeforeTriggerSlide}
-            >
-              {({ expanded }) => {
-                const allCollapsed = expanded === -1;
-                const gapX = 20;
-                return characters.map((character, index) => {
-                  const isBefore = expanded > index;
-                  const isAfter = expanded < index;
-                  const isExpanded = expanded === index;
-                  const xTransform = allCollapsed
-                    ? 0
-                    : isBefore
-                    ? -gapX
-                    : isAfter
-                    ? gapX
-                    : 0;
-                  return (
-                    <Spring
-                      key={character.displayName}
-                      from={{ x: 0 }}
-                      to={{ x: xTransform }}
-                      config={{
-                        easing: easeCircleInOut,
-                        duration: durationSlideAnimation,
-                        delay: delayBeforeTriggerSlide
-                      }}
-                      native
-                    >
-                      {({ x }) => {
-                        return (
-                          <StyledItemContainer
-                            component={animated.li}
-                            x={x}
-                            isSelected={isExpanded}
-                            duration={durationSlideAnimation}
-                            delay={delayBeforeTriggerSlide}
-                          >
-                            <CharacterListItem
-                              count={characters.length}
-                              character={character}
-                              isSelected={isExpanded}
-                            />
-                          </StyledItemContainer>
-                        );
-                      }}
-                    </Spring>
-                  );
-                });
-              }}
-            </KwicksSlider>
-          </StyledSlider>
+          <StyledSlider ref={sliderRef}>no kwicks here</StyledSlider>
         ) : null
       }
     </Media>

@@ -88,7 +88,7 @@ class RotatedSlidedUpText extends Component {
     const { Animation } = this;
     const words = text.split(" ");
     return words.map((word, index) => (
-      <StyledWord>
+      <StyledWord key={`${word}-${index}`}>
         <Animation
           items={word.split("").map((letter, index) => ({ letter, index }))}
           keys={item => `${item.letter}-${item.index}`}

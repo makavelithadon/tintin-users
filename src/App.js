@@ -7,7 +7,7 @@ import Root from "containers/Root";
 import configureStore from "state/store";
 import * as Layout from "components/Layout";
 import { NoMatch } from "views";
-import { HOME, NOT_FOUND, ADMIN } from "routes";
+import { HOME, NOT_FOUND } from "routes";
 
 const store = configureStore();
 
@@ -19,7 +19,6 @@ export default function App() {
       <Router>
         <Root>
           <Switch>
-            <Route path={ADMIN} component={Layout.Admin} />
             <Route path={NOT_FOUND} component={NoMatch} />
             <Route path={HOME} component={Layout.App} />
             <Route component={NoMatch} />
