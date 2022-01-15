@@ -81,7 +81,7 @@
     "lint-staged": "^10.0.7",
     "markdown-image-loader": "^2.0.0",
     "markdown-to-jsx": "^6.9.0",
-    "marked": "^0.8.0",
+    "marked": "^4.0.10",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.6.2",
     "react-hot-loader": "^4.3.12",
